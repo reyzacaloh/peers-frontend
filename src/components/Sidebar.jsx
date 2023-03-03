@@ -10,8 +10,8 @@ const Sidebar = ({ children }) => {
 
     const menuItem = [
         {
-            path: "/find-tutor",
-            name: "Cari Tutor",
+            path: "/",
+            name: "Home",
             icon: <FaChalkboardTeacher />
         },
         {
@@ -23,7 +23,7 @@ const Sidebar = ({ children }) => {
 
     return (
         <div className="container">
-            <div className="sidebar" style={{display: window.location.pathname === "/" ? "none" : "initial"}}>
+            <div className="sidebar">
                 <div className="top_section">
                     <h1 className="logo">Peers</h1>
                 </div>
