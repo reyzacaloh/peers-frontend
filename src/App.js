@@ -5,6 +5,7 @@ import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard.jsx";
 import Chat from "./pages/Chat.jsx";
 import FindTutor from "./pages/FindTutor.jsx";
+import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
 export const AuthContext = React.createContext();
@@ -65,6 +66,12 @@ function App() {
                   <Sidebar>
                     <Chat />
                   </Sidebar>} />
+              <Route
+                path="/profile" element={
+                  <Sidebar>
+                    <Profile />
+                  </Sidebar>} />
+              
               <Route path="*" element={<NotFound />} />
             </Routes>
           )}
