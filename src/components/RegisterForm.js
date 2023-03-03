@@ -1,11 +1,8 @@
 import React from 'react';
 import { Formik} from 'formik';
 import axios from "axios";
-import { AuthContext } from '../App';
-import { useNavigate } from 'react-router-dom';
 import * as Yup from "yup";
 const RegisterForm = () => {
-    
     return (
         <Formik
         initialValues={{
