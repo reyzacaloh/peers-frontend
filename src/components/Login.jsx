@@ -1,6 +1,7 @@
 import React from "react";
 import { useFormik } from "formik";
-import * as Yup from 'yup';
+import * as Yup from "yup";
+import axios from "axios";
 
 const Login = () => {
 
@@ -9,9 +10,21 @@ const Login = () => {
         pass: ''
     }
 
-    const onSubmit = values => {
-        console.log("Submit", values);
+    const onSubmit = async (values, actions) => {
+        console.log("Values: ", values);
 
+        try {
+            const response = await axios.post(
+                "http://localhost:8000"+"/api/auth/token",  // Django local port
+                values
+            );
+            actions.setSubmitting(false);
+            console.log("Response: ", response);
+        } catch (err) {
+            console.log("Error: ", err);
+            actions.setStatus(err.message)
+            actions.setSubmitting(false);
+        }
     }
 
     const validationSchema = Yup.object({
