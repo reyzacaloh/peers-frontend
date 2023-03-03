@@ -50,7 +50,7 @@ function App() {
     >
       <div className="App">
         <Router>
-          {state.isAuthenticated ? (
+          {!state.isAuthenticated ? (
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/register" element={
