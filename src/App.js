@@ -6,33 +6,14 @@ import Dashboard from "./pages/Dashboard.jsx";
 import Chat from "./pages/Chat.jsx";
 import FindTutor from "./pages/FindTutor.jsx";
 import NotFound from "./pages/NotFound";
+import { authReducer, initialState } from "./reducers/AuthReducer";
 
 export const AuthContext = React.createContext();
 
-const initialState = {
-  isAuthenticated: false,
-  user: null,
-  token: null,
-};
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "LOGIN":
-      localStorage.setItem("user", JSON.stringify(action.payload.user));
-      localStorage.setItem("token", JSON.stringify(action.payload.token));
-      return {
-        ...state,
-        isAuthenticated: true,
-        user: action.payload.user,
-        token: action.payload.token,
-      };
-    default:
-      return state;
-  }
-};
-
 function App() {
-  const [state, dispatch] = React.useReducer(reducer, initialState);
+
+  const [state, dispatch] = React.useReducer(authReducer, initialState);
+
   return (
     <AuthContext.Provider
       value={{
