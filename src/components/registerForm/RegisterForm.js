@@ -6,7 +6,6 @@ const RegisterForm = () => {
     return (
         <Formik
         initialValues={{
-           
         }}
         onSubmit= {async (values,actions) => {
         console.log("Values: ", values);
@@ -15,12 +14,10 @@ const RegisterForm = () => {
             "http://127.0.0.1:8000/"+"/api/auth/register",
             values
             );
-            actions.setSubmitting(false);
             console.log(response);
         } catch (err) {
             console.log("Error: ", err);
             actions.setStatus(err.message)
-            actions.setSubmitting(false);
         }
         }}>
         {formik => (
