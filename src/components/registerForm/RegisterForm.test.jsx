@@ -50,7 +50,6 @@ test('when backend API calls succesful', async () => {
 test('when backend API calls unsuccesful', async () => {
   jest.mock('axios');
   axios.post = jest.fn()
-  onSubmit = jest.fn()
   renderRegisterForm();
   const logSpy = jest.spyOn(global.console,'log')
   const registerButton = screen.getByText('Register')
