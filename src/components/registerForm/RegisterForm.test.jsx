@@ -1,6 +1,7 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import "@testing-library/jest-dom/extend-expect";
 import RegisterForm from './RegisterForm';
-import axios from 'axios';
+import axios, { Axios } from 'axios';
 import { act } from 'react-dom/test-utils';
 
 const renderRegisterForm = () => (render(<RegisterForm />));
@@ -20,11 +21,12 @@ test('all field in form fully renders', () => {
     expect(profilePic).toBeInTheDocument();
   });
 
-test('when backend API calls succesful', () => {
+test('when backend API calls succesful', async () => {
     jest.mock('axios');
-    axios.post = jest.fn()
+    axios.post = jest.fn();
     renderRegisterForm();
-    const registerButton = screen.getByText('Register')
+    const registerButton = screen.getByText('Register');
+    const logSpy = jest.spyOn(global.console,'log')
     const expectedResponse = {
         'success': true,
         'statusCode': '201 Created',
@@ -38,5 +40,26 @@ test('when backend API calls succesful', () => {
     }
     axios.post.mockResolvedValueOnce(expectedResponse);
     fireEvent.click(registerButton);
-    expect(axios.post).toHaveBeenCalledTimes(1);
+    await waitFor(() =>
+      expect(axios.post).toHaveBeenCalled()
+    );
+    expect(logSpy).toHaveBeenCalledWith(expectedResponse);
+    logSpy.mockRestore();
+})
+
+test('when backend API calls unsuccesful', async () => {
+  jest.mock('axios');
+  axios.post = jest.fn()
+  onSubmit = jest.fn()
+  renderRegisterForm();
+  const logSpy = jest.spyOn(global.console,'log')
+  const registerButton = screen.getByText('Register')
+  const expectedError = new Error("Network Error");
+  axios.post.mockRejectedValueOnce(expectedError);
+  fireEvent.click(registerButton);
+  await waitFor(() =>
+    expect(axios.post).toHaveBeenCalled()
+  );
+  expect(logSpy).toHaveBeenCalledWith('Error: ',expectedError);
+  logSpy.mockRestore();
 })
