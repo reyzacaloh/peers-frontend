@@ -1,19 +1,13 @@
 import React from 'react';
 import { Formik} from 'formik';
 import axios from "axios";
-import * as Yup from "yup";
+
 const RegisterForm = () => {
-    const validationSchema = Yup.object({
-        email: Yup.string().email('Invalid').required('Required'),
-        password: Yup.string().required('Required').min(2, 'Password sepanjang 2-10 karakter').max(10,'Password sepanjang 2-10 karakter'),
-        date_of_birth: Yup.date().required('Required').max('2010-1-1','Maaf, anda belum cukup')
-    })
     return (
         <div id='regis-form'>
         <h1>Register Form</h1>
         <Formik
         initialValues={{}}
-        // validationSchema = {validationSchema}
         onSubmit= {async (values,actions) => {
         try {
             const response = await axios.post(
