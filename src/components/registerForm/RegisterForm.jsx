@@ -3,27 +3,33 @@ import { Formik} from 'formik';
 import axios from "axios";
 import * as Yup from "yup";
 const RegisterForm = () => {
+    const validationSchema = Yup.object({
+        email: Yup.string().email('Invalid').required('Required'),
+        password: Yup.string().required('Required').min(2, 'Password sepanjang 2-10 karakter').max(10,'Password sepanjang 2-10 karakter'),
+        date_of_birth: Yup.date().required('Required').max('2010-1-1','Maaf, anda belum cukup')
+    })
     return (
+        <div id='regis-form'>
+        <h1>Register Form</h1>
         <Formik
-        initialValues={{
-        }}
+        initialValues={{}}
+        // validationSchema = {validationSchema}
         onSubmit= {async (values,actions) => {
-        console.log("Values: ", values);
         try {
             const response = await axios.post(
             "http://127.0.0.1:8000/"+"/api/auth/register",
             values
             );
             console.log(response);
+            actions.setStatus('success');
         } catch (err) {
             console.log("Error: ", err);
             actions.setStatus(err.message)
         }
         }}>
         {formik => (
-            <form onSubmit={formik.handleSubmit}>
-            {formik.status && <div id="feedback">Error : {formik.status}</div>}
-                <label htmlFor="email" >Email Address :<br></br></label>
+            <form onSubmit={formik.handleSubmit} data-testid="form">
+                <label htmlFor="email" ></label>
                 <input
                 id="email"
                 data-testid="email"
@@ -31,9 +37,9 @@ const RegisterForm = () => {
                 type="email"
                 onChange={formik.handleChange}
                 value={formik.values.email}
-                required
+                placeholder = 'Email Address'
                 /><br></br>
-                <label htmlFor="password" >Password :<br></br></label>
+                <label htmlFor="password" ></label>
                 <input
                 id="password"
                 data-testid="password"
@@ -41,9 +47,9 @@ const RegisterForm = () => {
                 type="password"
                 onChange={formik.handleChange}
                 value={formik.values.password}
-                required
+                placeholder='Password'
                 /> <br></br>
-                <label htmlFor="first_name" required>First Name :<br></br></label>
+                <label htmlFor="first_name" required></label>
                 <input
                 id="first_name"
                 data-testid="first_name"
@@ -51,9 +57,9 @@ const RegisterForm = () => {
                 type="text"
                 onChange={formik.handleChange}
                 value={formik.values.first_name}
-                required
+                placeholder='First Name'
                 /><br></br>
-                <label htmlFor="last_name" required>Last Name :<br></br></label>
+                <label htmlFor="last_name" required></label>
                 <input
                 id="last_name"
                 data-testid="last_name"
@@ -61,9 +67,9 @@ const RegisterForm = () => {
                 type="text"
                 onChange={formik.handleChange}
                 value={formik.values.last_name}
-                required
+                placeholder='Last Name'
                 /><br></br>
-                <label htmlFor="date_of_birth" required>Date of Birth :<br></br></label>
+                <label htmlFor="date_of_birth" required>Date of Birth</label>
                 <input
                 id="date_of_birth"
                 data-testid="date_of_birth"
@@ -71,7 +77,6 @@ const RegisterForm = () => {
                 type="date"
                 onChange={formik.handleChange}
                 value={formik.values.date_of_birth}
-                required
                 /><br></br>
                 <label htmlFor="profile_picture" required>Profile Picture :<br></br></label>
                 <input
@@ -93,6 +98,7 @@ const RegisterForm = () => {
             </form>)
             }
         </Formik>
+        </div>
     );
  };
 
