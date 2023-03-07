@@ -10,26 +10,41 @@ export const Image = styled.img`
 export const Wrapper = styled.div`
   position: absolute;
   display: flex;
-  padding: 0 5px 40px 10px;
-  line-height: 0.1pt;
   flex-direction: column;
-  justify-content: space-evenly;
   color: white;
   width: 100%;
-  overflow: hidden;
-  top: 70%;
+  bottom: 0;
   z-index: 999;
-  left: 0;
-  
+  padding: 0 10px 10px 20px;
+
+  @media only screen and (max-width: 425px) {
+    font-size: 12px;
+    font-weight: 200;
+  }
 `;
 
 export const Name = styled.h3`
- text-align: left;
-`
+  text-align: left;
+  margin:0;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  @media only screen and (max-width: 425px) {
+    margin: 10px 5px 2px 0px;
+  }
+`;
 
 export const University = styled.p`
   text-align: left;
-`
+  margin: 0;
+  font-weight: 150;
+  letter-spacing: 0.5px;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+`;
 
 export const ImageContainer = styled.div`
   position: relative;
@@ -73,35 +88,58 @@ export const Card = styled.div`
       }
     }
   }
+
+  @media only screen and (max-width: 425px) {
+    max-width: 180px;
+    min-width: 100px;
+
+    border-radius: 15px;
+  }
 `;
 
 export const Description = styled.div`
   flex: 1;
-  padding: 0 20px 20px 20px;
+  padding: 0 15px 15px 15px;
   display: flex;
   flex-direction: column;
-  line-height: 1pt;
-  gap: 2px;
+  gap: 1px;
+
+  @media only screen and (max-width: 425px) {
+    padding: 0 10px 10px 10px;
+    gap: 1px;
+    line-height: 0.2pt;
+  }
 `;
 export const Rating = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  bottom: 0;
+  margin: 0;
+  @media only screen and (max-width: 425px) {
+    padding-top: 10px;
+  }
 `;
 export const Contents = styled.div`
-  padding-bottom: 10px;
-  padding-top: 0;
+ margin: 0;
+
+  @media only screen and (max-width: 425px) {
+    padding-bottom: 0;
+  }
 `;
 export const Price = styled.div`
   background-color: lightgreen;
   border-radius: 18px;
   max-width: 150px;
   min-width: 100px;
-  padding: 10px 5px 10px 5px;
+  padding: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media only screen and (max-width: 425px) {
+    max-width: 100px;
+    padding: 10px;
+  }
 `;
 export const Star = styled(StarIcon)`
   color: orange;
@@ -116,14 +154,24 @@ export const Text = styled.p`
   letter-spacing: 0.5px;
   display: -webkit-box;
   overflow: hidden;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
+
+  @media only screen and (max-width: 425px) {
+    font-size: 12px;
+    line-height: 12pt;
+  }
 `;
 
 export const PriceTag = styled.span`
   font-size: 15px;
   color: green;
   padding: 5px;
+
+  @media only screen and (max-width: 425px) {
+    font-size: 12px;
+    padding: 0;
+  }
 `;
 
 export const Rate = styled.div`
@@ -131,9 +179,19 @@ export const Rate = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-right: 5px;
+
+  @media only screen and (max-width: 425px) {
+    font-size: 12px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+  }
 `;
 
 export const Review = styled.p`
   color: gray;
-`;
 
+  @media only screen and (max-width: 425px) {
+    font-size: 12px;
+  }
+`;

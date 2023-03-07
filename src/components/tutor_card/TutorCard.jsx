@@ -28,8 +28,10 @@ const TutorCard = ({ onClick, data }) => {
     rating,
   } = data || {};
   function currencyFormat(num) {
-    return 'Rp' + (num || 0).toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
- }
+    return (
+      "Rp" + (num || 0).toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
+    );
+  }
   return (
     <Card onClick={onClick} data-testid="tutor_card">
       <ImageContainer>
@@ -37,8 +39,8 @@ const TutorCard = ({ onClick, data }) => {
           <Name>{firstname}</Name>
           <University>{university}</University>
         </Wrapper>
-        <Image src={profile_picture}/>
-        </ImageContainer>
+        <Image src={profile_picture} />
+      </ImageContainer>
       <Description>
         <Rating>
           <Rate>
@@ -48,9 +50,7 @@ const TutorCard = ({ onClick, data }) => {
           <Review>({review_count} ulasan)</Review>
         </Rating>
         <Contents>
-          <Text>
-            {descriptions}
-          </Text>
+          <Text>{descriptions}</Text>
         </Contents>
         <Price>
           <PriceTag>{currencyFormat(price_per_hour)}/jam</PriceTag>

@@ -22,7 +22,7 @@ describe("TutorCard", () => {
     expect(screen.getByText("4.5")).toBeInTheDocument();
     expect(screen.getByText("(10 ulasan)")).toBeInTheDocument();
     expect(screen.getByText("I am an experienced tutor.")).toBeInTheDocument();
-    expect(screen.getByText("Rp50,000/jam")).toBeInTheDocument();
+    expect(screen.getByText("Rp50.000/jam")).toBeInTheDocument();
   });
 
   it("handles onClick event correctly", () => {
@@ -49,6 +49,6 @@ describe("TutorCard", () => {
 
     render(<TutorCard data={mockTutorDataWithPrice} />);
 
-    expect(screen.getByText("Rp150,000/jam")).toBeInTheDocument();
+    expect(screen.getByText("Rp150.000/jam")).toBeInTheDocument();
   });
 });
