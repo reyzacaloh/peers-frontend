@@ -45,10 +45,15 @@ function App() {
         <Router>
           {!state.isAuthenticated ? (
             <Routes>
-              <Route path="/" element={<Dashboard />} />
+              <Route path="/" element={
+                <Sidebar>
+                  <Dashboard />
+                </Sidebar>
+              } />
               <Route path="/register" element={
-                // TODO(Raka): Change the Dashboard Page to Register Page
-                <RegisterForm />
+                <Sidebar>
+                  <RegisterForm />
+                </Sidebar>
               } />
               <Route path="/login" element={
                 // TODO(Azka): Change the Dashboard Page to Login Page

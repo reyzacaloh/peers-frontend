@@ -3,6 +3,7 @@ import {
     FaChalkboardTeacher,
     FaCommentAlt,
 } from "react-icons/fa"
+import {VscAccount} from "react-icons/vsc"
 import { NavLink } from 'react-router-dom'
 
 
@@ -18,6 +19,11 @@ const Sidebar = ({ children }) => {
             path: "/chat",
             name: "Pesan",
             icon: <FaCommentAlt />
+        },
+        {
+            path: "/register",
+            name: "Register",
+            icon: <VscAccount />
         },
     ]
 
