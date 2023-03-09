@@ -6,8 +6,8 @@ import axios from 'axios';
 const renderLoginForm = () => (render(<LoginForm />));
 test('all field in form fully renders', () => {
     renderLoginForm();
-    const emailField = screen.getByText(/E-mail/i);
-    const passwordField = screen.getByText(/Password/i);
+    const emailField = screen.getByTestId("email");
+    const passwordField = screen.getByTestId("pass");
     expect(emailField).toBeInTheDocument();
     expect(passwordField).toBeInTheDocument();
 });
