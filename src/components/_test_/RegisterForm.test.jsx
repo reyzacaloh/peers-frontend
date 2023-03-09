@@ -14,7 +14,7 @@ describe('RegisterForm test', () => {
   let registerButton;
   let file;
   beforeEach(() => {
-    file = new File(["(⌐□_□)"], "chucknorris.png", { type: "image/png" });
+    file = new File(["(⌐□_□)"], "chucknorris.jpg", { type: "image/jpg" });
     render(<RegisterForm />);
     emailField = screen.getByTestId("email");
     passwordField = screen.getByTestId("password");
@@ -89,9 +89,24 @@ describe('RegisterForm test', () => {
     logSpy.mockRestore();
   })
 
+  test('not call API when fields are empty', async () => {
+    jest.mock('axios');
+    axios.post = jest.fn();
+    userEvent.click(registerButton);
+    await waitFor(() =>
+      expect(axios.post).toHaveBeenCalledTimes(0)
+    );
+  })
+
   test('not call API when validation failed', async () => {
     jest.mock('axios');
     axios.post = jest.fn();
+    userEvent.type(emailField, 't')
+    userEvent.type(passwordField, 'abc')
+    userEvent.type(firstNameField, 'J')
+    userEvent.type(lastNameField, 'D')
+    userEvent.type(dateOfBirth, '2023-03-08')
+    userEvent.upload(profilePic, file)
     userEvent.click(registerButton);
     await waitFor(() =>
       expect(axios.post).toHaveBeenCalledTimes(0)
