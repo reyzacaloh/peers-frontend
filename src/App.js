@@ -8,6 +8,7 @@ import FindTutor from "./pages/FindTutor.jsx";
 import NotFound from "./pages/NotFound";
 import { authReducer, initialState } from "./reducers/AuthReducer";
 
+
 export const AuthContext = React.createContext();
 
 function App() {
@@ -25,7 +26,9 @@ function App() {
         <Router>
           {!state.isAuthenticated ? (
             <Routes>
-              <Route path="/" element={<Dashboard />} />
+              <Route path="/" element={
+                  <Dashboard/>
+              } />
               <Route path="/register" element={
                 // TODO(Raka): Change the Dashboard Page to Register Page
                 <Dashboard />
