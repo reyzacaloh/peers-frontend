@@ -8,6 +8,8 @@ import NotFound from './pages/NotFound';
 import React from 'react';
 
 test('renders app', () => {
+
+  window.HTMLElement.prototype.scrollIntoView = function () { };
   render(<App />);
   const homeElement = screen.getByText(/beranda/i);
   const featureElement = screen.getByText(/fitur/i);

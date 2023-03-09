@@ -13,8 +13,6 @@ function Navbar() {
         }
     }
 
-    window.HTMLElement.prototype.scrollIntoView = function() {};
-
     const scrollToHome = async () => {
         document.getElementById("main").scrollIntoView({ behavior: 'smooth', block: 'start' });
     } 
