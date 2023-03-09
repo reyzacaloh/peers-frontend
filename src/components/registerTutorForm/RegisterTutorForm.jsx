@@ -14,7 +14,7 @@ const RegisterTutorForm = () => {
         try {
             <div><h1>Registration Form</h1></div>
             const response = await axios.post(
-            "http://127.0.0.1:8000"+"/api/auth/registerTutor",
+            "http://127.0.0.1:8000/api/auth/registerTutor",
             values
             );
             actions.setSubmitting(false);
