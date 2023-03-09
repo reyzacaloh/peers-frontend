@@ -18,7 +18,6 @@ const RegisterForm = () => {
         date_of_birth: Yup.date().required('Required').max('2010-1-1','Minimal 10 tahun untuk registrasi'),
         first_name: Yup.string().required('Required').min(2, 'Minimal 2 karakter'),
         last_name: Yup.string().required('Required').min(2, 'Minimal 2 karakter'),
-        
     })
     return (
         <div id='regis-form'>
@@ -65,8 +64,7 @@ const RegisterForm = () => {
                 placeholder = 'Email Address'
                 required
                 /><br></br>
-                {formik.errors.email && formik.touched.email && (
-                    <Error className="error">{formik.errors.email}</Error>)}
+                {formik.errors.email && formik.touched.email && (<Error className="error">{formik.errors.email}</Error>)}
                 <Label htmlFor="password" ></Label>
                 <Input
                 id="password"
@@ -78,8 +76,7 @@ const RegisterForm = () => {
                 placeholder='Password'
                 required
                 /><br></br>
-                {formik.errors.password && formik.touched.password && (
-                    <Error className="error">{formik.errors.password}</Error>)}
+                {formik.errors.password && formik.touched.password && (<Error className="error">{formik.errors.password}</Error>)}
                 <Label htmlFor="first_name" required></Label>
                 <Input
                 id="first_name"
@@ -91,8 +88,7 @@ const RegisterForm = () => {
                 placeholder='First Name'
                 required
                 /><br></br>
-                {formik.errors.first_name && formik.touched.first_name && (
-                    <Error className="error">{formik.errors.first_name}</Error>)}
+                {formik.errors.first_name && formik.touched.first_name && (<Error className="error">{formik.errors.first_name}</Error>)}
                 <Label htmlFor="last_name" required></Label>
                 <Input
                 id="last_name"
@@ -104,8 +100,7 @@ const RegisterForm = () => {
                 placeholder='Last Name'
                 required
                 /><br></br>
-                {formik.errors.last_name && formik.touched.last_name && (
-                    <Error className="error">{formik.errors.last_name}</Error>)}
+                {formik.errors.last_name && formik.touched.last_name && (<Error className="error">{formik.errors.last_name}</Error>)}
                 <Label htmlFor="date_of_birth" required>Date of Birth</Label>
                 <Input
                 id="date_of_birth"
@@ -116,8 +111,7 @@ const RegisterForm = () => {
                 value={formik.values.date_of_birth}
                 required
                 /><br></br>
-                {formik.errors.date_of_birth && formik.touched.date_of_birth && (
-                    <Error className="error">{formik.errors.date_of_birth}</Error>)}
+                {formik.errors.date_of_birth && formik.touched.date_of_birth && (<Error className="error">{formik.errors.date_of_birth}</Error>)}
                 <Label htmlFor="profile_picture" required>Profile Picture :<br></br></Label>
                 <Input
                 id="profile_picture"
@@ -131,8 +125,6 @@ const RegisterForm = () => {
                 accept=".jpg,.jpeg"
                 required
                 /><br></br>
-                {formik.errors.profile_picture && formik.touched.profile_picture && (
-                    <Error className="error">{formik.errors.profile_picture}</Error>)}<br></br>
                 <Button type="submit" disabled={formik.isSubmitting || formik.status==='success'}>
                 {formik.isSubmitting ? (
                     "Loading..."

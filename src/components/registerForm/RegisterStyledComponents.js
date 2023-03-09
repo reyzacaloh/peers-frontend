@@ -38,7 +38,6 @@ export const Button = styled.button`
   &:enabled {
     opacity: 1.0;
   }
-  opacity: ${props => !props.enabled ? 0.5 : 1};
 `;
 
 export const Error = styled.span`
