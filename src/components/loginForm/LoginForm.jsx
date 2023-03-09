@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 
-const Login = () => {
+const LoginForm = () => {
 
     const initialValues = {
         email: '',
@@ -54,4 +54,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default LoginForm

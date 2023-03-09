@@ -7,6 +7,7 @@ import Chat from "./pages/Chat.jsx";
 import FindTutor from "./pages/FindTutor.jsx";
 import NotFound from "./pages/NotFound";
 import RegisterForm from "./components/registerForm/RegisterForm";
+import LoginForm from "./components/loginForm/LoginForm";
 import { authReducer, initialState } from "./reducers/AuthReducer";
 
 export const AuthContext = React.createContext();
@@ -33,7 +34,8 @@ function App() {
               } />
               <Route path="/login" element={
                 // TODO(Azka): Change the Dashboard Page to Login Page
-                <Dashboard />} />
+                <LoginForm />
+              } />
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           ) : (
