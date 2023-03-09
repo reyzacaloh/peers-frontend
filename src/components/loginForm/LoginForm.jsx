@@ -39,13 +39,14 @@ const LoginForm = () => {
     });
     return (
         <div>
+            <h1>Login Form</h1>
             <form onSubmit={formik.handleSubmit}>
-                <label htmlFor="email">E-mail: </label><br/>
-                <input type="email" id="email" name="email" onChange={formik.handleChange} value={formik.values.email}/><br/>
+                <label htmlFor="email"></label>
+                <input type="email" id="email" name="email" placeholder="Email address" data-testid="email" onChange={formik.handleChange} value={formik.values.email}/><br/>
                 {formik.errors.email ? <div>{formik.errors.email}</div> : null}
 
-                <label htmlFor="pass">Password: </label><br/>
-                <input type="password" id="pass" name="pass" onChange={formik.handleChange} value={formik.values.pass}/><br/>
+                <label htmlFor="pass"></label>
+                <input type="password" id="pass" name="pass" placeholder="Password" data-testid="pass" onChange={formik.handleChange} value={formik.values.pass}/><br/>
                 {formik.errors.pass ? <div>{formik.errors.pass}</div> : null}
 
                 <button type='submit'>Login</button>
