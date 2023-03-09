@@ -2,7 +2,6 @@ import React from 'react'
 import {
     FaChalkboardTeacher,
     FaCommentAlt,
-    FaPowerOff,
 } from "react-icons/fa"
 import { NavLink } from 'react-router-dom'
 import Logout from './Logout'
