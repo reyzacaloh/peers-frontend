@@ -45,11 +45,15 @@ test('renders chat', () => {
   expect(linkElement).toBeInTheDocument();
 });
 
-test('renders sidebar', () => {
+test('renders find tutor', () => {
   render(
-    <FindTutor />
-  );
-  const linkElement = screen.getByText(/Find Tutor/i);
+    <Router>
+      <FindTutor />
+    </Router>
+      
+  );  
+
+  const linkElement = screen.getByText(/Cari Tutor/i);
   expect(linkElement).toBeInTheDocument();
 });
 
