@@ -14,8 +14,9 @@ const LoginForm = () => {
         console.log("Values: ", values);
 
         try {
+            let host = "http://localhost:8000";
             const response = await axios.post(
-                "http://localhost:8000"+"/api/auth/token",  // Django local port
+                `${host}/api/auth/token`,  // Django local port
                 values
             );
             actions.setSubmitting(false);
