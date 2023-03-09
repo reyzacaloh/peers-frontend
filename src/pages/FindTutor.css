@@ -1,0 +1,114 @@
+@import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* three columns with equal width */
+    gap: 2rem;
+    margin-bottom: 50px;
+}
+
+.card {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    text-align: left;
+    color: #000000;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    font-size: 16px;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-perspective: 20em;
+    perspective: 20em;
+}
+
+.card * {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+}
+
+.card img {
+    max-width: 100%;
+    vertical-align: top;
+    position: relative;
+}
+
+.card .reserve {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding-right: 10px;
+    color: #ffffff;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    opacity: 0;
+    background-color: #39a998;
+    -webkit-transform: rotateX(-90deg);
+    transform: rotateX(-90deg);
+    -webkit-transform-origin: 100% 0;
+    -ms-transform-origin: 100% 0;
+    transform-origin: 100% 0;
+}
+
+.card .reserve i {
+    display: inline-block;
+    margin-right: 10px;
+    width: 40px;
+    line-height: 40px;
+    text-align: center;
+    background-color: #164666;
+    color: #ffffff;
+    font-size: 1.4em;
+}
+
+.card figcaption {
+    padding: 20px;
+}
+
+.card h3,
+.card p {
+    margin: 0;
+}
+
+.card h3 {
+    font-size: 1.5em;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.card p {
+    font-size: 0.9em;
+    letter-spacing: 1px;
+    font-weight: 400;
+}
+
+.card .price {
+    font-weight: 500;
+    font-size: 1.5em;
+    line-height: 48px;
+    letter-spacing: 1px;
+}
+
+.card .price s {
+    margin-right: 5px;
+    opacity: 0.5;
+    font-size: 0.9em;
+}
+
+.card:hover .reserve,
+.card.hover .reserve {
+    opacity: 1;
+    -webkit-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+}
+
+.card:hover .reserve i,
+.card.hover .reserve i {
+    background-color: #279686;
+}

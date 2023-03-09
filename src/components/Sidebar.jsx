@@ -11,7 +11,7 @@ const Sidebar = ({ children }) => {
     const menuItem = [
         {
             path: "/",
-            name: "Home",
+            name: "Cari Tutor",
             icon: <FaChalkboardTeacher />
         },
         {
