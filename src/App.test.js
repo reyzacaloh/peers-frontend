@@ -7,17 +7,24 @@ import FindTutor from './pages/FindTutor';
 import NotFound from './pages/NotFound';
 import React, { Component } from 'react';
 import Dashboard from './pages/Dashboard';
+import Feature from './components/Feature';
 
 test('renders app', () => {
   render(<App />);
-  const linkElement = screen.getByText(/dashboard page/i);
-  expect(linkElement).toBeInTheDocument();
-});
+  const homeElement = screen.getByText(/beranda/i);
+  const featureElement = screen.getByText(/fitur/i);
 
-test('renders dashboard page', () => {
-  render(<Dashboard />);
-  const linkElement = screen.getByText(/dashboard page/i);
-  expect(linkElement).toBeInTheDocument();
+  fireEvent.click(homeElement);
+  expect(homeElement).toBeInTheDocument();
+
+  fireEvent.scroll(window, { target: { scrollY: 800 } });
+  const classElement = screen.getByText(/kelas/i);
+  expect(classElement).toBeInTheDocument();
+
+  fireEvent.scroll(window, { target: { scrollY: -800 } });
+  
+  fireEvent.click(featureElement);
+  expect(featureElement).toBeInTheDocument();
 });
 
 test('renders sidebar', () => {
