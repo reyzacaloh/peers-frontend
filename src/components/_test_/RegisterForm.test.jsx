@@ -1,63 +1,101 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, act, waitFor } from '@testing-library/react';
 import "@testing-library/jest-dom/extend-expect";
+import userEvent from '@testing-library/user-event'
 import RegisterForm from '../registerForm/RegisterForm';
 import axios from 'axios';
 
-const renderRegisterForm = () => (render(<RegisterForm />));
-test('all field in form fully renders', () => {
-    renderRegisterForm();
-    const emailField = screen.getByTestId("email");
-    const passwordField = screen.getByTestId("password");
-    const firstNameField = screen.getByTestId("first_name");
-    const lastNameField = screen.getByTestId("last_name");
-    const dateOfBirth = screen.getByTestId("date_of_birth");
-    const profilePic = screen.getByTestId("profile_picture");
-    expect(emailField).toBeInTheDocument();
-    expect(passwordField).toBeInTheDocument();
-    expect(firstNameField).toBeInTheDocument();
-    expect(lastNameField).toBeInTheDocument();
-    expect(dateOfBirth).toBeInTheDocument();
-    expect(profilePic).toBeInTheDocument();
+describe('RegisterForm test', () => {
+  let emailField;
+  let passwordField;
+  let firstNameField;
+  let lastNameField;
+  let dateOfBirth;
+  let profilePic;
+  let registerButton;
+  let file;
+  beforeEach(() => {
+    file = new File(["(⌐□_□)"], "chucknorris.png", { type: "image/png" });
+    render(<RegisterForm />);
+    emailField = screen.getByTestId("email");
+    passwordField = screen.getByTestId("password");
+    firstNameField = screen.getByTestId("first_name");
+    lastNameField = screen.getByTestId("last_name");
+    dateOfBirth = screen.getByTestId("date_of_birth");
+    profilePic = screen.getByTestId("profile_picture");
+    registerButton = screen.getByText('Register');
   });
 
-test('when backend API calls succesful', async () => {
+  test('all field in form fully renders', () => {
+      expect(emailField).toBeInTheDocument();
+      expect(passwordField).toBeInTheDocument();
+      expect(firstNameField).toBeInTheDocument();
+      expect(lastNameField).toBeInTheDocument();
+      expect(dateOfBirth).toBeInTheDocument();
+      expect(profilePic).toBeInTheDocument();
+    });
+
+  test('when backend API calls succesful', async () => {
+      jest.mock('axios');
+      axios.post = jest.fn();
+      const logSpy = jest.spyOn(global.console,'log')
+      const expectedResponse = {
+          'success': true,
+          'statusCode': '201 Created',
+          'message': 'User successfully registered!',
+          'userEvent': {
+            'email': 'test@testmail.com',
+            'password': 'testpassword',
+            'first_name': 'John',
+            'last_name': 'Doe'
+          },
+      }
+      axios.post.mockResolvedValueOnce(expectedResponse);
+      act(() => {
+        userEvent.type(emailField, 'test@testmail.com')
+        userEvent.type(passwordField, 'testpassword')
+        userEvent.type(firstNameField, 'John')
+        userEvent.type(lastNameField, 'Doe')
+        userEvent.type(dateOfBirth, '2003-03-08')
+        userEvent.upload(profilePic, file)
+        userEvent.click(registerButton);
+      });
+      await waitFor(() =>
+          expect(axios.post).toHaveBeenCalled()
+        );
+      expect(logSpy).toHaveBeenCalledWith('success');
+      logSpy.mockRestore();
+  })
+
+  test('when backend API calls unsuccesful', async () => {
     jest.mock('axios');
     axios.post = jest.fn();
-    renderRegisterForm();
-    const registerButton = screen.getByText('Register');
     const logSpy = jest.spyOn(global.console,'log')
-    const expectedResponse = {
-        'success': true,
-        'statusCode': '201 Created',
-        'message': 'User successfully registered!',
-        'user': {
-          'email': 'test@testmail.com',
-          'password': 'testpassword',
-          'first_name': 'John',
-          'last_name': 'Doe'
-        },
-    }
-    axios.post.mockResolvedValueOnce(expectedResponse);
-    fireEvent.click(registerButton);
+    const expectedError = new Error("Network Error");
+    axios.post.mockRejectedValueOnce(expectedError);
+    act(()=> {
+      userEvent.type(emailField, 'test@testmail.com')
+      userEvent.type(passwordField, 'testpassword')
+      userEvent.type(firstNameField, 'John')
+      userEvent.type(lastNameField, 'Doe')
+      userEvent.type(dateOfBirth, '2003-03-08')
+      userEvent.upload(profilePic, file)
+      userEvent.click(registerButton);
+      
+    })
     await waitFor(() =>
-      expect(axios.post).toHaveBeenCalled()
+        expect(axios.post).toHaveBeenCalled()
     );
-    expect(logSpy).toHaveBeenCalledWith(expectedResponse);
+    expect(logSpy).toHaveBeenCalledWith('Error: ',expectedError.message);
     logSpy.mockRestore();
-})
+  })
 
-test('when backend API calls unsuccesful', async () => {
-  jest.mock('axios');
-  axios.post = jest.fn()
-  renderRegisterForm();
-  const logSpy = jest.spyOn(global.console,'log')
-  const registerButton = screen.getByText('Register')
-  const expectedError = new Error("Network Error");
-  axios.post.mockRejectedValueOnce(expectedError);
-  fireEvent.click(registerButton);
-  await waitFor(() =>
-    expect(axios.post).toHaveBeenCalled()
-  );
-  expect(logSpy).toHaveBeenCalledWith('Error: ',expectedError);
-  logSpy.mockRestore();
-})
+  test('not call API when validation failed', async () => {
+    jest.mock('axios');
+    axios.post = jest.fn();
+    userEvent.click(registerButton);
+    await waitFor(() =>
+      expect(axios.post).toHaveBeenCalledTimes(0)
+    );
+  })
+}
+)
