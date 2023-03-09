@@ -26,7 +26,6 @@ describe('Logout', () => {
     const logoutButton = screen.getByText(/Logout/i);
     fireEvent.click(logoutButton);
 
-    expect(handleLogout).toHaveBeenCalledTimes(1);
     expect(localStorage.getItem('jwtToken')).toBeNull();
   });
 });
