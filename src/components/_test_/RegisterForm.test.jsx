@@ -1,8 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import "@testing-library/jest-dom/extend-expect";
-import RegisterForm from './RegisterForm';
-import axios, { Axios } from 'axios';
-import { act } from 'react-dom/test-utils';
+import RegisterForm from '../registerForm/RegisterForm';
+import axios from 'axios';
 
 const renderRegisterForm = () => (render(<RegisterForm />));
 test('all field in form fully renders', () => {
