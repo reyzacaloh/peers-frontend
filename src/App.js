@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard.jsx";
 import Chat from "./pages/Chat.jsx";
 import FindTutor from "./pages/FindTutor.jsx";
 import NotFound from "./pages/NotFound";
+import RegisterForm from "./components/registerForm/RegisterForm";
 import { authReducer, initialState } from "./reducers/AuthReducer";
 
 export const AuthContext = React.createContext();
@@ -28,7 +29,7 @@ function App() {
               <Route path="/" element={<Dashboard />} />
               <Route path="/register" element={
                 // TODO(Raka): Change the Dashboard Page to Register Page
-                <Dashboard />
+                <RegisterForm />
               } />
               <Route path="/login" element={
                 // TODO(Azka): Change the Dashboard Page to Login Page
