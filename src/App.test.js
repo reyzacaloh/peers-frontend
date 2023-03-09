@@ -1,13 +1,11 @@
-import { render, renderHook, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
 import Sidebar from './components/Sidebar';
 import { BrowserRouter as Router } from "react-router-dom";
 import Chat from './pages/Chat';
 import FindTutor from './pages/FindTutor';
 import NotFound from './pages/NotFound';
-import React, { Component } from 'react';
-import Dashboard from './pages/Dashboard';
-import Feature from './components/Feature';
+import React from 'react';
 
 test('renders app', () => {
   render(<App />);

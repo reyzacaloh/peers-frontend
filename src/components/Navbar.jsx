@@ -14,14 +14,12 @@ function Navbar() {
     }
 
     window.HTMLElement.prototype.scrollIntoView = function() {};
-    
+
     const scrollToHome = async () => {
-        const x = document.getElementById("main")
-        x.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document.getElementById("main").scrollIntoView({ behavior: 'smooth', block: 'start' });
     } 
     const scrollToFeatures = async () => {
-        const x = document.getElementById("features")
-        x.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document.getElementById("features").scrollIntoView({ behavior: 'smooth', block: 'start' });
     } 
 
     window.addEventListener('scroll', changeBackground);
