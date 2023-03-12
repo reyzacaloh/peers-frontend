@@ -12,7 +12,7 @@ import { AuthContext } from './contexts/AuthContext';
 
 function App() {
 
-  const {state, d} = React.useContext(AuthContext);
+  const {state} = React.useContext(AuthContext);
 
   return (
       <div className="App">
