@@ -1,5 +1,6 @@
 import React from 'react' 
 import {
+    FaSearch,
     FaChalkboardTeacher,
     FaCommentAlt,
 } from "react-icons/fa"
@@ -12,12 +13,17 @@ const Sidebar = ({ children }) => {
         {
             path: "/",
             name: "Cari Tutor",
-            icon: <FaChalkboardTeacher />
+            icon: <FaSearch />
         },
         {
             path: "/chat",
             name: "Pesan",
             icon: <FaCommentAlt />
+        },
+        {
+            path: "/tutor",
+            name: "Jadi Tutor",
+            icon: <FaChalkboardTeacher />
         },
     ]
 
