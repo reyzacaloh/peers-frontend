@@ -1,62 +1,72 @@
 import React from 'react';
 import './FindTutor.css';
-import { NavLink } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
+import TutorCard from '../components/tutor_card/TutorCard';
 
 const FindTutor = () => {
-
 
     const tutorItem = [
         {
             id: 1,
-            image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample96.jpg",
-            name: "Teacher 1",
-            description: "This is product 1",
-            price: "Rp100.000/jam",
+            profile_picture: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample96.jpg",
+            firstname: "Teacher 1",
+            university: "University",
+            descriptions: "This is product 1",
+            price_per_hour: 100000,
             rating: 4.5,
+            review_count: 10,
         },
         {
             id: 2,
-            image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample96.jpg",
-            name: "Teacher 2",
-            description: "This is product 2",
-            price: "Rp120.000/jam",
+            profile_picture: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample96.jpg",
+            firstname: "Teacher 2",
+            university: "University",
+            descriptions: "This is product 2",
+            price_per_hour:  20000,
             rating: 3.5,
+            review_count: 10,
         },
         {
             id: 3,
-            image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample96.jpg",
-            name: "Teacher 3",
-            description: "This is product 3",
-            price: "Rp90.000/jam",
+            profile_picture: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample96.jpg",
+            firstname: "Teacher 3",
+            university: "University",
+            descriptions: "This is product 3",
+            price_per_hour: 90000,
             rating: 5.0,
+            review_count: 10,
         },
         {
             id: 4,
-            image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample96.jpg",
-            name: "Teacher 4",
-            description: "This is product 4",
-            price: "Rp90.000/jam",
+            profile_picture: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample96.jpg",
+            firstname: "Teacher 4",
+            university: "University",
+            descriptions: "This is product 4",
+            price_per_hour: 90000,
             rating: 5.0,
+            review_count: 10,
         },
         {
             id: 5,
-            image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample96.jpg",
-            name: "Teacher 5",
-            description: "This is product 5",
-            price: "Rp90.000/jam",
+            profile_picture: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample96.jpg",
+            firstname: "Teacher 5",
+            university: "University",
+            descriptions: "This is product 5",
+            price_per_hour: 90000,
             rating: 5.0,
+            review_count: 10,
         },
         {
             id: 6,
-            image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample96.jpg",
-            name: "Teacher 6",
-            description: "This is product 6",
-            price: "Rp90.000/jam",
+            profile_picture: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample96.jpg",
+            firstname: "Teacher 6",
+            university: "University",
+            descriptions: "This is product 6",
+            price_per_hour: 90000,
             rating: 5.0,
+            review_count: 10,
         },
     ];
-
 
     return (
         <div>
@@ -64,24 +74,15 @@ const FindTutor = () => {
             <SearchBar/>
             <div className="grid-container">
                 {tutorItem.map((item, index) => (
-                    <NavLink to={"/chat/" + item.id} key={index}>
-                        <figure className="card">
-                            <img src={item.image} alt={item.name} />
-                            <div className="reserve">
-                                <i className="ion-chatbubbles"></i>
-                                <span>Reservasi</span>
-                            </div>
-                            <figcaption>
-                                <h3>{item.name}</h3>
-                                <p>{item.description}</p>
-                                <div className="price">
-                                    {item.price}
-                                </div>
-                                <i className="ion-ios-star"></i>
-                                <span> {item.rating}/5</span>
-                            </figcaption>
-                        </figure>
-                    </NavLink>
+                    <TutorCard onClick={()=>{}} key={index} data={{
+                        firstname: item.firstname,
+                        university: item.university,
+                        profile_picture: item.profile_picture,
+                        descriptions: item.descriptions,
+                        price_per_hour: item.price_per_hour,
+                        review_count: item.review_count,
+                        rating: item.rating,
+                    }} />
                 ))}
             </div>
         </div>
