@@ -11,6 +11,7 @@ import { AuthContext } from './contexts/AuthContext';
 import RegisterForm from "./components/registerForm/RegisterForm";
 import LoginForm from "./components/loginForm/LoginForm";
 import Profile from "./pages/Profile";
+import RegisterTutorForm from "./components/registerTutorForm/RegisterTutorForm";
 
 
 function App() {
@@ -51,8 +52,7 @@ function App() {
                 </Sidebar>} />
             <Route path="/tutor" element={
               !state.isTutor ?
-                // TODO(Azka): Change the Dashboard Page to Registrate as Tutor Page
-                <Dashboard /> :
+                <RegisterTutorForm /> :
                 <Sidebar>
                   <TutorDashboard />
                 </Sidebar>
