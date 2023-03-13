@@ -30,7 +30,7 @@ const RegisterTutorForm = () => {
             <div> 
             <form style={{ display: "inline-block", margin: '0 40%', border: '1px solid black', padding: '10px'}} onSubmit={formik.handleSubmit}> 
             {formik.status && <div id="feedback">Error : {formik.status}</div>}
-            <div><img alt="profile" class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"></img><br></br></div>
+            <div><img alt="profile" className="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"></img><br></br></div>
                 <label  htmlFor="email" >Email Akademik :<br></br></label>
                 <input 
                 id="email"
