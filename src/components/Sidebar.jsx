@@ -53,8 +53,6 @@ const Sidebar = ({ children }) => {
                     <Logout/>
                 </div>
                 
-                
-                
             </div>
             <main>{children}</main>
         </div>
