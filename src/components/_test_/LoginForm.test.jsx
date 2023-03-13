@@ -1,9 +1,10 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import "@testing-library/jest-dom/extend-expect";
-import LoginForm from "./LoginForm";
+import LoginForm from "../loginForm/LoginForm";
 import axios from 'axios';
+import {BrowserRouter} from 'react-router-dom'
 
-const renderLoginForm = () => (render(<LoginForm />));
+const renderLoginForm = () => (render(<LoginForm />, {wrapper: BrowserRouter}));
 test('all field in form fully renders', () => {
     renderLoginForm();
     const emailField = screen.getByTestId("email");
