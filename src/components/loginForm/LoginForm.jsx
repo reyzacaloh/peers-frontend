@@ -2,7 +2,7 @@ import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { Form, Input, Label, Button, Error } from "./LoginFormStyle";
+import { Form, Input, Label, Button, Error, A } from "./LoginFormStyle";
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
@@ -62,7 +62,10 @@ const LoginForm = () => {
                     ) : (
                         "Login"
                     )}
-                </Button>
+                </Button><br/>
+
+                <A className="nav-link" to="/register">Need an account?</A>
+
             </Form>
         </div>
     )

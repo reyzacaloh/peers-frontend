@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {Link} from "react-router-dom";
 
 export const Form = styled.form`
   background-color: #f4f4f4;
@@ -44,4 +45,8 @@ export const Error = styled.span`
   color: red;
   margin-top: 10px;
   border-radius: 5px;
+`;
+
+export const A = styled(Link)`
+  color: #279686;
 `;
