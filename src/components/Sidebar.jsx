@@ -3,6 +3,7 @@ import {
     FaSearch,
     FaChalkboardTeacher,
     FaCommentAlt,
+    FaUser,
 } from "react-icons/fa"
 import { NavLink } from 'react-router-dom'
 import Logout from './Logout'
@@ -20,6 +21,11 @@ const Sidebar = ({ children }) => {
             path: "/chat",
             name: "Pesan",
             icon: <FaCommentAlt />
+        },
+        {
+            path: "/profile",
+            name: "Profil",
+            icon: <FaUser />
         },
         {
             path: "/tutor",
