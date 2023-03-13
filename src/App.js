@@ -8,6 +8,8 @@ import FindTutor from "./pages/FindTutor.jsx";
 import NotFound from "./pages/NotFound";
 import TutorDashboard from "./pages/TutorDashboard";
 import { AuthContext } from './contexts/AuthContext';
+import RegisterForm from "./components/registerForm/RegisterForm";
+import LoginForm from "./components/loginForm/LoginForm";
 
 
 function App() {
@@ -20,15 +22,14 @@ function App() {
           {!state.isAuthenticated ? (
             <Routes>
               <Route path="/" element={
-                <Dashboard/>
+                  <Dashboard />
               } />
               <Route path="/register" element={
-                // TODO(Raka): Change the Dashboard Page to Register Page
-                <Dashboard />
+                  <RegisterForm />
               } />
               <Route path="/login" element={
-                // TODO(Azka): Change the Dashboard Page to Login Page
-                <Dashboard />} />
+                  <LoginForm />
+              } />
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           ) : (
