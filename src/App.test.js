@@ -1,22 +1,64 @@
-import { render, renderHook, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
 import Sidebar from './components/Sidebar';
 import { BrowserRouter as Router } from "react-router-dom";
 import Chat from './pages/Chat';
 import FindTutor from './pages/FindTutor';
 import NotFound from './pages/NotFound';
-import React, { Component } from 'react';
-import Dashboard from './pages/Dashboard';
+import React from 'react';
+import TutorDashboard from './pages/TutorDashboard';
+import { AuthContext } from './contexts/AuthContext';
 
-test('renders app', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/dashboard page/i);
+test('renders app, scroll and click buttons', () => {
+
+  window.HTMLElement.prototype.scrollIntoView = function () { };
+  render(
+  <AuthContext.Provider value={{state: {isAuthenticated: false, user: null, token: null, isTutor: false}, dispatch: {}}}>
+    <App />
+</AuthContext.Provider>);
+  const homeElement = screen.getByText(/beranda/i);
+  const featureElement = screen.getByText(/fitur/i);
+
+  fireEvent.click(homeElement);
+  expect(homeElement).toBeInTheDocument();
+
+  fireEvent.scroll(window, { target: { scrollY: 800 } });
+  const classElement = screen.getByText(/kelas/i);
+  expect(classElement).toBeInTheDocument();
+
+  fireEvent.scroll(window, { target: { scrollY: -800 } });
+  
+  fireEvent.click(featureElement);
+  expect(featureElement).toBeInTheDocument();
+});
+
+test('render app with not auth', () => {
+  render(
+    <AuthContext.Provider value={{state: {isAuthenticated: false, user: null, token: null, isTutor: false}, dispatch: {}}}>
+        <App />
+    </AuthContext.Provider>
+  );
+  const linkElement = screen.getByText(/beranda/i);
   expect(linkElement).toBeInTheDocument();
 });
 
-test('renders dashboard page', () => {
-  render(<Dashboard />);
-  const linkElement = screen.getByText(/dashboard page/i);
+test('render app with auth', () => {
+  render(
+    <AuthContext.Provider value={{state: {isAuthenticated: true, user: null, token: null, isTutor: false}, dispatch: {}}}>
+        <App />
+    </AuthContext.Provider>
+  );
+  const linkElement = screen.getByText(/pesan/i);
+  expect(linkElement).toBeInTheDocument();
+});
+
+test('render app with auth and tutor', () => {
+  render(
+    <AuthContext.Provider value={{state: {isAuthenticated: true, user: null, token: null, isTutor: true}, dispatch: {}}}>
+        <App />
+    </AuthContext.Provider>
+  );
+  const linkElement = screen.getByText(/pesan/i);
   expect(linkElement).toBeInTheDocument();
 });
 
@@ -38,11 +80,15 @@ test('renders chat', () => {
   expect(linkElement).toBeInTheDocument();
 });
 
-test('renders sidebar', () => {
+test('renders find tutor', () => {
   render(
-    <FindTutor />
-  );
-  const linkElement = screen.getByText(/Find Tutor/i);
+    <Router>
+      <FindTutor />
+    </Router>
+      
+  );  
+
+  const linkElement = screen.getByText(/Cari Tutor/i);
   expect(linkElement).toBeInTheDocument();
 });
 
@@ -51,5 +97,13 @@ test('renders not found page', () => {
     <NotFound />
   );
   const linkElement = screen.getByText(/Not Found/i);
+  expect(linkElement).toBeInTheDocument();
+});
+
+test('renders tutor dashboard page', () => {
+  render(
+    <TutorDashboard />
+  );
+  const linkElement = screen.getByText(/Tutor Dashboard/i);
   expect(linkElement).toBeInTheDocument();
 });

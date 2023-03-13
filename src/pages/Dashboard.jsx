@@ -1,9 +1,13 @@
 import React from 'react';
+import "./Dashboard.css";
+import Header from '../components/Header';
+import Feature from '../components/Feature';
 
 const Dashboard = () => {
     return (
         <div>
-            <h1>dashboard page</h1>
+            <Header/>
+            <Feature/>
         </div>
     );
 };

@@ -6,55 +6,56 @@ import Dashboard from "./pages/Dashboard.jsx";
 import Chat from "./pages/Chat.jsx";
 import FindTutor from "./pages/FindTutor.jsx";
 import NotFound from "./pages/NotFound";
+import TutorDashboard from "./pages/TutorDashboard";
+import { AuthContext } from './contexts/AuthContext';
 import RegisterForm from "./components/registerForm/RegisterForm";
 import LoginForm from "./components/loginForm/LoginForm";
-import { authReducer, initialState } from "./reducers/AuthReducer";
 
-export const AuthContext = React.createContext();
 
 function App() {
 
-  const [state, dispatch] = React.useReducer(authReducer, initialState);
+  const {state} = React.useContext(AuthContext);
 
   return (
-    <AuthContext.Provider
-      value={{
-        state,
-        dispatch,
-      }}
-    >
       <div className="App">
         <Router>
           {!state.isAuthenticated ? (
             <Routes>
-              <Route path="/" element={<Dashboard />} />
+              <Route path="/" element={
+                  <Dashboard />
+              } />
               <Route path="/register" element={
-                // TODO(Raka): Change the Dashboard Page to Register Page
-                <RegisterForm />
+                  <RegisterForm />
               } />
               <Route path="/login" element={
-                // TODO(Azka): Change the Dashboard Page to Login Page
-                <LoginForm />
+                  <LoginForm />
               } />
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           ) : (
-            <Routes>
-              <Route path="/" element={
-                <Sidebar>
-                  <FindTutor />
-                </Sidebar>} />
-              <Route
-                path="/chat" element={
+              <Routes>
+                <Route path="/" element={
                   <Sidebar>
-                    <Chat />
+                    <FindTutor />
                   </Sidebar>} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          )}
+                <Route
+                  path="/chat" element={
+                    <Sidebar>
+                      <Chat />
+                    </Sidebar>} />
+                <Route path="/tutor" element={
+                  !state.isTutor ?
+                  // TODO(Azka): Change the Dashboard Page to Registrate as Tutor Page
+                    <Dashboard /> :
+                    <Sidebar>
+                      <TutorDashboard />
+                    </Sidebar>
+                } /> :
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            )}
         </Router>
       </div>
-    </AuthContext.Provider>
   );
 }
 
