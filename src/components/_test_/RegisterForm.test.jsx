@@ -3,6 +3,7 @@ import "@testing-library/jest-dom/extend-expect";
 import userEvent from '@testing-library/user-event'
 import RegisterForm from '../registerForm/RegisterForm';
 import axios from 'axios';
+import {BrowserRouter} from 'react-router-dom'
 
 describe('RegisterForm test', () => {
   let emailField;
@@ -15,7 +16,7 @@ describe('RegisterForm test', () => {
   let file;
   beforeEach(() => {
     file = new File(["(⌐□_□)"], "chucknorris.jpg", { type: "image/jpg" });
-    render(<RegisterForm />);
+    render(<RegisterForm />,{wrapper: BrowserRouter});
     emailField = screen.getByTestId("email");
     passwordField = screen.getByTestId("password");
     firstNameField = screen.getByTestId("first_name");
