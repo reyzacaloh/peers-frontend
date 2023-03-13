@@ -1,0 +1,13 @@
+@import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
+
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 0.5fr); /* three columns with equal width */
+    gap: 1rem;
+    margin: 100px;
+}
+
+.title {
+    margin-bottom: 1rem;
+}
