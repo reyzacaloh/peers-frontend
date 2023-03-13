@@ -2,6 +2,7 @@ import React from 'react';
 import { Formik} from 'formik';
 import axios from "axios";
 import * as Yup from "yup";
+import { useNavigate } from 'react-router-dom';
 import {
     Form,
     Input,
@@ -11,7 +12,7 @@ import {
 } from "./RegisterStyledComponents"
 const RegisterForm = () => {
     const [selectedFile, setSelectedFile] = React.useState(null);
-    
+    const navigate = useNavigate();
     const validationSchema = Yup.object().shape({
         email: Yup.string().email('Invalid').min(11, "invalid email").required('Required'),
         password: Yup.string().required('Required').min(5, 'Password minimal 5 karakter'),
@@ -45,6 +46,7 @@ const RegisterForm = () => {
                 );
             console.log('success');
             actions.setStatus('success');
+            navigate("/login");
         } catch (err) {
             console.log("Error: ", err.message);
             actions.setStatus(err.message);
