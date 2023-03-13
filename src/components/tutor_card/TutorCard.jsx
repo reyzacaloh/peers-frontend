@@ -29,7 +29,7 @@ const TutorCard = ({ onClick, data }) => {
   } = data || {};
   function currencyFormat(num) {
     return (
-      "Rp" + (num || 0).toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
+      "Rp" + String(num).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
     );
   }
   return (
