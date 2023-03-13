@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import TutorDashboard from "./pages/TutorDashboard";
 import { AuthContext } from './contexts/AuthContext';
 import RegisterForm from "./components/registerForm/RegisterForm";
+import LoginForm from "./components/loginForm/LoginForm";
 
 
 function App() {
@@ -27,8 +28,8 @@ function App() {
                   <RegisterForm />
               } />
               <Route path="/login" element={
-                // TODO(Azka): Change the Dashboard Page to Login Page
-                <Dashboard />} />
+                  <LoginForm />
+              } />
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           ) : (
@@ -59,5 +60,3 @@ function App() {
 }
 
 export default App;
-
-
