@@ -43,6 +43,7 @@ sonarqube:
       -Dsonar.login=$SONAR_LOGIN
       -Dsonar.projectKey=$SONAR_PROJECT_KEY
       -Dsonar.sources=.
+      -Dsonar.exclusions="**/*.test.*, **/*StyledComponents.*"
   dependencies:
     - test
   allow_failure: true
