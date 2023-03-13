@@ -5,6 +5,7 @@ import {
     FaCommentAlt,
 } from "react-icons/fa"
 import { NavLink } from 'react-router-dom'
+import Logout from './Logout'
 
 
 const Sidebar = ({ children }) => {
@@ -41,6 +42,13 @@ const Sidebar = ({ children }) => {
                         </NavLink>
                     ))
                 }
+                
+                <div style={{ display:"flex", flexDirection:"column-reverse"}}>
+                    <Logout/>
+                </div>
+                
+                
+                
             </div>
             <main>{children}</main>
         </div>
