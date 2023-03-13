@@ -56,7 +56,13 @@ const LoginForm = () => {
                 <Input type="password" id="pass" name="pass" placeholder="Password" data-testid="pass" onChange={formik.handleChange} value={formik.values.pass}/><br/>
                 {formik.errors.pass && formik.touched.pass && (<Error className="error">{formik.errors.pass}</Error>)}
 
-                <Button type='submit'>Login</Button>
+                <Button type="submit" disabled={formik.isSubmitting || formik.status==='success'}>
+                    {formik.isSubmitting ? (
+                        "Loading..."
+                    ) : (
+                        "Login"
+                    )}
+                </Button>
             </Form>
         </div>
     )
