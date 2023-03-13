@@ -8,6 +8,7 @@ import NotFound from './pages/NotFound';
 import React from 'react';
 import TutorDashboard from './pages/TutorDashboard';
 import { AuthContext } from './contexts/AuthContext';
+import Profile from './pages/Profile';
 
 test('renders app, scroll and click buttons', () => {
 
@@ -107,3 +108,9 @@ test('renders tutor dashboard page', () => {
   const linkElement = screen.getByText(/Tutor Dashboard/i);
   expect(linkElement).toBeInTheDocument();
 });
+
+test('renders Profile page', () => {
+  render(<Profile />);
+  const linkElement = screen.getByText(/Profile page/i);
+  expect(linkElement).toBeInTheDocument();
+}); 
