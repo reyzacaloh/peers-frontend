@@ -66,7 +66,7 @@ const RegisterForm = () => {
                 placeholder = 'Email Address'
                 required
                 /><br></br>
-                {formik.errors.email && formik.touched.email && (<Error className="error">{formik.errors.email}</Error>)}
+                {formik.touched.email && (<Error className="error">{formik.errors.email}</Error>)}
                 <Label htmlFor="password" ></Label>
                 <Input
                 id="password"
@@ -78,7 +78,7 @@ const RegisterForm = () => {
                 placeholder='Password'
                 required
                 /><br></br>
-                {formik.errors.password && formik.touched.password && (<Error className="error">{formik.errors.password}</Error>)}
+                {formik.touched.password && (<Error className="error">{formik.errors.password}</Error>)}
                 <Label htmlFor="first_name" required></Label>
                 <Input
                 id="first_name"
@@ -90,7 +90,7 @@ const RegisterForm = () => {
                 placeholder='First Name'
                 required
                 /><br></br>
-                {formik.errors.first_name && formik.touched.first_name && (<Error className="error">{formik.errors.first_name}</Error>)}
+                {formik.touched.first_name && (<Error className="error">{formik.errors.first_name}</Error>)}
                 <Label htmlFor="last_name" required></Label>
                 <Input
                 id="last_name"
@@ -102,7 +102,7 @@ const RegisterForm = () => {
                 placeholder='Last Name'
                 required
                 /><br></br>
-                {formik.errors.last_name && formik.touched.last_name && (<Error className="error">{formik.errors.last_name}</Error>)}
+                {formik.touched.last_name && (<Error className="error">{formik.errors.last_name}</Error>)}
                 <Label htmlFor="date_of_birth" required>Date of Birth</Label>
                 <Input
                 id="date_of_birth"
@@ -113,7 +113,7 @@ const RegisterForm = () => {
                 value={formik.values.date_of_birth}
                 required
                 /><br></br>
-                {formik.errors.date_of_birth && formik.touched.date_of_birth && (<Error className="error">{formik.errors.date_of_birth}</Error>)}
+                {formik.touched.date_of_birth && (<Error className="error">{formik.errors.date_of_birth}</Error>)}
                 <Label htmlFor="profile_picture" required>Profile Picture :<br></br></Label>
                 <Input
                 id="profile_picture"
