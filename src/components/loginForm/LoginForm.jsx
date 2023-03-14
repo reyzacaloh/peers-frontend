@@ -21,7 +21,7 @@ const LoginForm = () => {
             let response = await axios.post(
                 `${host}/api/auth/token`,
                 {
-                    username: values.email,
+                    email: values.email,
                     password: values.pass
                 }
             );
