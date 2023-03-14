@@ -1,9 +1,12 @@
 import React from 'react' 
 import {
+    FaSearch,
     FaChalkboardTeacher,
     FaCommentAlt,
+    FaUser,
 } from "react-icons/fa"
 import { NavLink } from 'react-router-dom'
+import Logout from './Logout'
 
 
 const Sidebar = ({ children }) => {
@@ -12,12 +15,22 @@ const Sidebar = ({ children }) => {
         {
             path: "/",
             name: "Cari Tutor",
-            icon: <FaChalkboardTeacher />
+            icon: <FaSearch />
         },
         {
             path: "/chat",
             name: "Pesan",
             icon: <FaCommentAlt />
+        },
+        {
+            path: "/profile",
+            name: "Profil",
+            icon: <FaUser />
+        },
+        {
+            path: "/tutor",
+            name: "Jadi Tutor",
+            icon: <FaChalkboardTeacher />
         },
     ]
 
@@ -35,6 +48,11 @@ const Sidebar = ({ children }) => {
                         </NavLink>
                     ))
                 }
+                
+                <div style={{ display:"flex", flexDirection:"column-reverse"}}>
+                    <Logout/>
+                </div>
+                
             </div>
             <main>{children}</main>
         </div>
