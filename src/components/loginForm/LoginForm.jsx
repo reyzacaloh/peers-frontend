@@ -4,9 +4,10 @@ import * as Yup from "yup";
 import axios from "axios";
 import { Form, Input, Label, Button, Error, A } from "./LoginFormStyle";
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthContext';
 
 const LoginForm = () => {
-
+    const {dispatch} = React.useContext(AuthContext);
     const navigate = useNavigate();
 
     const initialValues = {
@@ -25,8 +26,14 @@ const LoginForm = () => {
             console.log("Success");
             actions.setStatus("success");
 
-            localStorage.setItem("jwtToken", response.data["access"]);
-            navigate("/dashboard");
+            dispatch({
+                type: "LOGIN",
+                payload: {
+                    token: response.data["access"],
+                }
+            })
+
+            navigate("/");
 
         } catch (err) {
             console.log("Error: ", err);
