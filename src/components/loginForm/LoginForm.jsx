@@ -20,7 +20,10 @@ const LoginForm = () => {
             let host = "https://peers-backend-dev.up.railway.app";  // Host
             let response = await axios.post(
                 `${host}/api/auth/token`,
-                values
+                {
+                    username: values.email,
+                    password: values.pass
+                }
             );
             actions.setSubmitting(false);
             console.log("Success");
