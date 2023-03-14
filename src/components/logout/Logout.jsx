@@ -1,21 +1,22 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { FaPowerOff } from 'react-icons/fa';
+import { FaSignOutAlt} from 'react-icons/fa';
 function Logout() {
-
-    const handleLogout = () => {
+    
+    const HandleLogout = () => {
       
       localStorage.removeItem("jwtToken");
+      
       
     };
   
     return (
       <NavLink 
-      className="link"
+      className="link logout"
       activeclassname="active"
-      onClick={handleLogout} 
+      onClick={HandleLogout} 
       >
-        <div className="icon"><FaPowerOff/></div>
+        <div className="icon"><FaSignOutAlt/></div>
         <div className="link_text">Logout</div>
     </NavLink>
     );
