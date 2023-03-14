@@ -1,12 +1,12 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import { FaSignOutAlt} from 'react-icons/fa';
 function Logout() {
-    
+    const navigate = useNavigate();
     const HandleLogout = () => {
       
       localStorage.removeItem("jwtToken");
-      
+      navigate("/");
       
     };
   
