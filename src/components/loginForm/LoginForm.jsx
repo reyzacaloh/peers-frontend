@@ -2,8 +2,13 @@ import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { Form, Input, Label, Button, Error, A } from "./LoginFormStyle";
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthContext';
 
 const LoginForm = () => {
+    const {dispatch} = React.useContext(AuthContext);
+    const navigate = useNavigate();
 
     const initialValues = {
         email: '',
@@ -11,16 +16,28 @@ const LoginForm = () => {
     }
 
     const onSubmit = async (values, actions) => {
-        console.log("Values: ", values);
-
         try {
-            let host = "http://localhost:8000";
-            const response = await axios.post(
-                `${host}/api/auth/token`,  // Django local port
-                values
+            let host = "https://peers-backend-dev.up.railway.app";  // Host
+            let response = await axios.post(
+                `${host}/api/auth/token/`,
+                {
+                    email: values.email,
+                    password: values.pass
+                }
             );
             actions.setSubmitting(false);
-            console.log("Response: ", response);
+            console.log("Success");
+            actions.setStatus("success");
+
+            dispatch({
+                type: "LOGIN",
+                payload: {
+                    token: response.data["access"],
+                }
+            })
+
+            navigate("/");
+
         } catch (err) {
             console.log("Error: ", err);
             actions.setStatus(err.message)
@@ -29,8 +46,8 @@ const LoginForm = () => {
     }
 
     const validationSchema = Yup.object({
-        email: Yup.string().email('Invalid').required('Required'),
-        pass: Yup.string().required('Required')
+        email: Yup.string().email('Invalid').min(11, "invalid email").required('Required'),
+        pass: Yup.string().required('Required').min(5, 'Password minimal 5 karakter')
     })
 
     const formik = useFormik({
@@ -40,18 +57,26 @@ const LoginForm = () => {
     });
     return (
         <div>
-            <h1>Login Form</h1>
-            <form onSubmit={formik.handleSubmit}>
-                <label htmlFor="email"></label>
-                <input type="email" id="email" name="email" placeholder="Email address" data-testid="email" onChange={formik.handleChange} value={formik.values.email}/><br/>
-                {formik.errors.email ? <div>{formik.errors.email}</div> : null}
+            <Form onSubmit={formik.handleSubmit}>
+                <h1>Login Form</h1>
+                <Label htmlFor="email"></Label>
+                <Input type="email" id="email" name="email" placeholder="Email Address" data-testid="email" onChange={formik.handleChange} value={formik.values.email}/><br/>
+                {formik.errors.email && formik.touched.email && (<Error className="error">{formik.errors.email}</Error>)}
 
-                <label htmlFor="pass"></label>
-                <input type="password" id="pass" name="pass" placeholder="Password" data-testid="pass" onChange={formik.handleChange} value={formik.values.pass}/><br/>
-                {formik.errors.pass ? <div>{formik.errors.pass}</div> : null}
+                <Label htmlFor="pass"></Label>
+                <Input type="password" id="pass" name="pass" placeholder="Password" data-testid="pass" onChange={formik.handleChange} value={formik.values.pass}/><br/>
+                {formik.errors.pass && formik.touched.pass && (<Error className="error">{formik.errors.pass}</Error>)}
 
-                <button type='submit'>Login</button>
-            </form>
+                <Button type="submit" disabled={formik.isSubmitting || formik.status==='success'}>
+                    {formik.isSubmitting ? (
+                        "Loading..."
+                    ) : (
+                        "Login"
+                    )}
+                </Button><br/>
+
+                <A className="nav-link" to="/register">Need an account?</A>
+            </Form>
         </div>
     )
 }
