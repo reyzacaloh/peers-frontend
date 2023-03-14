@@ -15,18 +15,19 @@ const LoginForm = () => {
     }
 
     const onSubmit = async (values, actions) => {
-        console.log("Values: ", values);
-
         try {
-            let host = "https://peers-backend-dev.up.railway.app";
-            await axios.post(
-                `${host}/api/auth/token`,  // Django local port
+            let host = "https://peers-backend-dev.up.railway.app";  // Host
+            let response = await axios.post(
+                `${host}/api/auth/token`,
                 values
             );
             actions.setSubmitting(false);
             console.log("Success");
             actions.setStatus("success");
+
+            localStorage.setItem("jwtToken", response.data["access"]);
             navigate("/dashboard");
+
         } catch (err) {
             console.log("Error: ", err);
             actions.setStatus(err.message)
@@ -65,7 +66,6 @@ const LoginForm = () => {
                 </Button><br/>
 
                 <A className="nav-link" to="/register">Need an account?</A>
-
             </Form>
         </div>
     )
