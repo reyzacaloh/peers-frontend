@@ -2,11 +2,12 @@ import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { Form, Input, Label, Button, Error } from "./LoginFormStyle";
+import { Form, Input, Label, Button, Error, A } from "./LoginFormStyle";
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthContext';
 
 const LoginForm = () => {
-
+    const {dispatch} = React.useContext(AuthContext);
     const navigate = useNavigate();
 
     const initialValues = {
@@ -15,18 +16,28 @@ const LoginForm = () => {
     }
 
     const onSubmit = async (values, actions) => {
-        console.log("Values: ", values);
-
         try {
-            let host = "https://peers-backend-dev.up.railway.app";
-            await axios.post(
-                `${host}/api/auth/token`,  // Django local port
-                values
+            let host = "https://peers-backend-dev.up.railway.app";  // Host
+            let response = await axios.post(
+                `${host}/api/auth/token/`,
+                {
+                    email: values.email,
+                    password: values.pass
+                }
             );
             actions.setSubmitting(false);
             console.log("Success");
             actions.setStatus("success");
-            navigate("/dashboard");
+
+            dispatch({
+                type: "LOGIN",
+                payload: {
+                    token: response.data["access"],
+                }
+            })
+
+            navigate("/");
+
         } catch (err) {
             console.log("Error: ", err);
             actions.setStatus(err.message)
@@ -62,7 +73,9 @@ const LoginForm = () => {
                     ) : (
                         "Login"
                     )}
-                </Button>
+                </Button><br/>
+
+                <A className="nav-link" to="/register">Need an account?</A>
             </Form>
         </div>
     )

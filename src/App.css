@@ -54,6 +54,9 @@ main {
   display: block;
 }
 
+.logout{
+background-color: #279686;
+}
 .icon,
 .link_text {
   font-size: 20px;

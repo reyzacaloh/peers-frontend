@@ -38,7 +38,7 @@ const RegisterForm = () => {
             formData.append("date_of_birth", values.date_of_birth);
             formData.append("profile_picture", selectedFile);
             await axios.post(
-                "http://peers-backend-dev.up.railway.app/api/auth/register/",
+                "https://peers-backend-dev.up.railway.app/api/auth/register/",
                 formData,
                 {headers: {
                     "content-type": "multipart/form-data",

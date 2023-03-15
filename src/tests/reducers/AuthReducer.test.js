@@ -12,3 +12,9 @@ it('returns not autheticated for unsuccessful login', () => {
   const updatedState = authReducer(initialState, updateAction);
   expect(updatedState).toEqual(initialState);
 });
+
+it('returns not autheticated for successful logout', () => {
+  const updateAction = {type: 'LOGOUT', payload: initialState };
+  const updatedState = authReducer(initialState, updateAction);
+  expect(updatedState).toEqual(initialState);
+});
