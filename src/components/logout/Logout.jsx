@@ -1,11 +1,14 @@
 import React from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { FaSignOutAlt} from 'react-icons/fa';
+import { AuthContext } from '../../contexts/AuthContext';
+
 function Logout() {
+    const {dispatch} = React.useContext(AuthContext);
     const navigate = useNavigate();
     const HandleLogout = () => {
       
-      localStorage.clear();
+      dispatch({type: "LOGOUT"})
       navigate("/");
       
     };
