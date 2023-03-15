@@ -5,7 +5,7 @@ function Logout() {
     const navigate = useNavigate();
     const HandleLogout = () => {
       
-      localStorage.removeItem("jwtToken");
+      localStorage.clear();
       navigate("/");
       
     };
