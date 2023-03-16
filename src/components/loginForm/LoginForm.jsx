@@ -2,7 +2,8 @@ import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { Form, Input, Label, Button, Error, A } from "./LoginFormStyle";
+import { Form, Input, Label, Button, Error} from "../registerForm/RegisterStyledComponents";
+import { A, Text } from "./LoginFormStyle";
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 
@@ -35,12 +36,18 @@ const LoginForm = () => {
                     token: response.data["access"],
                 }
             })
-
             navigate("/");
 
         } catch (err) {
             console.log("Error: ", err);
-            actions.setStatus(err.message)
+            let error = err.code;
+            if (error === "ERR_BAD_REQUEST") {
+                actions.setStatus("request_error");
+            } else if (error === "ERR_NETWORK") {
+                actions.setStatus("network_error");
+            } else {
+                actions.setStatus("error");
+            }
             actions.setSubmitting(false);
         }
     }
@@ -75,7 +82,19 @@ const LoginForm = () => {
                     )}
                 </Button><br/>
 
-                <A className="nav-link" to="/register">Need an account?</A>
+                <A className="nav-link" to="/register">Need an account?</A><br/>
+
+                <Text>
+                    {formik.status==='request_error' ? (
+                        "Incorrect email/password!"
+                    ) : formik.status==='network_error' ? (
+                        "Network error! Try again later"
+                    ) : formik.status==='error' ? (
+                        "Unknown error!"
+                    ) : (
+                        ""
+                    )}
+                </Text>
             </Form>
         </div>
     )
