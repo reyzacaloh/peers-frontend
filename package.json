@@ -52,17 +52,11 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
-    ]
-  },
-  "jest": {
+    ],
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/index.js",
       "!src/reportWebVitals.js"
-    ],
-    "moduleNameMapper": {
-      "axios": "axios/dist/node/axios.cjs"
-    }
+    ]
   }
-  
 }
