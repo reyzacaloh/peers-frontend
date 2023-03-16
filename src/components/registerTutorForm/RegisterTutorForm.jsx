@@ -1,38 +1,56 @@
 import React from 'react';
 import {Formik} from 'formik';
 import axios from "axios";
+import * as Yup from "yup";
+import { useNavigate } from 'react-router-dom';
+import {Form, Input, Label, Button, Error} from "../registerForm/RegisterStyledComponents.js"
 
 const RegisterTutorForm = () => {
+    const [selectedFile, setSelectedFile] = React.useState(null);
+    const navigate = useNavigate();
+    const validationSchema = Yup.object().shape({
+        email: Yup.string().email('Invalid').min(11, "invalid email").required('Required'),
+        name: Yup.string().required('Required').min(1, 'Nama tidak boleh kosong'),
+        npm: Yup.number().required('Required').min(10, 'Nomor mahasiswa tidak valid'),
+    })
     
     return (
         <Formik
         initialValues={{
            
         }}
+        enableReinitialize={true}
+        validationSchema = {validationSchema}
         onSubmit= {async (values,actions) => {
         console.log("Values: ", values);
+        const formData = new FormData();
+            formData.append("email", values.email);
+            formData.append("name", values.name);
+            formData.append("npm", values.npm);
+            formData.append("idedntity", selectedFile);
         try {
             <div><h1>Registration Form</h1></div>
-            const response = await axios.post(
-            "http://127.0.0.1:8000/api/auth/registerTutor",
-            values
-            );
-            actions.setSubmitting(false);
+            const response =  await axios.post(
+                "https://peers-backend-dev.up.railway.app/api/tutor_form/upload/",
+                formData,
+                {headers: {
+                    "content-type": "multipart/form-data",
+                }}
+                );
             console.log(response);
+            actions.setStatus('success');
+            navigate("/");
         } catch (err) {
             console.log("Error: ", err);
-            actions.setStatus(err.message)
-            actions.setSubmitting(false);
+            actions.setStatus(err.message);
         }
         }}>
         
         {formik => (
-            <div> 
-            <form style={{ display: "inline-block", margin: '0 40%', border: '1px solid black', padding: '10px'}} onSubmit={formik.handleSubmit}> 
-            {formik.status && <div id="feedback">Error : {formik.status}</div>}
-            <div><img alt="profile" className="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"></img><br></br></div>
-                <label  htmlFor="email" >Email Akademik :<br></br></label>
-                <input 
+            <Form onSubmit={formik.handleSubmit} data-testid="tutor_form">
+                <h1>Tutor Register Form</h1>
+                <Label htmlFor="email" >Email Akademik :<br></br></Label>
+                <Input 
                 id="email"
                 data-testid="email"
                 name="email"
@@ -41,8 +59,9 @@ const RegisterTutorForm = () => {
                 value={formik.values.email}
                 required
                 /><br></br>
-                <label htmlFor="name" >Nama sesuai KTP :<br></br></label>
-                <input
+                {formik.touched.email && (<Error className="error">{formik.errors.email}</Error>)}
+                <Label htmlFor="name" >Nama sesuai KTP :<br></br></Label>
+                <Input
                 id="name"
                 data-testid="name"
                 name="name"
@@ -51,8 +70,9 @@ const RegisterTutorForm = () => {
                 value={formik.values.name}
                 required
                 /> <br></br>
-                <label htmlFor="npm" required>NIM/NPM :<br></br></label>
-                <input
+                {formik.touched.name && (<Error className="error">{formik.errors.name}</Error>)}
+                <Label htmlFor="npm" required>NIM/NPM :<br></br></Label>
+                <Input
                 id="npm"
                 data-testid="npm"
                 name="npm"
@@ -61,25 +81,28 @@ const RegisterTutorForm = () => {
                 value={formik.values.npm}
                 required
                 /><br></br>
-                <label htmlFor="identity" required>Kartu Identitas/KTP :<br></br></label>
-                <input
+                {formik.touched.npm && (<Error className="error">{formik.errors.npm}</Error>)}
+                <Label htmlFor="identity" required>Kartu Identitas/KTP :<br></br></Label>
+                <Input
                 id="identity"
                 data-testid="identity"
                 name="identity"
                 type="file"
-                onChange={formik.handleChange}
+                onChange={(event) => {
+                    setSelectedFile(event.currentTarget.files[0]);
+                  }}
                 value={formik.values.identity}
-                disabled
+                accept=".jpg,.jpeg"
+                required
                 /><br></br>
-                <button type="submit" disabled={formik.isSubmitting}>
+                <Button type="submit" disabled={formik.isSubmitting || formik.status==='success'}>
                 {formik.isSubmitting ? (
                     "Loading..."
                 ) : (
                     "Register"
                 )}
-                </button>
-            </form>
-            </div>)
+                </Button>
+            </Form>)
             }
         </Formik>
     );
@@ -87,3 +110,4 @@ const RegisterTutorForm = () => {
 
 
  export default RegisterTutorForm;
+
