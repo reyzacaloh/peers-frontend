@@ -1,5 +1,8 @@
 image: node:16
 
+include:
+  - template: Code-Quality.gitlab-ci.yml
+
 stages:
   - build
   - test
@@ -28,7 +31,29 @@ test:
     - npm test -- --coverage --watchAll=false --detectOpenHandles --forceExit
   artifacts:
     paths:
-      - coverage/lcov.info
+      - coverage/
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml
+
+code_quality:
+  stage: test
+  artifacts:
+    expose_as: 'Code Quality Report'
+    paths: [gl-code-quality-report.json]
+    expire_in: 10 days
+  allow_failure: true
+
+code_quality_html:
+  stage: test
+  extends: code_quality
+  variables:
+    REPORT_FORMAT: html
+  artifacts:
+    expose_as: 'Code Quality Report HTML'
+    paths: [gl-code-quality-report.html]
+    expire_in: 10 days
 
 sonarqube:
   stage: quality
@@ -38,12 +63,7 @@ sonarqube:
     name: sonarsource/sonar-scanner-cli:4.6
     entrypoint: [ "" ]
   script:
-    - sonar-scanner
-      -Dsonar.host.url=https://sonarqube.cs.ui.ac.id
-      -Dsonar.login=$SONAR_LOGIN
-      -Dsonar.projectKey=$SONAR_PROJECT_KEY
-      -Dsonar.sources=.
-      -Dsonar.exclusions="**/*.test.*, **/*StyledComponents.*"
+    - sonar-scanner -Dsonar.login=$SONAR_LOGIN -Dsonar.projectKey=$SONAR_PROJECT_KEY
   dependencies:
     - test
   allow_failure: true

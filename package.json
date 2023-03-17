@@ -40,7 +40,8 @@
   "jest": {
     "moduleNameMapper": {
       "axios": "axios/dist/node/axios.cjs"
-    }
+    },
+    "coverageReporters": ["html", "text", "text-summary", "cobertura"]
   },
   "browserslist": {
     "production": [
