@@ -27,7 +27,7 @@ build:
 
 test:
   stage: test
-  coverage: /(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
   needs:
     - build
   cache:
@@ -37,12 +37,14 @@ test:
   before_script:
     - npm install
   script:
-    - npm test -- --coverage --watchAll=false --detectOpenHandles --forceExit --ci
+    - npm run test:ci
   artifacts:
     paths:
       - coverage/
     when: always
     reports:
+      junit:
+        - junit.xml
       coverage_report:
         coverage_format: cobertura
         path: coverage/cobertura-coverage.xml
