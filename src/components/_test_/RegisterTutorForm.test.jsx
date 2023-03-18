@@ -1,4 +1,4 @@
-import { render, screen, act, waitFor, fireEvent, findByText} from '@testing-library/react';
+import { render, screen, act, waitFor, fireEvent} from '@testing-library/react';
 import "@testing-library/jest-dom/extend-expect";
 import userEvent from '@testing-library/user-event'
 import RegisterTutorForm from '../registerTutorForm/RegisterTutorForm';
@@ -131,7 +131,6 @@ describe('RegisterForm test', () => {
   test('not call API when validation failed', async () => {
     jest.mock('axios');
     axios.post = jest.fn();
-    const logSpy = jest.spyOn(global.console,'log')
       const expectedResponse = {
           'success': true,
           'statusCode': '201 Created',
