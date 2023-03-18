@@ -4,21 +4,11 @@ include:
   - template: Code-Quality.gitlab-ci.yml
 
 stages:
-  - install
   - build
   - test
   - quality
   - deploy
 
-
-install:
-  stage: install
-  cache:
-    key: $CI_COMMIT_REF_SLUG 
-    paths:
-      - node_modules/
-  script:
-    - npm ci
 
 build:
   stage: build
@@ -26,7 +16,8 @@ build:
     key: $CI_COMMIT_REF_SLUG 
     paths:
       - node_modules/
-    policy: pull
+  before_script:
+    - npm ci
   script:
     - npm run build
   artifacts:
@@ -41,7 +32,8 @@ test:
     key: $CI_COMMIT_REF_SLUG 
     paths:
       - node_modules/
-    policy: pull
+  before_script:
+    - npm ci
   script:
     - npm test -- --coverage --watchAll=false --detectOpenHandles --forceExit --ci
   artifacts:
