@@ -10,11 +10,6 @@ stages:
   - quality
   - deploy
 
-cache:
-  paths:
-    - node_modules/
-
-
 install_dependencies:
   stage: install_dependencies
   cache: 
