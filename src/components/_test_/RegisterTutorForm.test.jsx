@@ -1,35 +1,45 @@
-import { render, screen, act, waitFor } from '@testing-library/react';
+import { render, screen, act, waitFor, fireEvent, findByText} from '@testing-library/react';
 import "@testing-library/jest-dom/extend-expect";
 import userEvent from '@testing-library/user-event'
 import RegisterTutorForm from '../registerTutorForm/RegisterTutorForm';
 import axios from 'axios';
 import {BrowserRouter} from 'react-router-dom'
+import CustomSelect from '../registerTutorForm/CustomSelect';
 
 describe('RegisterForm test', () => {
-  let emailField;
-  let nameField;
-  let npmField;
-  let identity;
+  let subjectField;
+  let universityField;
+  let pddiktiField;
+  let ktp;
+  let ktm_person;
+  let transkrip;
   let file;
+  let pdfile;
   let registerButton;
+
   beforeEach(() => {
     file = new File(["test"], "test.jpg", { type: "image/jpg" });
+    pdfile = new File(["pdtest"], "pdtest.pdf", { type: "file/pdf" });
     render(<RegisterTutorForm />,{wrapper: BrowserRouter});
-    emailField = screen.getByTestId("email");
-    nameField = screen.getByTestId("name");
-    npmField = screen.getByTestId("npm");
-    identity = screen.getByTestId("identity");
+    subjectField = screen.getByText('Select a subject'); 
+    universityField = screen.getByTestId("university");
+    pddiktiField = screen.getByTestId("pddikti");
+    ktp = screen.getByTestId("ktp");
+    ktm_person = screen.getByTestId("ktm_person");
+    transkrip = screen.getByTestId("transkrip");
     registerButton = screen.getByText('Register');
   });
 
   test('all field in form fully renders', () => {
-      expect(emailField).toBeInTheDocument();
-      expect(nameField).toBeInTheDocument();
-      expect(npmField).toBeInTheDocument();
-      expect(identity).toBeInTheDocument();
+      expect(subjectField).toBeInTheDocument();
+      expect(universityField).toBeInTheDocument();
+      expect(pddiktiField).toBeInTheDocument();
+      expect(ktp).toBeInTheDocument();
+      expect(ktm_person).toBeInTheDocument();
+      expect(transkrip).toBeInTheDocument();
     });
 
-  test('when backend API calls succesful', async () => {
+  test('when backend API calls successful', async () => {
       jest.mock('axios');
       axios.post = jest.fn();
       const logSpy = jest.spyOn(global.console,'log')
@@ -38,17 +48,19 @@ describe('RegisterForm test', () => {
           'statusCode': '201 Created',
           'message': 'User successfully registered!',
           'userEvent': {
-            'email': 'test@gmail.com',
-            'name': 'tester',
-            'npm': '2028062005',
+            'subject': 'matematika',
+            'university': 'UI',
+            'pddikti': 'https://pddikti.kemdikbud.go.id/data_mahasiswa/Rjc2QjdDRDMtNUY5Ny00NjM5LUJCMkItMDc3ODZGMjkxMTVF',
           },
       }
       axios.post.mockResolvedValueOnce(expectedResponse);
+
       act(() => {
-        userEvent.type(emailField, 'test@gmail.com')
-        userEvent.type(nameField, 'tester')
-        userEvent.type(npmField, '2028062005')
-        userEvent.upload(identity, file)
+        userEvent.type(universityField, 'UI')
+        userEvent.type(pddiktiField, 'https://pddikti.kemdikbud.go.id/data_mahasiswa/Rjc2QjdDRDMtNUY5Ny00NjM5LUJCMkItMDc3ODZGMjkxMTVF')
+        userEvent.upload(ktp, file)
+        userEvent.upload(ktm_person, file)
+        userEvent.upload(transkrip, pdfile)
         userEvent.click(registerButton);
       });
       await waitFor(() =>
@@ -64,11 +76,14 @@ describe('RegisterForm test', () => {
     const logSpy = jest.spyOn(global.console,'log')
     const expectedError = new Error("Network Error");
     axios.post.mockRejectedValueOnce(expectedError);
+
     act(()=> {
-      userEvent.type(emailField, 'test@gmail.com')
-      userEvent.type(nameField, 'tester')
-      userEvent.type(npmField, '2028062005')
-      userEvent.upload(identity, file)
+      userEvent.type(subjectField, 'Matematika')
+      userEvent.type(universityField, 'UI')
+      userEvent.type(pddiktiField, 'https://pddikti.kemdikbud.go.id/data_mahasiswa/Rjc2QjdDRDMtNUY5Ny00NjM5LUJCMkItMDc3ODZGMjkxMTVF')
+      userEvent.upload(ktp, file)
+      userEvent.upload(ktm_person, file)
+      userEvent.upload(transkrip, pdfile)
       userEvent.click(registerButton);
     })
     await waitFor(() =>
@@ -87,14 +102,55 @@ describe('RegisterForm test', () => {
     );
   })
 
+  test('should call onChange when the first option is selected', async () =>  {
+    const mockedOptions = [
+      {label: 'Mocked option 1', value: 'mocked-option-1'},
+      {label: 'Mocked option 2', value: 'mocked-option-2'},
+      {label: 'Mocked option 3', value: 'mocked-option-3'},
+    ]
+    const mockedOnChange = jest.fn();
+    const { getByText, queryByTestId, findByText } = render(<CustomSelect 
+        className="test"
+        options={mockedOptions} 
+        onChange={mockedOnChange} />);
+    const mySelectComponent = queryByTestId('test');
+
+    expect(mySelectComponent).toBeDefined();
+    expect(mySelectComponent).not.toBeNull();
+    expect(mockedOnChange).toHaveBeenCalledTimes(0);
+
+    fireEvent.keyDown(mySelectComponent.firstChild, { key: 'ArrowDown' });
+    await findByText('Mocked option 1');
+    fireEvent.click(getByText('Mocked option 1'));
+
+    expect(mockedOnChange).toHaveBeenCalledTimes(1);
+    expect(mockedOnChange).toHaveBeenCalledWith({label: 'Mocked option 1', value: 'mocked-option-1'});
+
+});
+
   test('not call API when validation failed', async () => {
     jest.mock('axios');
     axios.post = jest.fn();
-    userEvent.type(emailField, 'b')
-    userEvent.type(nameField, '')
-    userEvent.type(npmField, '28')
-    userEvent.upload(identity, file)
-    userEvent.click(registerButton);
+    const logSpy = jest.spyOn(global.console,'log')
+      const expectedResponse = {
+          'success': true,
+          'statusCode': '201 Created',
+          'message': 'User successfully registered!',
+          'userEvent': {
+            'subject': 'matematika',
+            'university': 'UI',
+            'pddikti': 'https://pddikti.kemdikbud.go.id/data_mahasiswa/Rjc2QjdDRDMtNUY5Ny00NjM5LUJCMkItMDc3ODZGMjkxMTVF',
+          },
+      }
+    axios.post.mockResolvedValueOnce(expectedResponse);
+    act(()=> {
+      userEvent.type(universityField, 'b')
+      userEvent.type(pddiktiField, 'kosong')
+      userEvent.upload(ktp, file)
+      userEvent.upload(ktm_person, file)
+      userEvent.upload(transkrip, pdfile)
+      userEvent.click(registerButton);
+    })
     await waitFor(() =>
       expect(axios.post).toHaveBeenCalledTimes(0)
     );
