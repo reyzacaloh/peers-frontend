@@ -36,6 +36,7 @@ test:
     - npm ci
   script:
     - npm test -- --coverage --watchAll=false --detectOpenHandles --forceExit --ci
+    - ls -al
   artifacts:
     paths:
       - coverage/
@@ -71,6 +72,7 @@ sonarqube:
     name: sonarsource/sonar-scanner-cli:4.6
     entrypoint: [ "" ]
   script:
+    - ls -al
     - sonar-scanner -Dsonar.login=$SONAR_LOGIN -Dsonar.projectKey=$SONAR_PROJECT_KEY
   dependencies:
     - test
@@ -103,3 +105,5 @@ production:
     - npm install -g firebase-tools
   script:
     - firebase deploy --token $FIREBASE_TOKEN -P $PROD
+  only:
+    - master
