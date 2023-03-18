@@ -4,30 +4,34 @@ import axios from "axios";
 import * as Yup from "yup";
 import { useNavigate } from 'react-router-dom';
 import {Form, Input, Label, Button, Error} from "../registerForm/RegisterStyledComponents.js"
+import { subjectOption } from "../../docs/data";
+import CustomSelect from './CustomSelect'
 
 const RegisterTutorForm = () => {
     const [selectedFile, setSelectedFile] = React.useState(null);
     const navigate = useNavigate();
     const validationSchema = Yup.object().shape({
-        email: Yup.string().email('Invalid').min(11, "invalid email").required('Required'),
-        name: Yup.string().required('Required').min(1, 'Nama tidak boleh kosong'),
-        npm: Yup.number().required('Required').min(10, 'Nomor mahasiswa tidak valid'),
+        subject: Yup.string().required('Required'),
+        university: Yup.string().required('Required').min(2, 'Universitas tidak valid'),
+        pddikti: Yup.string().required('Required').min(40, 'Alamat tidak valid'),
     })
     
     return (
         <Formik
         initialValues={{
-           
+            subject : " ",
         }}
         enableReinitialize={true}
         validationSchema = {validationSchema}
         onSubmit= {async (values,actions) => {
         console.log("Values: ", values);
         const formData = new FormData();
-            formData.append("email", values.email);
-            formData.append("name", values.name);
-            formData.append("npm", values.npm);
-            formData.append("idedntity", selectedFile);
+            formData.append("subject", values.subject);
+            formData.append("university", values.university);
+            formData.append("pddikti", values.pddikti);
+            formData.append("ktp", selectedFile);
+            formData.append("ktm_person", selectedFile);
+            formData.append("transkrip", selectedFile);
         try {
             <div><h1>Registration Form</h1></div>
             const response =  await axios.post(
@@ -49,50 +53,74 @@ const RegisterTutorForm = () => {
         {formik => (
             <Form onSubmit={formik.handleSubmit} data-testid="tutor_form">
                 <h1>Tutor Register Form</h1>
-                <Label htmlFor="email" >Email Akademik :<br></br></Label>
-                <Input 
-                id="email"
-                data-testid="email"
-                name="email"
-                type="email"
-                onChange={formik.handleChange}
-                value={formik.values.email}
-                required
-                /><br></br>
-                {formik.touched.email && (<Error className="error">{formik.errors.email}</Error>)}
-                <Label htmlFor="name" >Nama sesuai KTP :<br></br></Label>
+                <Label htmlFor="subject" >Subject :<br></br></Label>
+                <CustomSelect
+                className="subject"
+                onChange={value=>formik.setFieldValue('subject',value.value)}
+                value={formik.values.subject}
+                options={subjectOption}
+                />
+                <br></br>
+                {formik.touched.subject && (<Error className="error">{formik.errors.subject}</Error>)}
+                <Label htmlFor="university" >Universitas asal :<br></br></Label>
                 <Input
-                id="name"
-                data-testid="name"
-                name="name"
+                id="university"
+                data-testid="university"
+                name="university"
                 type="text"
                 onChange={formik.handleChange}
-                value={formik.values.name}
+                value={formik.values.university}
                 required
                 /> <br></br>
-                {formik.touched.name && (<Error className="error">{formik.errors.name}</Error>)}
-                <Label htmlFor="npm" required>NIM/NPM :<br></br></Label>
+                {formik.touched.university && (<Error className="error">{formik.errors.university}</Error>)}
+                <Label htmlFor="pddikti" required>Alamat PDDIKTI :<br></br></Label>
                 <Input
-                id="npm"
-                data-testid="npm"
-                name="npm"
-                type="number"
+                id="pddikti"
+                data-testid="pddikti"
+                name="pddikti"
+                type="text"
                 onChange={formik.handleChange}
-                value={formik.values.npm}
+                value={formik.values.pddikti}
                 required
                 /><br></br>
-                {formik.touched.npm && (<Error className="error">{formik.errors.npm}</Error>)}
-                <Label htmlFor="identity" required>Kartu Identitas/KTP :<br></br></Label>
+                {formik.touched.pddikti && (<Error className="error">{formik.errors.pddikti}</Error>)}
+                <Label htmlFor="ktp" required>Kartu Identitas/KTP :<br></br></Label>
                 <Input
-                id="identity"
-                data-testid="identity"
-                name="identity"
+                id="ktp"
+                data-testid="ktp"
+                name="ktp"
                 type="file"
                 onChange={(event) => {
                     setSelectedFile(event.currentTarget.files[0]);
                   }}
-                value={formik.values.identity}
+                value={formik.values.ktp}
                 accept=".jpg,.jpeg"
+                required
+                /><br></br>
+                <Label htmlFor="ktm_person" required>KTM dan Muka:<br></br></Label>
+                <Input
+                id="ktm_person"
+                data-testid="ktm_person"
+                name="ktm_person"
+                type="file"
+                onChange={(event) => {
+                    setSelectedFile(event.currentTarget.files[0]);
+                  }}
+                value={formik.values.ktm_person}
+                accept=".jpg,.jpeg"
+                required
+                /><br></br>
+                <Label htmlFor="transkrip" required>Transkrip Nilai :<br></br></Label>
+                <Input
+                id="transkrip"
+                data-testid="transkrip"
+                name="transkrip"
+                type="file"
+                onChange={(event) => {
+                    setSelectedFile(event.currentTarget.files[0]);
+                  }}
+                value={formik.values.transkrip}
+                accept=".pdf"
                 required
                 /><br></br>
                 <Button type="submit" disabled={formik.isSubmitting || formik.status==='success'}>
