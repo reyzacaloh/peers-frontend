@@ -97,14 +97,14 @@ production:
     - master
 
 code_quality:
-  stage: post
+  stage: .post
   artifacts:
     expose_as: 'Code Quality Report'
     paths: [gl-code-quality-report.json]
     expire_in: 10 days
 
 code_quality_html:
-  stage: post
+  stage: .post
   extends: code_quality
   variables:
     REPORT_FORMAT: html
