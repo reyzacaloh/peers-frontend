@@ -4,23 +4,20 @@ include:
   - template: Code-Quality.gitlab-ci.yml
 
 stages:
-  - install_dependencies
+  - install
   - build
   - test
   - quality
   - deploy
 
-install_dependencies:
-  stage: install_dependencies
+install:
+  stage: install
   cache: 
     key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
     paths:
       - node_modules/
   script:
     - npm install
-  only:
-    changes:
-      - package-lock.json
 
 build:
   stage: build
