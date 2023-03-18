@@ -10,22 +10,18 @@ stages:
   - quality
   - deploy
 
-install:
-  stage: install
-  cache: 
+cache: 
     key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
     paths:
       - node_modules/
+
+install:
+  stage: install
   script:
     - npm install
 
 build:
   stage: build
-  cache: 
-    key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
-    paths:
-      - node_modules/
-    policy: pull
   script:
     - npm run build
   artifacts:
@@ -34,6 +30,7 @@ build:
 
 test:
   stage: test
+  parallel: 1
   script:
     - npm test -- --coverage --watchAll=false --detectOpenHandles --forceExit
   artifacts:
@@ -46,6 +43,7 @@ test:
 
 code_quality:
   stage: test
+  parallel: 1
   artifacts:
     expose_as: 'Code Quality Report'
     paths: [gl-code-quality-report.json]
@@ -54,6 +52,7 @@ code_quality:
 
 code_quality_html:
   stage: test
+  parallel: 1
   extends: code_quality
   variables:
     REPORT_FORMAT: html
