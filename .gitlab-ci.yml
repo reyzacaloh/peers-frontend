@@ -30,7 +30,7 @@ build:
 
 test:
   stage: test
-  parallel: 1
+  parallel: 2
   script:
     - npm test -- --coverage --watchAll=false --detectOpenHandles --forceExit
   artifacts:
@@ -43,7 +43,7 @@ test:
 
 code_quality:
   stage: test
-  parallel: 1
+  parallel: 2
   artifacts:
     expose_as: 'Code Quality Report'
     paths: [gl-code-quality-report.json]
@@ -52,7 +52,7 @@ code_quality:
 
 code_quality_html:
   stage: test
-  parallel: 1
+  parallel: 2
   extends: code_quality
   variables:
     REPORT_FORMAT: html
