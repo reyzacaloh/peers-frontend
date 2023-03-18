@@ -27,7 +27,7 @@ build:
 
 test:
   stage: test
-  coverage: '/(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/'
+  coverage: /(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/
   needs:
     - build
   cache:
@@ -41,6 +41,7 @@ test:
   artifacts:
     paths:
       - coverage/
+    when: always
     reports:
       coverage_report:
         coverage_format: cobertura
