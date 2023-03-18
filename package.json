@@ -41,7 +41,7 @@
     "moduleNameMapper": {
       "axios": "axios/dist/node/axios.cjs"
     },
-    "coverageReporters": ["html", "text", "text-summary", "cobertura"]
+    "coverageReporters": ["html", "text", "text-summary", "cobertura", "lcov"]
   },
   "browserslist": {
     "production": [

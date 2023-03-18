@@ -6,8 +6,9 @@ include:
 stages:
   - build
   - test
-  - quality
   - deploy
+  - sonar
+  - quality
 
 
 build:
@@ -26,6 +27,7 @@ build:
 
 test:
   stage: test
+  coverage: '/(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/'
   needs:
     - build
   cache:
@@ -36,7 +38,6 @@ test:
     - npm ci
   script:
     - npm test -- --coverage --watchAll=false --detectOpenHandles --forceExit --ci
-    - ls -al
   artifacts:
     paths:
       - coverage/
@@ -45,34 +46,14 @@ test:
         coverage_format: cobertura
         path: coverage/cobertura-coverage.xml
 
-code_quality:
-  stage: test
-  needs:
-    - build
-  artifacts:
-    expose_as: 'Code Quality Report'
-    paths: [gl-code-quality-report.json]
-    expire_in: 10 days
-
-code_quality_html:
-  stage: test
-  extends: code_quality
-  variables:
-    REPORT_FORMAT: html
-  artifacts:
-    expose_as: 'Code Quality Report HTML'
-    paths: [gl-code-quality-report.html]
-    expire_in: 10 days
-
 sonarqube:
-  stage: quality
+  stage: sonar
   needs:
     - test
   image:
     name: sonarsource/sonar-scanner-cli:4.6
     entrypoint: [ "" ]
   script:
-    - ls -al
     - sonar-scanner -Dsonar.login=$SONAR_LOGIN -Dsonar.projectKey=$SONAR_PROJECT_KEY
   dependencies:
     - test
@@ -107,3 +88,22 @@ production:
     - firebase deploy --token $FIREBASE_TOKEN -P $PROD
   only:
     - master
+
+code_quality:
+  stage: quality
+  needs:
+    - build
+  artifacts:
+    expose_as: 'Code Quality Report'
+    paths: [gl-code-quality-report.json]
+    expire_in: 10 days
+
+code_quality_html:
+  stage: quality
+  extends: code_quality
+  variables:
+    REPORT_FORMAT: html
+  artifacts:
+    expose_as: 'Code Quality Report HTML'
+    paths: [gl-code-quality-report.html]
+    expire_in: 10 days
