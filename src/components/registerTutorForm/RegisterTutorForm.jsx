@@ -39,6 +39,7 @@ const RegisterTutorForm = () => {
                 formData,
                 {headers: {
                     "content-type": "multipart/form-data",
+                    "authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
                 }}
                 );
             console.log(response);
