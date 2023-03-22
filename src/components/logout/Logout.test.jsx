@@ -2,13 +2,17 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import Logout from './Logout';
+import AuthContextProvider from "../../contexts/AuthContext";
 
 describe('Logout', () => {
   test('renders a "Logout" button', () => {
     render(
-      <BrowserRouter>
-        <Logout />
-      </BrowserRouter>
+      <AuthContextProvider>
+        <BrowserRouter>
+          <Logout />
+        </BrowserRouter>
+      </AuthContextProvider>
+      
     );
 
     const logoutButton = screen.getByText(/Logout/i);
@@ -18,9 +22,12 @@ describe('Logout', () => {
   test('calls the handleLogout function when clicked', () => {
     const handleLogout = jest.fn();
     render(
-      <BrowserRouter>
-        <Logout handleLogout={handleLogout} />
-      </BrowserRouter>
+      <AuthContextProvider>
+        <BrowserRouter>
+          <Logout handleLogout={handleLogout} />
+        </BrowserRouter>
+      </AuthContextProvider>
+      
     );
 
     const logoutButton = screen.getByText(/Logout/i);

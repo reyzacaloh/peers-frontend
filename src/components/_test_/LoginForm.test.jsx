@@ -1,51 +1,110 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import {render, screen, waitFor, act} from '@testing-library/react';
 import "@testing-library/jest-dom/extend-expect";
 import LoginForm from "../loginForm/LoginForm";
 import axios from 'axios';
 import {BrowserRouter} from 'react-router-dom'
+import AuthContextProvider from "../../contexts/AuthContext";
+import userEvent from "@testing-library/user-event";
 
-const renderLoginForm = () => (render(<LoginForm />, {wrapper: BrowserRouter}));
-test('all field in form fully renders', () => {
-    renderLoginForm();
-    const emailField = screen.getByTestId("email");
-    const passwordField = screen.getByTestId("pass");
-    expect(emailField).toBeInTheDocument();
-    expect(passwordField).toBeInTheDocument();
+describe('LoginForm test', () => {
+    const renderLoginForm = () => (
+        render(<AuthContextProvider> <LoginForm /> </AuthContextProvider>, {wrapper: BrowserRouter})
+    );
+    let emailField;
+    let passwordField;
+    let loginButton;
+
+    beforeEach(() => {
+        renderLoginForm();
+        emailField = screen.getByTestId("email");
+        passwordField = screen.getByTestId("pass");
+        loginButton = screen.getByText('Login');
+    });
+
+    test('all field in form fully renders', () => {
+        expect(emailField).toBeInTheDocument();
+        expect(passwordField).toBeInTheDocument();
+    });
+
+    test('when backend API call is successful', async () => {
+        jest.mock('axios');
+        axios.post = jest.fn();
+        const logSpy = jest.spyOn(global.console,'log');
+        const expectedResponse = {
+            access: "accesstokentest",
+            refresh: "refreshtokentest"
+        };
+        axios.post.mockResolvedValueOnce(expectedResponse);
+        act(() => {
+            userEvent.type(emailField, 'test@testmail.com')
+            userEvent.type(passwordField, 'testpassword')
+            userEvent.click(loginButton);
+        });
+        await waitFor(() =>
+            expect(axios.post).toHaveBeenCalled()
+        );
+        expect(logSpy).toHaveBeenCalledWith('Success');
+        logSpy.mockRestore();
+    });
+
+    test('when backend API calls is unsuccessful with network error', async () => {
+        jest.mock('axios');
+        axios.post = jest.fn();
+        const logSpy = jest.spyOn(global.console,'log');
+        const expectedError = {
+            code: "ERR_NETWORK"
+        };
+        axios.post.mockRejectedValueOnce(expectedError);
+        act(() => {
+            userEvent.type(emailField, 'test@testmail.com')
+            userEvent.type(passwordField, 'testpassword')
+            userEvent.click(loginButton);
+        });
+        await waitFor(() =>
+            expect(axios.post).toHaveBeenCalled()
+        );
+        expect(logSpy).toHaveBeenCalledWith('Error: ', expectedError);
+        logSpy.mockRestore();
+    });
+
+    test('when backend API calls is unsuccessful with bad request error', async () => {
+        jest.mock('axios');
+        axios.post = jest.fn()
+        const logSpy = jest.spyOn(global.console,'log')
+        const expectedError = {
+            code: "ERR_BAD_REQUEST"
+        };
+        axios.post.mockRejectedValueOnce(expectedError);
+        act(() => {
+            userEvent.type(emailField, 'test@testmail.com')
+            userEvent.type(passwordField, 'testpassword')
+            userEvent.click(loginButton);
+        });
+        await waitFor(() =>
+            expect(axios.post).toHaveBeenCalled()
+        );
+        expect(logSpy).toHaveBeenCalledWith('Error: ', expectedError);
+        logSpy.mockRestore();
+    });
+
+    test('when backend API calls is unsuccessful with unknown error', async () => {
+        jest.mock('axios');
+        axios.post = jest.fn()
+        const logSpy = jest.spyOn(global.console,'log')
+        const expectedError = {
+            code: "Test Error"
+        };
+        axios.post.mockRejectedValueOnce(expectedError);
+        act(() => {
+            userEvent.type(emailField, 'test@testmail.com')
+            userEvent.type(passwordField, 'testpassword')
+            userEvent.click(loginButton);
+        });
+        await waitFor(() =>
+            expect(axios.post).toHaveBeenCalled()
+        );
+        expect(logSpy).toHaveBeenCalledWith('Error: ', expectedError);
+        logSpy.mockRestore();
+    });
+
 });
-
-test.skip('when backend API calls succesful', async () => {  // Login endpoint is not done yet
-    jest.mock('axios');
-    axios.post = jest.fn();
-    renderLoginForm();
-    const loginButton = screen.getByText('Login');
-    const logSpy = jest.spyOn(global.console,'log')
-    const expectedResponse = {
-        'success': true,
-        'statusCode': '201 Created',
-        'message': '',
-        'user': { },
-    }
-    axios.post.mockResolvedValueOnce(expectedResponse);
-    fireEvent.click(loginButton);
-    await waitFor(() =>
-        expect(axios.post).toHaveBeenCalled()
-    );
-    expect(logSpy).toHaveBeenCalledWith(expectedResponse);
-    logSpy.mockRestore();
-})
-
-test.skip('when backend API calls unsuccesful', async () => {  // Login endpoint is not done yet
-    jest.mock('axios');
-    axios.post = jest.fn()
-    renderLoginForm();
-    const logSpy = jest.spyOn(global.console,'log')
-    const loginButton = screen.getByText('Login')
-    const expectedError = new Error("Network Error");
-    axios.post.mockRejectedValueOnce(expectedError);
-    fireEvent.click(loginButton);
-    await waitFor(() =>
-        expect(axios.post).toHaveBeenCalled()
-    );
-    expect(logSpy).toHaveBeenCalledWith('Error: ',expectedError);
-    logSpy.mockRestore();
-})

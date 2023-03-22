@@ -74,7 +74,7 @@ const FindTutor = () => {
             <SearchBar/>
             <div className="grid-container">
                 {tutorItem.map((item, index) => (
-                    <TutorCard onClick={()=>{}} key={index} data={{
+                    <TutorCard key={index} data={{
                         firstname: item.firstname,
                         university: item.university,
                         profile_picture: item.profile_picture,
