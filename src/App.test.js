@@ -9,6 +9,8 @@ import React from 'react';
 import TutorDashboard from './pages/TutorDashboard';
 import { AuthContext } from './contexts/AuthContext';
 import Profile from './pages/Profile';
+import AuthContextProvider from "./contexts/AuthContext";
+
 
 test('renders app, scroll and click buttons', () => {
 
@@ -65,9 +67,12 @@ test('render app with auth and tutor', () => {
 
 test('renders sidebar', () => {
   render(
-    <Router>
-      <Sidebar />
-    </Router>
+    <AuthContextProvider>
+      <Router>
+        <Sidebar />
+      </Router>
+    </AuthContextProvider>
+    
   );
   const linkElement = screen.getByText(/Pesan/i);
   expect(linkElement).toBeInTheDocument();
