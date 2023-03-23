@@ -133,7 +133,15 @@ const RegisterForm = () => {
                 ) : (
                     "Register"
                 )}
-                </Button>
+                </Button><br></br>
+                <Error>
+                {formik.status === undefined || formik.status === 'success' ? (
+                        ""
+                    ) : (
+                        formik.status
+                    )}
+                </Error>
+                
             </Form>)
             }
         </Formik>

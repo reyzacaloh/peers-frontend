@@ -51,15 +51,13 @@ describe('RegisterForm test', () => {
           },
       }
       axios.post.mockResolvedValueOnce(expectedResponse);
-      act(() => {
-        userEvent.type(emailField, 'test@testmail.com')
-        userEvent.type(passwordField, 'testpassword')
-        userEvent.type(firstNameField, 'John')
-        userEvent.type(lastNameField, 'Doe')
-        userEvent.type(dateOfBirth, '2003-03-08')
-        userEvent.upload(profilePic, file)
-        userEvent.click(registerButton);
-      });
+      userEvent.type(emailField, 'test@testmail.com')
+      userEvent.type(passwordField, 'testpassword')
+      userEvent.type(firstNameField, 'John')
+      userEvent.type(lastNameField, 'Doe')
+      userEvent.type(dateOfBirth, '2003-03-08')
+      userEvent.upload(profilePic, file)
+      userEvent.click(registerButton);
       await waitFor(() =>
           expect(axios.post).toHaveBeenCalled()
         );
@@ -73,16 +71,13 @@ describe('RegisterForm test', () => {
     const logSpy = jest.spyOn(global.console,'log')
     const expectedError = new Error("Network Error");
     axios.post.mockRejectedValueOnce(expectedError);
-    act(()=> {
-      userEvent.type(emailField, 'test@testmail.com')
-      userEvent.type(passwordField, 'testpassword')
-      userEvent.type(firstNameField, 'John')
-      userEvent.type(lastNameField, 'Doe')
-      userEvent.type(dateOfBirth, '2003-03-08')
-      userEvent.upload(profilePic, file)
-      userEvent.click(registerButton);
-      
-    })
+    userEvent.type(emailField, 'test@testmail.com')
+    userEvent.type(passwordField, 'testpassword')
+    userEvent.type(firstNameField, 'John')
+    userEvent.type(lastNameField, 'Doe')
+    userEvent.type(dateOfBirth, '2003-03-08')
+    userEvent.upload(profilePic, file)
+    userEvent.click(registerButton);
     await waitFor(() =>
         expect(axios.post).toHaveBeenCalled()
     );
