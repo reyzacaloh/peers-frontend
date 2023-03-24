@@ -10,7 +10,7 @@ import TutorDashboard from './pages/TutorDashboard';
 import { AuthContext } from './contexts/AuthContext';
 import Profile from './pages/Profile';
 import AuthContextProvider from "./contexts/AuthContext";
-import Verification from './pages/verification';
+import Verification from '../src/pages/Verification';
 
 test('renders app, scroll and click buttons', () => {
 
@@ -123,7 +123,6 @@ test('renders Profile page', () => {
 test('renders verify tutor', () => {
   render(
     <Verification/>
-      
   );  
 
   const linkElement = screen.getByText(/No/i);
