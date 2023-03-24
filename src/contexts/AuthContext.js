@@ -9,6 +9,14 @@ const AuthContextProvider = ({ children }) => {
 
     React.useEffect(() => {
         const token = localStorage.getItem('token');
+        const tutor = localStorage.getItem('tutor');
+
+        if (tutor != null) {
+            dispatch({
+                type: 'TUTOR',
+                payload: {token}
+            })
+        } else
 
         if (token != null) {
             dispatch({
