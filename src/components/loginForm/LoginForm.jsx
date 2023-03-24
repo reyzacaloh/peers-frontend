@@ -2,7 +2,8 @@ import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { Form, Input, Label, Button, Error, A } from "./LoginFormStyle";
+import { Form, Input, Label, Button, Error} from "../registerForm/RegisterStyledComponents";
+import { A, Text } from "./LoginFormStyle";
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 
@@ -17,7 +18,7 @@ const LoginForm = () => {
 
     const onSubmit = async (values, actions) => {
         try {
-            let host = "https://peers-backend-dev.up.railway.app";  // Host
+            let host = "https://peers-backend-dev.up.railway.app";
             let response = await axios.post(
                 `${host}/api/auth/token/`,
                 {
@@ -35,12 +36,11 @@ const LoginForm = () => {
                     token: response.data["access"],
                 }
             })
-
             navigate("/");
 
         } catch (err) {
             console.log("Error: ", err);
-            actions.setStatus(err.message)
+            actions.setStatus(err.code);
             actions.setSubmitting(false);
         }
     }
@@ -61,11 +61,11 @@ const LoginForm = () => {
                 <h1>Login Form</h1>
                 <Label htmlFor="email"></Label>
                 <Input type="email" id="email" name="email" placeholder="Email Address" data-testid="email" onChange={formik.handleChange} value={formik.values.email}/><br/>
-                {formik.errors.email && formik.touched.email && (<Error className="error">{formik.errors.email}</Error>)}
+                {formik.touched.email && (<Error className="error">{formik.errors.email}</Error>)}
 
                 <Label htmlFor="pass"></Label>
                 <Input type="password" id="pass" name="pass" placeholder="Password" data-testid="pass" onChange={formik.handleChange} value={formik.values.pass}/><br/>
-                {formik.errors.pass && formik.touched.pass && (<Error className="error">{formik.errors.pass}</Error>)}
+                {formik.touched.pass && (<Error className="error">{formik.errors.pass}</Error>)}
 
                 <Button type="submit" disabled={formik.isSubmitting || formik.status==='success'}>
                     {formik.isSubmitting ? (
@@ -75,10 +75,28 @@ const LoginForm = () => {
                     )}
                 </Button><br/>
 
-                <A className="nav-link" to="/register">Need an account?</A>
+                <A className="nav-link" to="/register">Need an account?</A><br/>
+
+                <Text>
+                    {formik.status === undefined || formik.status === 'success' ? (
+                        ""
+                    ) : (
+                        errorHandler(formik.status)
+                    )}
+                </Text>
             </Form>
         </div>
     )
+}
+
+function errorHandler(status) {
+    if (status === "ERR_BAD_REQUEST") {
+        return "Incorrect email/password!";
+    } else if (status === "ERR_NETWORK") {
+        return "Network error! Try again later";
+    } else {
+        return "Unknown error!";
+    }
 }
 
 export default LoginForm
