@@ -53,9 +53,9 @@ const VerifyTable = () => {
           <tr>
             <td data-label="No">{index + 1}</td>
             <td data-label="Email">{user.uid.email}</td>
-            <td data-label="Transkrip Nilai"><a target={"_blank"} href={`${user.transkrip}`}>link</a></td>
-            <td data-label="KTM"><a target={"_blank"} href={`${user.ktp}`}>link</a></td>
-            <td data-label="Selfie"><a target={"_blank"} href={`${user.ktm_person}`}>link</a></td>
+            <td data-label="Transkrip Nilai"><a rel="noreferrer" target={"_blank"} href={`${user.transkrip}`}>link</a></td>
+            <td data-label="KTM"><a rel="noreferrer" target={"_blank"} href={`${user.ktp}`}>link</a></td>
+            <td data-label="Selfie"><a rel="noreferrer" target={"_blank"} href={`${user.ktm_person}`}>link</a></td>
             
             <td data-label="Actions" classname="td-button">
               <button
