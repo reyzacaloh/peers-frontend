@@ -5,9 +5,11 @@ import * as Yup from "yup";
 import { useNavigate } from 'react-router-dom';
 import {Form, Input, Label, Button, Error} from "../registerForm/RegisterStyledComponents.js"
 import { subjectOption } from "../../docs/data";
-import CustomSelect from './CustomSelect'
+import CustomSelect from './CustomSelect';
+import { AuthContext } from '../../contexts/AuthContext.js';
 
 const RegisterTutorForm = () => {
+    const {dispatch} = React.useContext(AuthContext);
     const [selectedFile1, setSelectedFile1] = React.useState(null);
     const [selectedFile2, setSelectedFile2] = React.useState(null);
     const [selectedFile3, setSelectedFile3] = React.useState(null);
@@ -46,6 +48,9 @@ const RegisterTutorForm = () => {
                 );
             console.log(response);
             actions.setStatus('success');
+            dispatch({
+                type: "TUTOR"
+            });
             navigate("/");
         } catch (err) {
             console.log("Error: ", err);

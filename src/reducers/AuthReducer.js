@@ -12,13 +12,23 @@ const authReducer = (state, action) => {
             return {
                 ...state,
                 isAuthenticated: true,
+                isTutor: false,
                 token: action.payload.token,
+            };
+        case "TUTOR":
+            localStorage.setItem("tutor", "true");
+            return {
+                ...state,
+                isAuthenticated: true,
+                isTutor: true,
+                token: localStorage.getItem("token"),
             };
         case "LOGOUT":
             localStorage.clear();
             return {
                 ...state,
                 isAuthenticated: false,
+                isTutor: false,
                 token : null
             };
         default:
