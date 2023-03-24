@@ -5,10 +5,14 @@ import * as Yup from "yup";
 import { useNavigate } from 'react-router-dom';
 import {Form, Input, Label, Button, Error} from "../registerForm/RegisterStyledComponents.js"
 import { subjectOption } from "../../docs/data";
-import CustomSelect from './CustomSelect'
+import CustomSelect from './CustomSelect';
+import { AuthContext } from '../../contexts/AuthContext.js';
 
 const RegisterTutorForm = () => {
-    const [selectedFile, setSelectedFile] = React.useState(null);
+    const {dispatch} = React.useContext(AuthContext);
+    const [selectedFile1, setSelectedFile1] = React.useState(null);
+    const [selectedFile2, setSelectedFile2] = React.useState(null);
+    const [selectedFile3, setSelectedFile3] = React.useState(null);
     const navigate = useNavigate();
     const validationSchema = Yup.object().shape({
         subject: Yup.string().required('Required'),
@@ -29,9 +33,9 @@ const RegisterTutorForm = () => {
             formData.append("subject", values.subject);
             formData.append("university", values.university);
             formData.append("pddikti", values.pddikti);
-            formData.append("ktp", selectedFile);
-            formData.append("ktm_person", selectedFile);
-            formData.append("transkrip", selectedFile);
+            formData.append("ktp", selectedFile1);
+            formData.append("ktm_person", selectedFile2);
+            formData.append("transkrip", selectedFile3);
         try {
             <div><h1>Registration Form</h1></div>
             const response =  await axios.post(
@@ -44,6 +48,9 @@ const RegisterTutorForm = () => {
                 );
             console.log(response);
             actions.setStatus('success');
+            dispatch({
+                type: "TUTOR"
+            });
             navigate("/");
         } catch (err) {
             console.log("Error: ", err);
@@ -92,7 +99,7 @@ const RegisterTutorForm = () => {
                 name="ktp"
                 type="file"
                 onChange={(event) => {
-                    setSelectedFile(event.currentTarget.files[0]);
+                    setSelectedFile1(event.currentTarget.files[0]);
                   }}
                 value={formik.values.ktp}
                 accept=".jpg,.jpeg"
@@ -105,7 +112,7 @@ const RegisterTutorForm = () => {
                 name="ktm_person"
                 type="file"
                 onChange={(event) => {
-                    setSelectedFile(event.currentTarget.files[0]);
+                    setSelectedFile2(event.currentTarget.files[0]);
                   }}
                 value={formik.values.ktm_person}
                 accept=".jpg,.jpeg"
@@ -118,7 +125,7 @@ const RegisterTutorForm = () => {
                 name="transkrip"
                 type="file"
                 onChange={(event) => {
-                    setSelectedFile(event.currentTarget.files[0]);
+                    setSelectedFile3(event.currentTarget.files[0]);
                   }}
                 value={formik.values.transkrip}
                 accept=".pdf"
