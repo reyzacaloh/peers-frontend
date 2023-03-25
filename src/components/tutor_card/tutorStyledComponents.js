@@ -49,7 +49,7 @@ export const University = styled.p`
 export const ImageContainer = styled.div`
   position: relative;
   display: flex;
-  flex: 3;
+  flex: 2;
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -70,6 +70,7 @@ export const Card = styled.div`
   max-width: 300px;
   border-radius: 30px;
   min-width: 250px;
+  height: 400px;
   background-color: white;
   -webkit-box-shadow: 0px 11px 18px 1px rgba(0, 0, 0, 0.11);
   -moz-box-shadow: 0px 11px 18px 1px rgba(0, 0, 0, 0.11);
@@ -103,6 +104,7 @@ export const Description = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1px;
+  justify-content: space-between;
 
   @media only screen and (max-width: 425px) {
     padding: 0 10px 10px 10px;
