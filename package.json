@@ -31,7 +31,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "test:ci": "npm run test -- --reporters=default --reporters=jest-junit --watchAll=false --ci --coverage"
+    "test:ci": "npm run test -- --reporters=default --reporters=jest-junit --watchAll=false --ci --coverage --silent"
   },
   "eslintConfig": {
     "extends": [
