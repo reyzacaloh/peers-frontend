@@ -8,7 +8,7 @@ import {
 import {MdVerifiedUser} from "react-icons/md"
 import { NavLink } from 'react-router-dom'
 import Logout from './logout/Logout'
-
+import "./Sidebar.css";
 
 const Sidebar = ({ children }) => {
 
@@ -46,6 +46,7 @@ const Sidebar = ({ children }) => {
                 <div className="top_section">
                     <h1 className="logo">Peers</h1>
                 </div>
+                <div className="listItem">
                 {
                     menuItem.map((item, index) => (
                         <NavLink to={item.path} key={index} className="link" activeclassname="active">
@@ -55,6 +56,7 @@ const Sidebar = ({ children }) => {
                     ))
                 }
                 
+                </div>
                 <div >
                     <Logout/>
                 </div>

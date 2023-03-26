@@ -1,13 +1,30 @@
 @import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
 
 
+.tutor__top_section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.tutor__top_section > .basic-single {
+    width: 50%;
+}
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(3, 0.5fr); /* three columns with equal width */
+    grid-template-columns: repeat(2, 0.5fr); /* three columns with equal width */
     gap: 1rem;
-    margin: 100px;
 }
 
 .title {
     margin-bottom: 1rem;
 }
+
+@media only screen and (max-width: 425px) {
+    .grid-container {
+        display: block;
+        overflow: hidden;
+    }
+  }
