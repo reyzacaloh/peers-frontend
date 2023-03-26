@@ -17,7 +17,7 @@ export const Wrapper = styled.div`
   z-index: 999;
   padding: 0 10px 10px 20px;
 
-  @media only screen and (max-width: 425px) {
+  @media only screen and (max-width: 785px) {
     padding: 0 5px 5px 10px;
   }
 `;
@@ -29,7 +29,7 @@ export const Name = styled.h3`
   overflow: hidden;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
-  @media only screen and (max-width: 425px) {
+  @media only screen and (max-width: 785px) {
     font-size: 12px;
   }
 `;
@@ -44,7 +44,7 @@ export const University = styled.p`
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 
-  @media only screen and (max-width: 425px) {
+  @media only screen and (max-width: 785px) {
     font-size: 10px;
   }
 `;
@@ -67,7 +67,7 @@ export const ImageContainer = styled.div`
     transition: transform 1s ease;
   }
 
-  @media only screen and (max-width: 425px) {
+  @media only screen and (max-width: 785px) {
     border-radius: 5px;
     flex-basis: 50%;
   }
@@ -84,7 +84,7 @@ export const Text = styled.p`
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
 
-  @media only screen and (max-width: 425px) {
+  @media only screen and (max-width: 785px) {
     font-size: 10px;
     -webkit-line-clamp: 4;
     line-height: 10pt;
@@ -96,7 +96,9 @@ export const Card = styled.div`
   cursor: pointer;
   flex-direction: column;
   min-width: 300px;
+  max-width: 300px;
   border-radius: 30px;
+  margin: 0;
   height: 400px;
   background-color: white;
   -webkit-box-shadow: 0px 11px 18px 1px rgba(0, 0, 0, 0.11);
@@ -117,10 +119,16 @@ export const Card = styled.div`
     }
   }
 
-  @media only screen and (max-width: 425px) {
-    min-width: 150px;
+  @media only screen and (max-width: 785px) {
+    min-width: 175px;
+    max-width: 175px;
     border-radius: 10px;
     height: 280px;
+  }
+
+  @media only screen and (max-width: 1024px) and (min-width: 786px) {
+    min-width: 240px;
+    max-width: 240px;
   }
 `;
 
@@ -138,7 +146,7 @@ export const Description = styled.div`
     align-self: flex-start;
     align-content: flex-start;
   }
-  @media only screen and (max-width: 425px) {
+  @media only screen and (max-width: 785px) {
     padding: 0 10px 10px 10px;
     flex-basis: 50%;
   }
@@ -148,14 +156,14 @@ export const Rating = styled.div`
   align-items: center;
   justify-content: center;
   margin: 0;
-  @media only screen and (max-width: 425px) {
+  @media only screen and (max-width: 785px) {
     font-size: 10px;
   }
 `;
 export const Contents = styled.div`
   margin: 0;
   padding-bottom: 5px;
-  @media only screen and (max-width: 425px) {
+  @media only screen and (max-width: 785px) {
     padding-bottom: 0;
   }
 `;
@@ -169,7 +177,7 @@ export const Price = styled.div`
   justify-content: center;
   align-items: center;
 
-  @media only screen and (max-width: 425px) {
+  @media only screen and (max-width: 785px) {
     border-radius: 15px;
     height: 20px;
     max-width: 100vw;
@@ -179,7 +187,7 @@ export const Star = styled(StarIcon)`
   color: orange;
   margin-right: 5px;
 
-  @media only screen and (max-width: 425px) {
+  @media only screen and (max-width: 785px) {
     margin-right: 2px;
     padding: 3px;
   }
@@ -190,7 +198,7 @@ export const PriceTag = styled.span`
   color: green;
   padding: 5px;
 
-  @media only screen and (max-width: 425px) {
+  @media only screen and (max-width: 785px) {
     font-size: 10px;
     padding: 0;
   }
@@ -202,7 +210,7 @@ export const Rate = styled.div`
   justify-content: space-between;
   margin-right: 5px;
 
-  @media only screen and (max-width: 425px) {
+  @media only screen and (max-width: 785px) {
     font-size: 12px;
     align-items: center;
     justify-content: center;
@@ -213,7 +221,7 @@ export const Rate = styled.div`
 export const Review = styled.p`
   color: gray;
 
-  @media only screen and (max-width: 425px) {
+  @media only screen and (max-width: 785px) {
     font-size: 12px;
   }
 `;
