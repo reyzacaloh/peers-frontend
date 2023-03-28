@@ -2,6 +2,7 @@ image: node:16-alpine
 
 include:
   - template: Code-Quality.gitlab-ci.yml
+  - template: SAST.gitlab-ci.yml
 
 stages:
   - build
@@ -24,6 +25,7 @@ build:
   artifacts:
     paths:
       - build/
+    expire_in: 1 days
 
 test:
   stage: test
@@ -48,7 +50,23 @@ test:
       coverage_report:
         coverage_format: cobertura
         path: coverage/cobertura-coverage.xml
+    expire_in: 1 days
 
+sast:
+  stage: test
+  artifacts:
+    reports:
+      sast: gl-sast-report.json
+    expire_in: 1 days
+  rules:
+    - when: never
+  variables:
+    SEARCH_MAX_DEPTH: 4
+    SAST_EXCLUDED_PATHS: "**/coverage/**, **/node_modules/**, **/build/**, **/public/**"
+    SAST_BANDIT_EXCLUDED_PATHS: "****/coverage/**, **/node_modules/**, **/build/**, **/public/**"
+  script:
+    - echo "$CI_JOB_NAME is used for configuration only, and its script should not be executed"
+    - exit 1
 
 staging:
   stage: deploy
@@ -106,16 +124,4 @@ code_quality:
   artifacts:
     expose_as: 'Code Quality Report'
     paths: [gl-code-quality-report.json]
-    expire_in: 10 days
-
-code_quality_html:
-  stage: quality
-  needs:
-    - sonarqube
-  extends: code_quality
-  variables:
-    REPORT_FORMAT: html
-  artifacts:
-    expose_as: 'Code Quality Report HTML'
-    paths: [gl-code-quality-report.html]
-    expire_in: 10 days
+    expire_in: 1 days

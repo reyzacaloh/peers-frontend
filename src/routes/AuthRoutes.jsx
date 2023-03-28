@@ -7,6 +7,7 @@ import NotFound from "../pages/NotFound";
 import TutorDashboard from "../pages/TutorDashboard";
 import Profile from "../pages/Profile";
 import RegisterTutorForm from "../components/registerTutorForm/RegisterTutorForm";
+import Verification from "../pages/Verification.jsx"
 import { AuthContext } from "../contexts/AuthContext";
 
 function AuthRoutes() {
@@ -30,6 +31,12 @@ function AuthRoutes() {
                     <Sidebar>
                         <Profile />
                     </Sidebar>} />
+            <Route
+                path="/verify" element={
+                    <Sidebar>
+                        <Verification/>
+                    </Sidebar>} />
+            
             <Route path="/tutor" element={
                 !state.isTutor ?
                     <RegisterTutorForm /> :
