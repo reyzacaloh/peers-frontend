@@ -5,6 +5,7 @@ import {
     FaCommentAlt,
     FaUser,
 } from "react-icons/fa"
+import {MdVerifiedUser} from "react-icons/md"
 import { NavLink } from 'react-router-dom'
 import Logout from './logout/Logout'
 
@@ -31,6 +32,11 @@ const Sidebar = ({ children }) => {
             path: "/tutor",
             name: "Jadi Tutor",
             icon: <FaChalkboardTeacher />
+        },
+        {
+            path: "/verify",
+            name: "Verify Tutor",
+            icon: <MdVerifiedUser />
         },
     ]
 
