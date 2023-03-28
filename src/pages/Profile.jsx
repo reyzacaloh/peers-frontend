@@ -1,29 +1,47 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import './Profile.css';
+import axios from 'axios';
 
-const Profile = () => {
-    return (
-        <div>
-            <h1>Profile page</h1>
-            <div className="row">
-                <div className="col-md-3 border-right">
-                    <div className="d-flex flex-column align-items-center text-center p-3 py-5"><img alt="profile" className="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"></img><br></br>
-                        <span className="font-weight-bold">someone</span><br></br>
-                        <span className="text-black-50">something@mail.com</span><span> </span>
-                    </div>    
-                </div>
-                <br></br>
-                <div className="row mt-2">
-                    <div className="col-md-6"><label className="labels">Name</label><br></br><input type="text" className="form-control" placeholder="first name" value=""></input></div>
-                    <div className="col-md-6"><label className="labels">Surname</label><br></br><input type="text" className="form-control" value="" placeholder="surname"></input></div>
-                </div>
-                <div className="row mt-3">
-                    <div className="col-md-12"><label className="labels">Mobile Number</label><br></br><input type="text" className="form-control" placeholder="enter phone number" value=""></input></div>
-                    <div className="col-md-12"><label className="labels">Address</label><br></br><input type="text" className="form-control" placeholder="enter address line 1" value=""></input></div>
-                    <div className="col-md-12"><label className="labels">Education</label><br></br><input type="text" className="form-control" placeholder="education" value=""></input></div>
-                </div>
-            </div>
+function Profile() {
+  const [profile, setProfile] = useState([]);
+
+  const fetchData = async (setProfile) => {
+    try {
+      const response = await axios.get('https://peers-backend-dev.up.railway.app/api/auth/user/profile/', {
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,
+        },
+      });
+      setProfile(response.data.user);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData(setProfile);
+  }, []);
+
+  return (
+    <div>
+      <h1>Profile page</h1>
+      <div className="grid-container">
+        <div className="card">
+          <div>
+            <img class="rounded" src="https://www.citypng.com/public/uploads/preview/png-profile-user-round-gray-icon-symbol-11639594342slkdqxcgi6.png" alt="profile" width="200" />
+          </div>
+          <div class="content">
+            <h4>
+              Nama: {profile.first_name} {profile.last_name}{' '}
+            </h4>
+            <h4>Email: {profile.email}</h4>
+            <h4>Tanggal: {profile.date_of_birth}</h4>
+          </div>
         </div>
-    );
-};
+      </div>
+    </div>
+  );
+}
 
 export default Profile;
