@@ -38,13 +38,13 @@ describe('Verify Table component', () => {
     axios.patch.mockResolvedValueOnce({})
     render(<VerifyTable />)
     await waitFor(() => fireEvent.click(screen.getAllByText('accept')[0]))
-    expect(axios.patch).toHaveBeenCalledWith('https://peers-backend-dev.up.railway.app/api/tutor_form/verify/', expect.any(FormData), {headers: {"content-type": "multipart/form-data"}})
+    expect(axios.patch).toHaveBeenCalledWith('https://peers-backend-prod.up.railway.app/api/tutor_form/verify/', expect.any(FormData), {headers: {"content-type": "multipart/form-data"}})
   })
    it('calls the VerifyUser function with the correct parameters when deny button is clicked', async () => {
     axios.patch.mockResolvedValueOnce({})
     render(<VerifyTable />)
     await waitFor(() => fireEvent.click(screen.getAllByText('deny')[0]))
-    expect(axios.patch).toHaveBeenCalledWith('https://peers-backend-dev.up.railway.app/api/tutor_form/verify/', expect.any(FormData), {headers: {"content-type": "multipart/form-data"}})
+    expect(axios.patch).toHaveBeenCalledWith('https://peers-backend-prod.up.railway.app/api/tutor_form/verify/', expect.any(FormData), {headers: {"content-type": "multipart/form-data"}})
     console.log = jest.fn()
     expect(console.log).toBeNull
 })
