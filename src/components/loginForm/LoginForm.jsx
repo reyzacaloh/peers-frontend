@@ -29,7 +29,7 @@ const LoginForm = () => {
 
   const onSubmit = async (values, actions) => {
     try {
-      let response = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/token/`, {
+      let response = await axios.post(`https://peers-backend-prod.up.railway.app/api/auth/token/`, {
         email: values.email,
         password: values.pass,
       });
