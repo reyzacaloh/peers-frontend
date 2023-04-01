@@ -48,7 +48,7 @@ describe('Profile component', () => {
     axios.get.mockResolvedValueOnce({ data: {} });
     render(<Profile />);
     await waitFor(() => expect(axios.get).toHaveBeenCalledWith(
-      'https://peers-backend-dev.up.railway.app/api/auth/user/profile/',
+      'https://peers-backend-prod.up.railway.app/api/auth/user/profile/',
       { headers: { authorization: `Bearer ${token}` } }
     ));
   })

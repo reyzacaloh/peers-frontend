@@ -10,7 +10,7 @@ const VerifyTable = () => {
   }, []);
 
   const getUsers = async () => {
-    const response = await axios.get('https://peers-backend-dev.up.railway.app/api/tutor_form/verify/');
+    const response = await axios.get('https://peers-backend-prod.up.railway.app/api/tutor_form/verify/');
     setUser(response.data['applicants']);
   };
   console.log(users)
@@ -23,7 +23,7 @@ const VerifyTable = () => {
             formData.append("is_verified", true);
             formData.append("is_accepted", status);
             await axios.patch(
-                "https://peers-backend-dev.up.railway.app/api/tutor_form/verify/",
+                "https://peers-backend-prod.up.railway.app/api/tutor_form/verify/",
                 formData,
                 {headers: {
                     "content-type": "multipart/form-data",
