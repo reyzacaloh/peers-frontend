@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   FaSearch,
   FaChalkboardTeacher,
@@ -9,6 +9,8 @@ import { MdVerifiedUser } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import Logout from "./logout/Logout";
 import "./Sidebar.css";
+import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 
 const Sidebar = ({ children }) => {
   const [open, setOpen] = React.useState(true);
@@ -40,12 +42,36 @@ const Sidebar = ({ children }) => {
     },
   ];
 
-  return (
-    <div className="container" onDoubleClick={() => setOpen(!open)}>
-      <div className={`overlay ${open ? "" : "hide_overlay"}`}></div>
+  useEffect(() => {
+    const setIsOpen = () => setOpen(true);
+    window.addEventListener("resize", setIsOpen);
 
+    return () => window.removeEventListener("resize", setIsOpen);
+  });
+  return (
+    <div className="container">
+      <div data-testid="overlay" className={`overlay ${open ? "" : "hide"}`}></div>
+      <div className="navbar_top">
+        <div className="icon_section">
+          <MenuOutlinedIcon
+            data-testid="menu_icon"
+            sx={{ fontSize: "30px" }}
+            className="menu_icon"
+            onClick={() => setOpen(!open)}
+          />
+        </div>
+        <div className="app_icon">
+          <img className="peers_icon" src="app-icon.png" alt="app-icon-peers" />
+        </div>
+      </div>
       <div className={`sidebar ${open ? "" : "hide"}`}>
         <div className="top_section">
+          <CloseRoundedIcon
+            data-testid="menu_icon2"
+            sx={{ fontSize: "25px" }}
+            className="close_icon"
+            onClick={() => setOpen(!open)}
+          />
           <h1 className="logo">Peers</h1>
         </div>
         <div className="listItem">
