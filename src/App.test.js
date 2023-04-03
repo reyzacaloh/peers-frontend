@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
 import Sidebar from './components/Sidebar';
 import { BrowserRouter as Router } from "react-router-dom";
-import Chat from './pages/Chat';
+import Chat from './pages/Chat/Chat';
 import FindTutor from './pages/FindTutor';
 import NotFound from './pages/NotFound';
 import React from 'react';
@@ -80,7 +80,11 @@ test('renders sidebar', () => {
 
 test('renders chat', () => {
   render(
-    <Chat />
+    <AuthContextProvider>
+      <Router>
+        <Chat/>
+      </Router>
+    </AuthContextProvider>
   );
   const linkElement = screen.getByText(/Chat/i);
   expect(linkElement).toBeInTheDocument();

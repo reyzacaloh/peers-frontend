@@ -1,31 +1,25 @@
-import React from 'react';
+import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Sidebar from '../components/Sidebar.jsx';
-import Chat from "../pages/Chat.jsx";
+import Sidebar from "../components/Sidebar.jsx";
+import Chat from "../pages/Chat/Chat.jsx";
 import FindTutor from "../pages/FindTutor.jsx";
 import NotFound from "../pages/NotFound";
 import TutorDashboard from "../pages/TutorDashboard";
 import Profile from "../pages/Profile";
 import RegisterTutorForm from "../components/registerTutorForm/RegisterTutorForm";
-import Verification from "../pages/Verification.jsx"
+import Verification from "../pages/Verification.jsx";
 import { AuthContext } from "../contexts/AuthContext";
 
 function AuthRoutes() {
+  const { state } = React.useContext(AuthContext);
 
-    const { state } = React.useContext(AuthContext);
-    
-    return (
-
+  return (
         <Routes>
             <Route path="/" element={
                 <Sidebar>
                     <FindTutor />
                 </Sidebar>} />
-            <Route
-                path="/chat" element={
-                    <Sidebar>
-                        <Chat />
-                    </Sidebar>} />
+            <Route path="/chat" element={ <Chat />} />
             <Route
                 path="/profile" element={
                     <Sidebar>
