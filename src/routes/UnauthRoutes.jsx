@@ -1,8 +1,8 @@
 import React from 'react';
 import { Navigate, Routes, Route } from "react-router-dom";
 import Dashboard from "../pages/Dashboard.jsx";
-import RegisterForm from "../components/registerForm/RegisterForm";
-import LoginForm from "../components/loginForm/LoginForm";
+import Login from '../pages/Login/Login.jsx';
+import Register from '../pages/Register/Register.jsx';
 
 
 const UnauthRoutes = () => (
@@ -12,10 +12,10 @@ const UnauthRoutes = () => (
             <Dashboard />
         } />
         <Route path="/register" element={
-            <RegisterForm />
+            <Register/>
         } />
         <Route path="/login" element={
-            <LoginForm />
+           <Login/>
         } />
         <Route path="*" element={<Navigate to="/" />} />
     </Routes>
