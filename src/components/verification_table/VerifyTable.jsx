@@ -19,11 +19,8 @@ const VerifyTable = () => {
         },
       }
     );
-    console.log(response);
     setUser(response.data["applicants"]);
   };
-  console.log(users);
-  console.log(typeof users);
 
   const VerifyUser = async (pddikti, status) => {
     try {
@@ -44,8 +41,6 @@ const VerifyTable = () => {
         }
       );
       getUsers();
-
-      console.log("success");
     } catch (error) {
       console.log("Error: ", error);
     }
