@@ -9,9 +9,9 @@ const Input = () => {
       <div className="input_btn">
         <input type="file" id="file" style={{display: 'none'}} />
         <label htmlFor="file">
-          <AddCircleOutlineOutlinedIcon sx={{fontSize: '30px', color: 'white'}}/>
+          <AddCircleOutlineOutlinedIcon className="addIcon" sx={{fontSize: '30px', color: 'white'}}/>
         </label>
-        <SendIcon sx={{fontSize: '30px', color: 'white'}}/>
+        <SendIcon className="sendIcon" sx={{fontSize: '30px', color: 'white'}}/>
       </div>
       
     </div>

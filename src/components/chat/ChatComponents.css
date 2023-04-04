@@ -53,12 +53,21 @@
   justify-content: space-between;
 }
 
-.user_info > .profile {
+.user_info_profile {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.user_info_profile > .profile {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
+.user_info_profile > .back_btn {
+  cursor: pointer;
+  display: none;
+}
 .profile > span {
   font-weight: 700px;
   font-size: 18px;
@@ -192,6 +201,7 @@
 .chat_info {
   display: flex;
   align-items: center;
+  gap: 0.8rem;
   flex: 1;
   padding: 10px 15px 10px 0px;
   cursor: pointer;
@@ -209,7 +219,7 @@
 }
 
 .user_profile_pic {
-  flex: 1;
+  flex: 0.5;
 }
 
 .chat_header_info > span {
@@ -231,6 +241,11 @@
 .user_chat_info > p {
   font-weight: 300;
   font-size: 0.8rem;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* number of lines to show */
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 .user_chat_info {
@@ -264,8 +279,14 @@
 .messageInfo {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   color: gray;
   font-weight: 300px;
+}
+
+.messageInfo > span {
+  font-size: 0.8rem;
 }
 .messageInfo > img {
   width: 40px;
@@ -282,10 +303,16 @@
 }
 .messageContent > p {
   background-color: white;
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  word-break: break-all;
   max-width: max-content;
+  margin: 0;
   padding: 10px 20px;
   border-radius: 0px 10px 10px 10px;
 }
+
 .messageContent > img {
   width: 50%;
 }
@@ -304,10 +331,55 @@
   border-radius: 10px 0px 10px 10px;
 }
 
-
 /* Mobile */
-@media only screen and (max-width: 425px) {
-  .chat_sidebar {
+@media only screen and (max-width: 780px) {
+  .hidden {
     flex: 0;
+  }
+
+  .input_btn {
+    padding-right: 10px;
+  }
+
+  .sendIcon {
+    padding: 2px;
+  }
+
+  .addIcon {
+    padding: 2px;
+  }
+  .chat_info_container {
+    padding-bottom: 10px;
+    max-height: 80px;
+  }
+
+  .user_info_profile > .profile {
+    gap: 0.5rem;
+  }
+
+  .chat_box_header_button_container > span {
+    display: none;
+  }
+
+  .profile > img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .user_info_profile > .back_btn {
+    cursor: pointer;
+    display: block;
+  }
+
+  .messageInfo > span {
+    font-size: 10px;
+  }
+
+  .messageContent > p {
+    font-size: 12px;
+  }
+
+  .messageContent > p {
+    padding: 10px;
   }
 }

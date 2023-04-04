@@ -21,7 +21,7 @@ const AuthContextProvider = ({ children }) => {
         if (token != null) {
             dispatch({
                 type: 'LOGIN',
-                payload: {token}
+                payload: {token: JSON.parse(token)}
             })
         }
     }, [])

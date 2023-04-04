@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 import "./ChatComponents.css";
 import ChatInfo from "./ChatInfo";
 
-const ChatSidebar = ({onClickChat, data}) => {
+const ChatSidebar = ({onClickChat, data, back}) => {
   const navigate = useNavigate();
  
   return (
-    <div className="chat_sidebar">
+    <div className={`chat_sidebar ${back ? "" : "hidden"}`}>
       <div className="sidebar_top">
         <ArrowBackIosIcon className="arrow" />
         <span onClick={() => navigate("/")}>Back</span>
