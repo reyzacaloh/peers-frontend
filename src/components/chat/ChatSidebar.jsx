@@ -8,7 +8,7 @@ const ChatSidebar = ({onClickChat, data, back}) => {
   const navigate = useNavigate();
  
   return (
-    <div className={`chat_sidebar ${back ? "" : "hidden"}`}>
+    <div className={`chat_sidebar ${back ? "" : "hidden"}`} data-testid="chat_sidebar">
       <div className="sidebar_top">
         <ArrowBackIosIcon className="arrow" />
         <span onClick={() => navigate("/")}>Back</span>

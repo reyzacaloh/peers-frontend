@@ -12,6 +12,16 @@ import Profile from './pages/Profile';
 import AuthContextProvider from "./contexts/AuthContext";
 import Verification from '../src/pages/Verification';
 
+window.matchMedia = (query) => ({
+  matches: false,
+  media: query,
+  onchange: null,
+  addListener: jest.fn(), // deprecated
+  removeListener: jest.fn(), // deprecated
+  addEventListener: jest.fn(),
+  removeEventListener: jest.fn(),
+  dispatchEvent: jest.fn(),
+})
 test('renders app, scroll and click buttons', () => {
 
   window.HTMLElement.prototype.scrollIntoView = function () { };

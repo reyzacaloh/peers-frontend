@@ -1,41 +1,55 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import Chat from '../Chat/Chat';
-import { ChatSidebar, ChatBox } from '../../components/chat';
+import { fireEvent, render, screen } from "@testing-library/react";
+import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import AuthContextProvider from "../../contexts/AuthContext";
+import ChatContextProvider from "../../contexts/ChatContext";
+import Chat from "../Chat/Chat";
 
-jest.mock('../../components/chat', () => ({
-  ChatSidebar: jest.fn(() => <div data-testid="chat-sidebar" />),
-  ChatBox: jest.fn(() => <div data-testid="chat-box" />)
-}));
-const data = [{ username: 'John', latest_message: 'Hi' }];
-describe('Chat component', () => {
-  it('renders ChatSidebar and ChatBox', () => {
-    render(<Chat data={data}/>);
-    expect(screen.getByTestId('chat-sidebar')).toBeInTheDocument();
-    expect(screen.getByTestId('chat-box')).toBeInTheDocument();
+const data = [
+  {
+    profile_pic:
+      "https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2021/09/04/4102259019.jpg",
+    username: "Mawar Eva",
+    latest_message: "Long time no see",
+  },
+];
+
+
+describe("Chat component", () => {
+  it("renders ChatSidebar and ChatBox", () => {
+    render(<AuthContextProvider>
+      <ChatContextProvider>
+        <Chat/>
+      </ChatContextProvider>
+    </AuthContextProvider>,
+    { wrapper: BrowserRouter });
+    expect(screen.getByTestId("chat_sidebar")).toBeInTheDocument();
+    expect(screen.getByTestId("chat_box")).toBeInTheDocument();
   });
 
-  it('passes data and onClickChat props to ChatSidebar', () => {
-    const onClickChat = jest.fn();
-    render(<Chat data={data} />);
-    expect(ChatSidebar).toHaveBeenCalledWith({ data, onClickChat }, {});
+ 
+
+  it('closes the ChatBox component when the "Close" button is clicked', () => {
+    render(<AuthContextProvider>
+      <ChatContextProvider>
+        <Chat data={data}/>
+      </ChatContextProvider>
+    </AuthContextProvider>,
+    { wrapper: BrowserRouter });
+    fireEvent.click(screen.getByText("Mawar Eva"));
+    fireEvent.click(screen.getByTestId('close_btn'));
+    expect(screen.queryAllByTestId('messsages')).toHaveLength(0);
   });
 
-  it('opens ChatBox and sets user when chat is clicked', () => {
+  it('opens the ChatBox component when a user is clicked on the ChatSidebar component', () => {
+    render(<AuthContextProvider>
+      <ChatContextProvider>
+        <Chat data={data}/>
+      </ChatContextProvider>
+    </AuthContextProvider>,
+    { wrapper: BrowserRouter });
     
-    render(<Chat data={data}/>);
-    const chat = screen.getByText('John');
-    fireEvent.click(chat);
-    expect(ChatBox).toHaveBeenCalledWith({ open: true, data: { username: 'John', latest_message: 'Hi' }, onClose: expect.any(Function) }, {});
-  });
-
-  it('closes ChatBox when onClose is called', () => {
-    const onClose = jest.fn();
-    render(<Chat data={data} />);
-    const chat = screen.getByText('John');
-    fireEvent.click(chat);
-    const closeButton = screen.getByLabelText('Close');
-    fireEvent.click(closeButton);
-    expect(ChatBox).toHaveBeenCalledWith({ open: false, data: {}, onClose }, {});
+    fireEvent.click(screen.getByText("Mawar Eva"));
+    expect(screen.queryAllByTestId('messages')).toHaveLength(1);
   });
 });

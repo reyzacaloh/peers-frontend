@@ -5,7 +5,7 @@ const ImageFull = ({ open, url, onClick }) => {
   return (
     <>
       <div className={`imageOverlay ${open ? "show" : ""}`}></div>
-      <div className={`image ${open ? "full" : ""}`} onClick={onClick}>
+      <div data-testid="image_container" className={`image ${open ? "full" : ""}`} onClick={onClick}>
         <img src={url} alt={url} />
       </div>
     </>

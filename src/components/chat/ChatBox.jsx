@@ -11,7 +11,7 @@ const ChatBox = ({ data, onClose, onClickBack, open, back }) => {
   let { profile_pic, username } = data || {};
   const isMobile = useBreakpoint(down("md"));
   return (
-    <div className={`chat_box ${back ? "hidden" : ""}`}>
+    <div className={`chat_box ${back ? "hidden" : ""}`} data-testid="chat_box">
       {open || isMobile? (
         <>
           <div className="chat_box_top">
@@ -35,7 +35,7 @@ const ChatBox = ({ data, onClose, onClickBack, open, back }) => {
                       cursor: "pointer",
                     }}
                   />
-                  <span onClick={onClose}>Close</span>
+                  <span data-testid="close_btn" onClick={onClose}>Close</span>
                 </div>
               </div>
             </div>

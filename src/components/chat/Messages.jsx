@@ -79,7 +79,7 @@ const Messages = () => {
     },
   ];
   return (
-    <div className="messages">
+    <div className="messages" data-testid="messages">
       {getData()?.map((msg, idx) => (
         <Message data={msg} key={idx}/>
       ))}

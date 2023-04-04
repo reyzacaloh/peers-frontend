@@ -11,15 +11,15 @@ const Message = ({ data }) => {
   }, []);
   return (
     <div ref={ref} className={`message ${isOwner ? "owner" : ""}`}>
-      <ImageFull open={open} url={message_img} onClick={() => setOpen(!open)} />
+      <ImageFull  open={open} url={message_img} onClick={() => setOpen(!open)} />
       <div className="messageInfo">
-        <img src={profile_pic || "user_pic_placeholder.png"} alt="" />
+        <img src={profile_pic || "user_pic_placeholder.png"} alt="profile_pic" />
         <span>{time || "Just Now"}</span>
       </div>
       <div className="messageContent">
-        {message && <p>{message}</p>}
+        {message && <p data-testid="message_text">{message}</p>}
         {message_img && (
-          <img src={message_img} alt="" onClick={() => setOpen(!open)} />
+          <img  src={message_img} alt="msg_pic" onClick={() => setOpen(!open)} />
         )}
       </div>
     </div>

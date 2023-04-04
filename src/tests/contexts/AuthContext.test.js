@@ -14,7 +14,7 @@ test('render app with not auth', () => {
 });
 
 test('render app with auth', () => {
-    localStorage.setItem("token", "TEST_TOKEN");
+    localStorage.setItem("token", JSON.stringify("TEST_TOKEN"));
     render(
         <AuthContextProvider>
             <App />
