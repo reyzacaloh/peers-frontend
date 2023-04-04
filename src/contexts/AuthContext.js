@@ -14,14 +14,14 @@ const AuthContextProvider = ({ children }) => {
         if (tutor != null) {
             dispatch({
                 type: 'TUTOR',
-                payload: {token}
+                payload: {token: (token != null) ? token.replace(/['"]+/g, '') : null}
             })
         } else
 
         if (token != null) {
             dispatch({
                 type: 'LOGIN',
-                payload: {token: JSON.parse(token)}
+                payload: {token: token.replace(/['"]+/g, '')}
             })
         }
     }, [])
