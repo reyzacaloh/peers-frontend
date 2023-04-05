@@ -14,6 +14,7 @@ const Chat = ({data}) => {
         setBack(false);
     }
     /* istanbul ignore next */
+    // eslint-disable-next-line no-unused-vars
     const getData = () => 
          [
     {
