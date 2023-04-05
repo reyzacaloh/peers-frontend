@@ -46,6 +46,7 @@ const Sidebar = ({ children }) => {
     const setIsOpen = () => setOpen(true);
     window.addEventListener("resize", setIsOpen);
 
+
     return () => window.removeEventListener("resize", setIsOpen);
   });
   return (
