@@ -1,6 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { createContext } from "react";
+import React, { useEffect, useState, createContext } from "react";
 
 export const ChatContext = createContext();
 

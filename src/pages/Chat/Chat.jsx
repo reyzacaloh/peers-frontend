@@ -8,8 +8,8 @@ const Chat = ({data}) => {
     const [user, setUser] = useState({});
     const [back, setBack] = useState(true);
     
-    const handleOnClickChat = (user) => {
-        setUser(user);
+    const handleOnClickChat = (currentUser) => {
+        setUser(currentUser);
         setOpen(true);
         setBack(false);
     }

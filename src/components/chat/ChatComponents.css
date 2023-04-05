@@ -376,10 +376,6 @@
   }
 
   .messageContent > p {
-    font-size: 12px;
-  }
-
-  .messageContent > p {
     padding: 10px;
   }
 }
