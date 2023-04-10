@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import Logout from './Logout';
+import Logout from '../logout/Logout';
 import AuthContextProvider from "../../contexts/AuthContext";
 
 describe('Logout', () => {
