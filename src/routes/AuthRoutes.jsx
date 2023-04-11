@@ -8,6 +8,7 @@ import TutorDashboard from "../pages/TutorDashboard";
 import Profile from "../pages/Profile";
 import RegisterTutorForm from "../components/registerTutorForm/RegisterTutorForm";
 import Verification from "../pages/Verification.jsx"
+import TutorScheduleForm from "../components/tutorScheduleForm/TutorScheduleForm";
 import { AuthContext } from "../contexts/AuthContext";
 
 function AuthRoutes() {
@@ -36,6 +37,11 @@ function AuthRoutes() {
                     <Sidebar>
                         <Verification/>
                     </Sidebar>} />
+            <Route
+                path="/schedule" element={
+                <Sidebar>
+                    <TutorScheduleForm/>
+                </Sidebar>} />
             
             <Route path="/tutor" element={
                 !state.isTutor ?

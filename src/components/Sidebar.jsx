@@ -3,7 +3,7 @@ import {
   FaSearch,
   FaChalkboardTeacher,
   FaCommentAlt,
-  FaUser,
+  FaUser, FaEdit,
 } from "react-icons/fa";
 import { MdVerifiedUser } from "react-icons/md";
 import { NavLink } from "react-router-dom";
@@ -39,6 +39,11 @@ const Sidebar = ({ children }) => {
       path: "/verify",
       name: "Verify Tutor",
       icon: <MdVerifiedUser />,
+    },
+    {
+      path: "/schedule",
+      name: "[Temp] Schedule",
+      icon: <FaEdit />,
     },
   ];
 
