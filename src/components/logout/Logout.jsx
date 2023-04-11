@@ -6,7 +6,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 function Logout() {
     const {dispatch} = React.useContext(AuthContext);
     const navigate = useNavigate();
-    const [open, setOpen] = useState(true);
+    const [open] = useState(true);
     const HandleLogout = () => {
       
       dispatch({type: "LOGOUT"})
