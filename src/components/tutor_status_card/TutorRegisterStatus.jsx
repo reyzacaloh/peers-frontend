@@ -16,7 +16,7 @@ const TutorRegisterStatus = ({ is_accepted, is_verified }) => {
     setTutor({});
   }
   return (
-    <div className="status_container">
+    <div className="status_container" data-testid="tutorRegisterStatus">
       <div className="main_status">
         <div className="status_wrapper">
           {pending ? (
@@ -24,7 +24,7 @@ const TutorRegisterStatus = ({ is_accepted, is_verified }) => {
           ) : (
             <CancelOutlinedIcon sx={{ fontSize: "40px", color: "red" }} />
           )}
-          <p className={`statusText ${pending ? "pending" : "declined"}`}>
+          <p className='statusText'>
             {pending
               ? "Masih menunggu verifikasi"
               : "Mohon Maaf Registrasi anda ditolak!"}

@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
-import AuthContextProvider from '../../contexts/AuthContext';
+import AuthContextProvider, {AuthContext} from '../../contexts/AuthContext';
 import Sidebar from "../Sidebar";
 
 describe("Sidebar", () => {
@@ -68,4 +68,20 @@ describe("Sidebar", () => {
 
     expect(window.location.pathname).toBe("/verify");
   });
+
+  test("render the right menu for tutor when already accepted", () => {
+    render(
+     <AuthContext.Provider value={{tutor: {is_verified: true, is_accepted: true}}}>
+       <BrowserRouter>
+        <Sidebar />
+      </BrowserRouter>
+    </AuthContext.Provider>
+    );
+    
+    expect(screen.queryAllByText("Jadi Tutor")).toHaveLength(0);
+    fireEvent.click(screen.getByText("Dashboard"));
+    
+    expect(window.location.pathname).toBe("/tutor/dashboard");
+  });
+
 });

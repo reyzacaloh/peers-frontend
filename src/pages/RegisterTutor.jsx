@@ -6,7 +6,6 @@ import { AuthContext } from "../contexts/AuthContext";
 import "./RegisterTutor.css";
 const RegisterTutor = () => {
   const { state, getTutor, tutor} = useContext(AuthContext);
-  // const [tutor, setTutor] = React.useState({});
   
   const navigate = useNavigate();
 

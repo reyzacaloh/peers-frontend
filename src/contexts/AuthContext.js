@@ -8,6 +8,7 @@ const AuthContextProvider = ({ children }) => {
     
     const [state, dispatch] = React.useReducer(authReducer, initialState);
     const [tutor, setTutor] = React.useState({});
+    
     const getTutor = async (token) => {
         const response = await axios.get(
           `${process.env.REACT_APP_API_URL}/api/tutor_form/tutor/data`,

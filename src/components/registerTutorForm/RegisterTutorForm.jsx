@@ -1,12 +1,12 @@
-import React from 'react';
-import {Formik} from 'formik';
 import axios from "axios";
-import * as Yup from "yup";
+import { Formik } from 'formik';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import {Form, Input, Label, Button, Error} from "../registerForm/RegisterStyledComponents.js"
-import { subjectOption } from "../../docs/data";
-import CustomSelect from './CustomSelect';
+import * as Yup from "yup";
 import { AuthContext } from '../../contexts/AuthContext.js';
+import { subjectOption } from "../../docs/data";
+import { Button, Error, Form, Input, Label } from "../registerForm/RegisterStyledComponents.js";
+import CustomSelect from './CustomSelect';
 
 const RegisterTutorForm = () => {
     const {dispatch} = React.useContext(AuthContext);
@@ -38,7 +38,7 @@ const RegisterTutorForm = () => {
             formData.append("transkrip", selectedFile3);
         try {
             <div><h1>Registration Form</h1></div>
-            await axios.post(
+            const response = await axios.post(
                 `${process.env.REACT_APP_API_URL}/api/tutor_form/upload/`,
                 formData,
                 {headers: {
@@ -47,6 +47,7 @@ const RegisterTutorForm = () => {
                 }}
                 );
             actions.setStatus('success');
+            console.log(response);
             dispatch({
                 type: "TUTOR"
             });
