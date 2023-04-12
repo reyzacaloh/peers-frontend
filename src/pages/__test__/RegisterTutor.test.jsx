@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { BrowserRouter, useNavigate } from "react-router-dom";
-import AuthContextProvider, { AuthContext } from "../../contexts/AuthContext";
+import { AuthContext } from "../../contexts/AuthContext";
 import RegisterTutor from "../RegisterTutor";
 
 jest.mock("react-router-dom", () => ({

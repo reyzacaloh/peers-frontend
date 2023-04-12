@@ -14,7 +14,7 @@ const RegisterTutor = () => {
     if (tutor.is_accepted) {
       navigate("/tutor/dashboard");
     }
-   getTutor(JSON.parse(state.token))
+   getTutor(state.token)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tutor.is_submitted]);
   return (
