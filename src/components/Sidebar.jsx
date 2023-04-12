@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   FaSearch,
   FaChalkboardTeacher,
@@ -11,9 +11,11 @@ import Logout from "./logout/Logout";
 import "./Sidebar.css";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import { AuthContext } from "../contexts/AuthContext";
 
 const Sidebar = ({ children }) => {
   const [open, setOpen] = React.useState(true);
+  const {tutor} = useContext(AuthContext);
   const menuItem = [
     {
       path: "/",
@@ -31,8 +33,8 @@ const Sidebar = ({ children }) => {
       icon: <FaUser />,
     },
     {
-      path: "/tutor",
-      name: "Jadi Tutor",
+      path: `${tutor.is_verified && tutor.is_accepted ? "/tutor/dashboard" : "/tutor"}`,
+      name: `${tutor.is_verified && tutor.is_accepted ? "Dashboard" : "Jadi Tutor"}`,
       icon: <FaChalkboardTeacher />,
     },
     {

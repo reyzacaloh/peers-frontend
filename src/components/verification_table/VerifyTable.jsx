@@ -11,7 +11,7 @@ const VerifyTable = () => {
 
   const getUsers = async () => {
     const response = await axios.get(
-      "https://peers-backend-dev.up.railway.app/api/tutor_form/verify/",
+      "http://localhost:8000/api/tutor_form/verify/",
       {
         headers: {
           "content-type": "multipart/form-data",

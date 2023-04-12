@@ -38,15 +38,14 @@ const RegisterTutorForm = () => {
             formData.append("transkrip", selectedFile3);
         try {
             <div><h1>Registration Form</h1></div>
-            const response =  await axios.post(
-                "https://peers-backend-dev.up.railway.app/api/tutor_form/upload/",
+            await axios.post(
+                `${process.env.REACT_APP_API_URL}/api/tutor_form/upload/`,
                 formData,
                 {headers: {
                     "content-type": "multipart/form-data",
                     "authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
                 }}
                 );
-            console.log(response);
             actions.setStatus('success');
             dispatch({
                 type: "TUTOR"
@@ -59,7 +58,7 @@ const RegisterTutorForm = () => {
         }}>
         
         {formik => (
-            <Form onSubmit={formik.handleSubmit} data-testid="tutor_form">
+            <Form onSubmit={formik.handleSubmit} className='tutor_form' data-testid="tutor_form">
                 <h1>Tutor Register Form</h1>
                 <Label htmlFor="subject" >Subject :<br></br></Label>
                 <CustomSelect

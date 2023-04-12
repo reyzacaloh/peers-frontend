@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import { authReducer, initialState } from "../reducers/AuthReducer";
 
@@ -6,12 +7,23 @@ export const AuthContext = React.createContext();
 const AuthContextProvider = ({ children }) => {
     
     const [state, dispatch] = React.useReducer(authReducer, initialState);
-
+    const [tutor, setTutor] = React.useState({});
+    const getTutor = async (token) => {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/api/tutor_form/tutor/data`,
+          {
+            headers: {
+              Authorization: `Bearer ${token.replace(/['"]+/g, "")}`,
+            },
+          }
+        );
+        setTutor(response.data?.tutor);
+      };
     React.useEffect(() => {
+        
         const token = localStorage.getItem('token');
-        const tutor = localStorage.getItem('tutor');
-
-        if (tutor != null) {
+        const isTutor = localStorage.getItem('tutor');
+        if (isTutor) {
             dispatch({
                 type: 'TUTOR',
                 payload: {token: (token != null) ? token.replace(/['"]+/g, '') : null}
@@ -31,6 +43,9 @@ const AuthContextProvider = ({ children }) => {
             value={{
                 state,
                 dispatch,
+                tutor,
+                setTutor,
+                getTutor
             }}
         >
             {children}
