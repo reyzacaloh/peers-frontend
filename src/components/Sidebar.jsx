@@ -3,7 +3,8 @@ import {
   FaSearch,
   FaChalkboardTeacher,
   FaCommentAlt,
-  FaUser, FaEdit,
+  FaUser,
+  FaCalendar,
 } from "react-icons/fa";
 import { MdVerifiedUser } from "react-icons/md";
 import { NavLink } from "react-router-dom";
@@ -42,8 +43,8 @@ const Sidebar = ({ children }) => {
     },
     {
       path: "/schedule",
-      name: "[Temp] Schedule",
-      icon: <FaEdit />,
+      name: "Schedule",
+      icon: <FaCalendar />,
     },
   ];
 
