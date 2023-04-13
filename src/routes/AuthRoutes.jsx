@@ -8,6 +8,7 @@ import TutorDashboard from "../pages/TutorDashboard";
 import Profile from "../pages/Profile";
 import RegisterTutorForm from "../components/registerTutorForm/RegisterTutorForm";
 import Verification from "../pages/Verification.jsx";
+import Upload from "../pages/Chat/Upload.jsx";
 import { AuthContext } from "../contexts/AuthContext";
 
 function AuthRoutes() {
@@ -29,6 +30,12 @@ function AuthRoutes() {
                 path="/verify" element={
                     <Sidebar>
                         <Verification/>
+                    </Sidebar>} />
+
+            <Route
+                path="/upload" element={
+                    <Sidebar>
+                        <Upload/>
                     </Sidebar>} />
             
             <Route path="/tutor" element={
