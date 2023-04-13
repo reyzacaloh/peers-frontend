@@ -1,0 +1,155 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+}
+
+.page {
+  flex-basis: 85%;
+  flex-shrink: 0;
+  flex-grow: 0;
+  height: 100vh;
+  background-color: white;
+  display: flex;
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.page::-webkit-scrollbar {
+  display: none;
+}
+
+
+.sidebar {
+  height: 100vh;
+  flex-grow: 0;
+  flex-basis: 15%;
+  flex-shrink: 0;
+  display: flex;
+  color: #fff;
+  flex-direction: column;
+  transition: transform 0.5s ease;
+  z-index: 9999;
+  background: #279686;
+}
+
+.top_section > .close_icon {
+  color: white;
+}
+
+.navbar_top {
+  display: none;
+}
+
+.hide {
+  transform: translateX(-100vw);
+}
+
+.top_section {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  gap: 10px;
+}
+
+.logo {
+  font-size: 30px;
+  display: block;
+  cursor: pointer;
+}
+
+.link {
+  display: flex;
+  color: #fff;
+  padding: 10px 15px;
+  gap: 15px;
+  transition: all 0.5s;
+}
+
+.link:hover {
+  background: #e0e0e07f;
+  transition: all 0.5s;
+}
+
+.active {
+  background: #e0e0e07f;
+}
+
+.link_text {
+  display: block;
+}
+
+.icon,
+.link_text {
+  font-size: 20px;
+}
+
+@media only screen and (max-width: 1024px) {
+  .page {
+    flex-basis: 100%;
+    flex-shrink: 0;
+    flex-grow: 0;
+    height: 100vh;
+    margin-top: 120px;
+    padding-top: 10px;
+  }
+
+  .navbar_top {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    background-color: white;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    padding: 10px;
+    -webkit-box-shadow: 0px 11px 18px 1px rgba(0, 0, 0, 0.11);
+    -moz-box-shadow: 0px 11px 18px 1px rgba(0, 0, 0, 0.11);
+    box-shadow: 0px 11px 18px 1px rgba(0, 0, 0, 0.11);
+  }
+
+  .peers_icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .menu_icon {
+    color: black;
+  }
+
+  .sidebar {
+    height: 100vh;
+    min-width: 250px;
+    position: absolute;
+    display: flex;
+    color: #fff;
+    flex-direction: column;
+    transition: transform 0.5s ease;
+    z-index: 9999;
+    background: #279686;
+  }
+
+  .top_section > .close_icon {
+    color: white;
+  }
+
+  .overlay {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    transition: transform 0.5s ease;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}
+
+@media only screen and (min-width: 1025px) {
+  .top_section > .close_icon {
+    display: none;
+  }
+}
