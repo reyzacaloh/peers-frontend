@@ -54,7 +54,7 @@ test:
   stage: test
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
   needs:
-    - build
+    - build-staging
   cache:
     key: $CI_COMMIT_REF_SLUG 
     paths:
@@ -94,7 +94,7 @@ sast:
 staging:
   stage: deploy
   needs:
-    - build
+    - build-staging
     - test
   environment:
     name: staging
@@ -103,7 +103,7 @@ staging:
   script:
     - firebase deploy --token $FIREBASE_TOKEN -P $STAGING_ID
   dependencies:
-    - build
+    - build-staging
   only:
     - staging
     - coldfix
@@ -111,8 +111,10 @@ staging:
 production:
   stage: deploy
   needs:
-    - build
+    - build-production
     - test
+  dependencies:
+    - build-production
   environment:
     name: production
   before_script:
