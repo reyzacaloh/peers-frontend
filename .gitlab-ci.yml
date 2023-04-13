@@ -31,7 +31,7 @@ build-staging:
       - build/
     expire_in: 1 days
 
-build-prod:
+build-production:
   stage: build
   environment:
     name: production
