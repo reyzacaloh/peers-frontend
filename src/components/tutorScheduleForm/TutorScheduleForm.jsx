@@ -2,7 +2,8 @@ import React from "react";
 import axios from "axios";
 import {useFormik} from "formik";
 import {useNavigate} from "react-router-dom";
-import {Button, Container, Form, Label, Title, Wrapper} from "../loginForm/LoginFormStyle"
+import {Container, Form, Wrapper} from "../loginForm/LoginFormStyle"
+import {Button, Label, Title} from "./TutorScheduleFormStyle";
 import {DatePicker, TimePicker} from "antd";
 import dayjs from "dayjs";
 
@@ -16,7 +17,7 @@ const TutorScheduleForm = () => {
 
     const initialValues = {
         date: dayjs().add(1, 'day'),
-        time: dayjs().add(6, 'hour'),
+        time: dayjs(),
     };
 
     const onSubmit = async (values, actions) => {
@@ -49,7 +50,7 @@ const TutorScheduleForm = () => {
     return (
         <Container>
             <Wrapper>
-                <Title>Add/Edit Schedule</Title>
+                <Title>Add New Schedule</Title>
                 <Form onSubmit={formik.handleSubmit}>
                     <Label>Date</Label>
                     <DatePicker
