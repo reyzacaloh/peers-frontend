@@ -1,102 +1,102 @@
 /* eslint-disable no-restricted-globals */
-import React, { useState } from 'react' 
+import React, { useState } from "react";
+import {
+    SDivider,
+    SLink,
+    SLinkContainer,
+    SLinkIcon,
+    SLinkLabel,
+    SLinkNotification,
+    SLogo,
+    SSidebar,
+    SSidebarButton,
+    SLayout
+} from "./styles";
 import {
     FaSearch,
     FaChalkboardTeacher,
     FaCommentAlt,
     FaUser,
 } from "react-icons/fa"
-import {MdVerifiedUser} from "react-icons/md"
-import { NavLink } from 'react-router-dom'
+import {
+  AiOutlineLeft,
+} from "react-icons/ai";
+import { MdVerifiedUser } from "react-icons/md";
+import { useLocation } from 'react-router-dom'
 import Logout from './logout/Logout'
-import "tailwindcss/tailwind.css";
-import control from "../images/control.png"
 import logo from "../images/logo_small.png"
 
 
 const Sidebar = ({ children }) => {
-    const [open, setOpen] = useState(true);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const { pathname } = useLocation();
 
     const menuItem = [
         {
-            path: "/",
-            name: "Cari Tutor",
-            icon: <FaSearch />
+            to: "/",
+            label: "Cari Tutor",
+            icon: <FaSearch />,
+            notification: 0
         },
         {
-            path: "/chat",
-            name: "Pesan",
-            icon: <FaCommentAlt />
+            to: "/chat",
+            label: "Pesan",
+            icon: <FaCommentAlt />,
+            notification: 0
         },
         {
-            path: "/profile",
-            name: "Profil",
-            icon: <FaUser />
+            to: "/profile",
+            label: "Profil",
+            icon: <FaUser />,
+            notification: 0
         },
         {
-            path: "/tutor",
-            name: "Jadi Tutor",
-            icon: <FaChalkboardTeacher />
+            to: "/tutor",
+            label: "Jadi Tutor",
+            icon: <FaChalkboardTeacher />,
+            notification: 0
         },
         {
-            path: "/verify",
-            name: "Verify Tutor",
-            icon: <MdVerifiedUser />
+            to: "/verify",
+            label: "Verify Tutor",
+            icon: <MdVerifiedUser />,
+            notification: 0
         },
     ]
 
     return (
-    <div className="flex">
-      <div
-        className={` ${
-          open ? "w-72" : "w-20 "
-        } bg-dark-purple h-screen p-5  pt-8 relative duration-300`}
-      >
-        <img
-          src={control}
-          className={`absolute cursor-pointer -right-3 top-9 w-7 border-dark-purple
-           border-2 rounded-full  ${!open && "rotate-180"}`}
-          onClick={() => setOpen(!open)}
-          alt=''
-        />
-        <div className="flex gap-x-4 items-center">
-          <img
-            src={logo}
-            className={`cursor-pointer duration-500 ${
-              open && "rotate-[360deg]"
-            }`}
-            alt='Peers'
-          />
-          <h1
-            className={`text-white origin-left font-medium text-2xl duration-200 ${
-              !open && "scale-0"
-            }`}
-          >
-            Peers
-          </h1>
-        </div>
-
-        <ul className="pt-6">
-            {
-                menuItem.map((item, index) => (
-                    <li>
-                    <NavLink className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
-                    ${menuItem.gap ? "mt-9" : "mt-2"} `}
-                    to={item.path} key={index}>
-                        <div className="icon">{item.icon}</div>
-                        <div className={`${!open && "hidden"} origin-left duration-200`}>
-                            {item.name}
-                        </div>
-                    </NavLink>
-                    </li>
-                ))
-            }
-            <Logout/>
-        </ul>
-        </div>
-        <main>{children}</main>
-    </div>
-    )
+      <SLayout>
+        <SSidebar isOpen={sidebarOpen}>
+            <>
+                <SSidebarButton isOpen={sidebarOpen} onClick={() => setSidebarOpen((p) => !p)}>
+                    <AiOutlineLeft />
+                </SSidebarButton>
+            </>
+            <SLogo>
+                <img src={logo} alt="logo" />
+            </SLogo>
+            <SDivider />
+            {menuItem.map(({ icon, label, notification, to }) => (
+                <SLinkContainer key={label} isActive={pathname === to}>
+                    <SLink to={to} style={!sidebarOpen ? { width: `fit-content` } : {}}>
+                        <SLinkIcon>{icon}</SLinkIcon>
+                        {sidebarOpen && (
+                            <>
+                                <SLinkLabel>{label}</SLinkLabel>
+                                {/* if notifications are at 0 or null, do not display */}
+                                {!!notification && (
+                                    <SLinkNotification>{notification}</SLinkNotification>
+                                )}
+                            </>
+                        )}
+                    </SLink>
+                </SLinkContainer>
+            ))}
+            <Logout></Logout>
+        </SSidebar>
+            <main>{children}</main>
+      </SLayout>
+    );
 }
 
 export default Sidebar
