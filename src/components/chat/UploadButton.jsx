@@ -85,6 +85,7 @@ export default class UploadButton extends React.Component {
   onUpload() {
     const {loadedFiles} = this.state;
 
+    // eslint-disable-next-line array-callback-return
     loadedFiles.map((file, idx) => {
       console.log("Updating...");
       //Update file (Change it's state to uploading)
