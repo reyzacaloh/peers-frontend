@@ -11,6 +11,7 @@ import { AuthContext } from './contexts/AuthContext';
 import Profile from './pages/Profile';
 import AuthContextProvider from "./contexts/AuthContext";
 import Verification from '../src/pages/Verification';
+import Upload from './pages/Chat/Upload';
 
 window.matchMedia = (query) => ({
   matches: false,
@@ -97,6 +98,18 @@ test('renders chat', () => {
     </AuthContextProvider>
   );
   const linkElement = screen.getByText(/Chat/i);
+  expect(linkElement).toBeInTheDocument();
+});
+
+test('renders upload', () => {
+  render(
+    <AuthContextProvider>
+      <Router>
+        <Upload/>
+      </Router>
+    </AuthContextProvider>
+  );
+  const linkElement = screen.getByText(/Upload/i);
   expect(linkElement).toBeInTheDocument();
 });
 
