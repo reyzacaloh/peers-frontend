@@ -11,7 +11,7 @@ const VerifyTable = () => {
 
   const getUsers = async () => {
     const response = await axios.get(
-      "http://localhost:8000/api/tutor_form/verify/",
+      `${process.env.REACT_APP_API_URL}/api/tutor_form/verify/`,
       {
         headers: {
           "content-type": "multipart/form-data",
@@ -29,7 +29,7 @@ const VerifyTable = () => {
       formData.append("is_verified", true);
       formData.append("is_accepted", status);
       await axios.patch(
-        "https://peers-backend-dev.up.railway.app/api/tutor_form/verify/",
+        `${process.env.REACT_APP_API_URL}/api/tutor_form/verify/`,
         formData,
         {
           headers: {
