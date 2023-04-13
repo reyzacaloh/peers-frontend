@@ -23,12 +23,13 @@ const TutorScheduleForm = () => {
     const onSubmit = async (values, actions) => {
         try {
             await axios.post("https://peers-backend-dev.up.railway.app/api/schedule/", {
+                date_time: `${values.date.format('YYYY-MM-DD')}T${values.time.format('HH:00:00.0Z')}`
+                }, {
                 headers: {
                     "content-type": "application/x-www-form-urlencoded",
                     authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-                },
-                date_time: `${values.date.format('YYYY-MM-DD')} ${values.time.format('HH:00:00')}`
-            });
+                }}
+            );
             actions.setSubmitting(false);
             console.log("Success");
             actions.setStatus("success");
