@@ -17,7 +17,7 @@ describe("TutorRegisterStatus", () => {
       const setTutor = jest.fn();
       const state = { token };
       render(
-        <AuthContext.Provider value={{ state, setTutor }}>
+        <AuthContext.Provider value={{ state, setTutor, currentUser: {role:3} }}>
           <TutorRegisterStatus is_accepted={false} is_verified={true} />
         </AuthContext.Provider>
       );
@@ -35,7 +35,7 @@ describe("TutorRegisterStatus", () => {
       await waitFor(() => {
         expect(axios.delete).toHaveBeenCalledWith(
           `${process.env.REACT_APP_API_URL}/api/tutor_form/tutor/data`,
-          { headers: { authorization: `Bearer ${JSON.parse(token)}` } }
+          { headers: { authorization: `Bearer ${token}` } }
         );
       })
     });

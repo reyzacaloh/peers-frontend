@@ -10,7 +10,7 @@ const TutorRegisterStatus = ({ is_accepted, is_verified }) => {
   const handleRegistrasi = async () => {
     axios.delete(`${process.env.REACT_APP_API_URL}/api/tutor_form/tutor/data`, {
       headers: {
-        "authorization": `Bearer ${JSON.parse(state.token)}`
+        "authorization": `Bearer ${state.token}`
       }
     })
     setTutor({});

@@ -23,3 +23,15 @@ test('render app with auth', () => {
     const linkElement = screen.getByText(/profil/i);
     expect(linkElement).toBeInTheDocument();
 });
+
+test('render app with auth as Tutor', () => {
+    localStorage.setItem("isTutor", "true");
+    render(
+        <AuthContextProvider>
+            <App />
+        </AuthContextProvider>
+    );
+    const linkElement = screen.getByText(/profil/i);
+    expect(linkElement).toBeInTheDocument();
+    expect(localStorage.getItem("isTutor")).toEqual("true");
+});

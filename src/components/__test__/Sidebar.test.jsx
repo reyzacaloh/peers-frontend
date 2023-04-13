@@ -41,12 +41,12 @@ describe("Sidebar", () => {
 
   test("navigates to different pages", () => {
     render(
-      <AuthContextProvider>
-      <BrowserRouter>
-       <Sidebar />
-     </BrowserRouter>
-    </AuthContextProvider>
-    );
+      <AuthContext.Provider value={{tutor: {is_verified: true, is_accepted: true}, currentUser: {role: 1}}}>
+        <BrowserRouter>
+         <Sidebar />
+       </BrowserRouter>
+     </AuthContext.Provider>
+     );
 
     fireEvent.click(screen.getByText("Cari Tutor"));
 
@@ -71,7 +71,7 @@ describe("Sidebar", () => {
 
   test("render the right menu for tutor when already accepted", () => {
     render(
-     <AuthContext.Provider value={{tutor: {is_verified: true, is_accepted: true}}}>
+     <AuthContext.Provider value={{tutor: {is_verified: true, is_accepted: true}, currentUser: {role: 2}}}>
        <BrowserRouter>
         <Sidebar />
       </BrowserRouter>

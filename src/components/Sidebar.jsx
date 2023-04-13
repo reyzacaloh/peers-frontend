@@ -12,11 +12,42 @@ import "./Sidebar.css";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { AuthContext } from "../contexts/AuthContext";
+import { getCurrentUser } from "../utils/common";
+
+const TutorMenu = ({ role }) => {
+  return (
+    <NavLink
+      to={role === 2 ? "/tutor/dashboard" : "/tutor"}
+      className="link"
+      activeclassname="active"
+    >
+      <div className="icon">
+        <FaChalkboardTeacher />
+      </div>
+      <div className="link_text">{role === 2 ? "Dashboard" : "Jadi Tutor"}</div>
+    </NavLink>
+  );
+};
+
+const VerifyTutor = ({ role }) => {
+  return (
+    <NavLink
+      to={"/verify"}
+      className={`link ${role !== 1 && "hide_link"}`}
+      activeclassname="active"
+    >
+      <div className="icon">
+        <MdVerifiedUser />
+      </div>
+      <div className="link_text">{role === 1 && "Verify Tutor"}</div>
+    </NavLink>
+  );
+};
 
 const Sidebar = ({ children }) => {
   const [open, setOpen] = React.useState(true);
-  const {tutor} = useContext(AuthContext);
-  const menuItem = [
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
+  let menuItem = [
     {
       path: "/",
       name: "Cari Tutor",
@@ -32,28 +63,25 @@ const Sidebar = ({ children }) => {
       name: "Profil",
       icon: <FaUser />,
     },
-    {
-      path: `${tutor.is_verified && tutor.is_accepted ? "/tutor/dashboard" : "/tutor"}`,
-      name: `${tutor.is_verified && tutor.is_accepted ? "Dashboard" : "Jadi Tutor"}`,
-      icon: <FaChalkboardTeacher />,
-    },
-    {
-      path: "/verify",
-      name: "Verify Tutor",
-      icon: <MdVerifiedUser />,
-    },
   ];
 
   useEffect(() => {
-    const setIsOpen = () => setOpen(true);
-    window.addEventListener("resize", setIsOpen);
-
-
-    return () => window.removeEventListener("resize", setIsOpen);
-  });
+    const handleResize = () => {
+      if (window.innerWidth > 1024) {
+        setOpen(true);
+      }
+    };
+    getCurrentUser(setCurrentUser);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser.role]);
   return (
     <div className="container">
-      <div data-testid="overlay" className={`overlay ${open ? "" : "hide"}`}></div>
+      <div
+        data-testid="overlay"
+        className={`overlay ${open ? "" : "hide"}`}
+      ></div>
       <div className="navbar_top">
         <div className="icon_section">
           <MenuOutlinedIcon
@@ -82,13 +110,19 @@ const Sidebar = ({ children }) => {
             <NavLink
               to={item.path}
               key={index}
-              className="link"
+              className={`link ${
+                currentUser.role !== 1 && item.path === "/verify"
+                  ? "hide_link"
+                  : ""
+              }`}
               activeclassname="active"
             >
               <div className="icon">{item.icon}</div>
               <div className="link_text">{item.name}</div>
             </NavLink>
           ))}
+          <TutorMenu role={currentUser.role} />
+          <VerifyTutor role={currentUser.role} />
           <Logout />
         </div>
       </div>

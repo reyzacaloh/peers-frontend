@@ -47,7 +47,7 @@ test('render app with not auth', () => {
 
 test('render app with auth', () => {
   render(
-    <AuthContext.Provider value={{state: {isAuthenticated: true, user: null, token: null, isTutor: false}, dispatch: {}, tutor: {}}}>
+    <AuthContext.Provider value={{state: {isAuthenticated: true, user: null, token: null, isTutor: false}, dispatch: {}, tutor: {}, currentUser: {role: 3}}}>
         <App />
     </AuthContext.Provider>
   );
@@ -57,7 +57,7 @@ test('render app with auth', () => {
 
 test('render app with auth and tutor', () => {
   render(
-    <AuthContext.Provider value={{state: {isAuthenticated: true, user: null, token: null, isTutor: true}, dispatch: {}, tutor: {}}}>
+    <AuthContext.Provider value={{state: {isAuthenticated: true, user: null, token: null, isTutor: true}, dispatch: {}, tutor: {}, currentUser: {role: 3}}}>
         <App />
     </AuthContext.Provider>
   );

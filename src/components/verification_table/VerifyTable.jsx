@@ -60,7 +60,7 @@ const VerifyTable = () => {
       </thead>
       <tbody>
         {users.map((user, index) => (
-          <tr>
+          <tr key={user.uid}>
             <td data-label="No">{index + 1}</td>
             <td data-label="Email">{user.uid.email}</td>
             <td data-label="Transkrip Nilai">
@@ -79,7 +79,7 @@ const VerifyTable = () => {
               </a>
             </td>
 
-            <td data-label="Actions" classname="td-button">
+            <td data-label="Actions" className="td-button">
               <button
                 onClick={() => VerifyUser(user.pddikti, true)}
                 className="success"
