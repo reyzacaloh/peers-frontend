@@ -12,8 +12,12 @@ stages:
   - quality
 
 
-build:
+build-staging:
   stage: build
+  except:
+    - master
+  environment:
+    name: staging
   cache:
     key: $CI_COMMIT_REF_SLUG 
     paths:
@@ -26,6 +30,25 @@ build:
     paths:
       - build/
     expire_in: 1 days
+
+build-prod:
+  stage: build
+  environment:
+    name: production
+  cache:
+    key: $CI_COMMIT_REF_SLUG 
+    paths:
+      - node_modules/
+  before_script:
+    - npm install
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - build/
+    expire_in: 1 days
+  only:
+    - master
 
 test:
   stage: test
