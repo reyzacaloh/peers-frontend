@@ -9,6 +9,7 @@ import Profile from "../pages/Profile";
 import RegisterTutorForm from "../components/registerTutorForm/RegisterTutorForm";
 import Verification from "../pages/Verification.jsx"
 import TutorScheduleForm from "../components/tutorScheduleForm/TutorScheduleForm";
+import TutorDetail from '../pages/TutorDetail/TutorDetail.jsx';
 import { AuthContext } from "../contexts/AuthContext";
 
 function AuthRoutes() {
@@ -49,7 +50,10 @@ function AuthRoutes() {
                     <Sidebar>
                         <TutorDashboard />
                     </Sidebar>
-            } /> :
+            } />
+            <Route path="/tutor/:id" element={
+                    <TutorDetail />
+            } />
             <Route path="*" element={<NotFound />} />
         </Routes>
     );
