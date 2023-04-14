@@ -7,7 +7,7 @@ function Profile() {
 
   const fetchData = async (setProfile) => {
     try {
-      const response = await axios.get('https://peers-backend-prod.up.railway.app/api/auth/user/profile/', {
+      const response = await axios.get('https://peers-backend-dev.up.railway.app/api/auth/user/profile/', {
         headers: {
           authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,
         },
@@ -29,9 +29,9 @@ function Profile() {
       <div className="grid-container">
         <div className="card">
           <div>
-            <img class="rounded" src="https://www.citypng.com/public/uploads/preview/png-profile-user-round-gray-icon-symbol-11639594342slkdqxcgi6.png" alt="profile" width="200" />
+            <img className="rounded" src="https://www.citypng.com/public/uploads/preview/png-profile-user-round-gray-icon-symbol-11639594342slkdqxcgi6.png" alt="profile" width="200" />
           </div>
-          <div class="content">
+          <div className="content">
             <h4>
               Nama: {profile.first_name} {profile.last_name}{' '}
             </h4>

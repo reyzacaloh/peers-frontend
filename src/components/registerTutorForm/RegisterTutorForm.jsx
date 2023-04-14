@@ -39,7 +39,7 @@ const RegisterTutorForm = () => {
         try {
             <div><h1>Registration Form</h1></div>
             const response =  await axios.post(
-                "https://peers-backend-prod.up.railway.app/api/tutor_form/upload/",
+                "https://peers-backend-dev.up.railway.app/api/tutor_form/upload/",
                 formData,
                 {headers: {
                     "content-type": "multipart/form-data",

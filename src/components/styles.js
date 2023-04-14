@@ -40,7 +40,8 @@ export const SSidebar = styled.div`
     height: relative;
     padding: ${v.lgSpacing};
     position: relative;
-    background: #279686;
+    color: white;
+    font-weight: bold;
 `;
 
 export const SSidebarButton = styled.button`
@@ -48,6 +49,7 @@ export const SSidebarButton = styled.button`
     position: absolute;
     top: ${v.xxlSpacing};
     right: ${({ isOpen }) => (isOpen ? `-16px` : `-10px`)};
+    color: white;
     width: 32px;
     height: 32px;
     border-radius: 50%;
