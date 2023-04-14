@@ -6,65 +6,57 @@ import FindTutor from "../pages/FindTutor.jsx";
 import NotFound from "../pages/NotFound";
 import TutorDashboard from "../pages/TutorDashboard";
 import Profile from "../pages/Profile";
-import Verification from "../pages/Verification.jsx";
-import RegisterTutor from "../pages/RegisterTutor.jsx";
+import RegisterTutorForm from "../components/registerTutorForm/RegisterTutorForm";
+import Verification from "../pages/Verification.jsx"
+import TutorScheduleForm from "../components/tutorScheduleForm/TutorScheduleForm";
+import TutorDetail from '../pages/TutorDetail/TutorDetail.jsx';
+import { AuthContext } from "../contexts/AuthContext";
 
 function AuthRoutes() {
 
-  return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <Sidebar>
-            <FindTutor />
-          </Sidebar>
-        }
-      />
-      <Route
-        path="/chat"
-        element={
-          <Sidebar>
-            <Chat />
-          </Sidebar>
-        }
-      />
-      <Route
-        path="/profile"
-        element={
-          <Sidebar>
-            <Profile />
-          </Sidebar>
-        }
-      />
-      <Route
-        path="/verify"
-        element={
-          <Sidebar>
-            <Verification />
-          </Sidebar>
-        }
-      />
-      <Route
-        path="/tutor/dashboard"
-        element={
-          <Sidebar>
-            <TutorDashboard/>
-          </Sidebar>
-        }
-      />
-      <Route
-        path="/tutor"
-        element={
-          <Sidebar>
-            <RegisterTutor/>
-          </Sidebar>
-        }
-      />{" "}
-      :
-      <Route path="*" element={<NotFound />} />
-    </Routes>
-  );
+    const { state } = React.useContext(AuthContext);
+    
+    return (
+
+        <Routes>
+            <Route path="/" element={
+                <Sidebar>
+                    <FindTutor />
+                </Sidebar>} />
+            <Route
+                path="/chat" element={
+                    <Sidebar>
+                        <Chat />
+                    </Sidebar>} />
+            <Route
+                path="/profile" element={
+                    <Sidebar>
+                        <Profile />
+                    </Sidebar>} />
+            <Route
+                path="/verify" element={
+                    <Sidebar>
+                        <Verification/>
+                    </Sidebar>} />
+            <Route
+                path="/schedule" element={
+                <Sidebar>
+                    <TutorScheduleForm/>
+                </Sidebar>} />
+            
+            <Route path="/tutor" element={
+                !state.isTutor ?
+                    <RegisterTutorForm /> :
+                    <Sidebar>
+                        <TutorDashboard />
+                    </Sidebar>
+            } />
+            <Route path="/tutor/:id" element={
+                    <TutorDetail />
+            } />
+            <Route path="*" element={<NotFound />} />
+        </Routes>
+    );
 }
 
 export default AuthRoutes;

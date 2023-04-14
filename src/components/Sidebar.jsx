@@ -4,6 +4,7 @@ import {
   FaChalkboardTeacher,
   FaCommentAlt,
   FaUser,
+  FaCalendar,
 } from "react-icons/fa";
 import { MdVerifiedUser } from "react-icons/md";
 import { NavLink } from "react-router-dom";
@@ -62,6 +63,21 @@ const Sidebar = ({ children }) => {
       path: "/profile",
       name: "Profil",
       icon: <FaUser />,
+    },
+    {
+      path: "/tutor",
+      name: "Jadi Tutor",
+      icon: <FaChalkboardTeacher />,
+    },
+    {
+      path: "/verify",
+      name: "Verify Tutor",
+      icon: <MdVerifiedUser />,
+    },
+    {
+      path: "/schedule",
+      name: "Schedule",
+      icon: <FaCalendar />,
     },
   ];
 

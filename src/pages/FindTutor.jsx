@@ -2,8 +2,12 @@ import React from "react";
 import "./FindTutor.css";
 import SearchBar from "../components/SearchBar";
 import TutorCard from "../components/tutor_card/TutorCard";
+import { useNavigate } from "react-router-dom";
 
 const FindTutor = () => {
+
+  const navigate = useNavigate();
+  
   const tutorItem = [
     {
       id: 1,
@@ -116,6 +120,7 @@ const FindTutor = () => {
       <div className="card_container">
         {tutorItem.map((item, index) => (
           <TutorCard
+          onClick={() => navigate(`/tutor/${item.id}`)}
             key={index}
             data={{
               firstname: item.firstname,
