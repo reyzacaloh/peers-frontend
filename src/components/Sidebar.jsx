@@ -65,16 +65,6 @@ const Sidebar = ({ children }) => {
       icon: <FaUser />,
     },
     {
-      path: "/tutor",
-      name: "Jadi Tutor",
-      icon: <FaChalkboardTeacher />,
-    },
-    {
-      path: "/verify",
-      name: "Verify Tutor",
-      icon: <MdVerifiedUser />,
-    },
-    {
       path: "/schedule",
       name: "Schedule",
       icon: <FaCalendar />,
