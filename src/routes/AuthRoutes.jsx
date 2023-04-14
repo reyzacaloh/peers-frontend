@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Sidebar from '../components/Sidebar.jsx';
+import Sidebar from "../components/Sidebar.jsx";
 import Chat from "../pages/Chat.jsx";
 import FindTutor from "../pages/FindTutor.jsx";
 import NotFound from "../pages/NotFound";
