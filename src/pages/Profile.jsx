@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './Profile.css';
 import axios from 'axios';
+import LearnerSchedule from '../components/LearnerSchedule';
 
-function Profile() {
+const Profile = () => {
   const [profile, setProfile] = useState([]);
 
   const fetchData = async (setProfile) => {
@@ -24,7 +25,7 @@ function Profile() {
   }, []);
 
   return (
-    <div>
+    <div className='page_container'>
       <h1>Profile page</h1>
       <div className="grid-container">
         <div className="card">
@@ -40,6 +41,7 @@ function Profile() {
           </div>
         </div>
       </div>
+      <LearnerSchedule></LearnerSchedule>
     </div>
   );
 }
