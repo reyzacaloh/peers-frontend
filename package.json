@@ -72,5 +72,8 @@
       "!src/index.js",
       "!src/reportWebVitals.js"
     ]
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.1"
   }
 }

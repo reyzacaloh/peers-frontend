@@ -67,7 +67,7 @@ const Chat = ({data}) => {
     return (
         <div className='chat_container'>
             <div className="wrapper">
-               <ChatSidebar back={back} data={data} onClickChat={(e) => handleOnClickChat(e)}/>
+               <ChatSidebar back={back} data={getData()} onClickChat={(e) => handleOnClickChat(e)}/>
                <ChatBox back={back} open={open} data={user} onClickBack={() => setBack(true)} onClose={() => setOpen(false)}/>
             </div>
         </div>

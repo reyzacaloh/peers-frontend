@@ -15,7 +15,7 @@ describe('Logout', () => {
       
     );
 
-    const logoutButton = screen.getByText(/Logout/i);
+    const logoutButton = screen.getByTestId("logout");
     expect(logoutButton).toBeInTheDocument();
   });
 
@@ -30,7 +30,7 @@ describe('Logout', () => {
       
     );
 
-    const logoutButton = screen.getByText(/Logout/i);
+    const logoutButton = screen.getByTestId("logout");
     fireEvent.click(logoutButton);
 
     expect(localStorage.getItem('jwtToken')).toBeNull();
