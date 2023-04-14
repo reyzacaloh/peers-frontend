@@ -28,7 +28,7 @@ import logo from "../images/logo_small.png"
 
 
 const Sidebar = ({ children }) => {
-    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(true);
     const { pathname } = useLocation();
 
     const menuItem = [

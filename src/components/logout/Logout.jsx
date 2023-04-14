@@ -1,18 +1,12 @@
 import React, { useState } from 'react' 
-import { useNavigate, NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FaSignOutAlt} from 'react-icons/fa';
 import { AuthContext } from '../../contexts/AuthContext';
 import {
-  SDivider,
   SLink,
   SLinkContainer,
   SLinkIcon,
   SLinkLabel,
-  SLinkNotification,
-  SLogo,
-  SSidebar,
-  SSidebarButton,
-  SLayout
 } from "../styles";
 
 function Logout() {
@@ -29,7 +23,7 @@ function Logout() {
     return (
       <SLinkContainer onClick={HandleLogout} key="Logout">
         <SLink style={!sidebarOpen ? { width: `fit-content` } : {}} >
-          <SLinkIcon>{<FaSignOutAlt></FaSignOutAlt>}</SLinkIcon>
+          <SLinkIcon data-testid="logout">{<FaSignOutAlt></FaSignOutAlt>}</SLinkIcon>
           {sidebarOpen && (
             <>
               <SLinkLabel>Logout</SLinkLabel>
