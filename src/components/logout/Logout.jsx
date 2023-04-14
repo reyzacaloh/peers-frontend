@@ -2,31 +2,41 @@ import React, { useState } from 'react'
 import { useNavigate, NavLink } from 'react-router-dom';
 import { FaSignOutAlt} from 'react-icons/fa';
 import { AuthContext } from '../../contexts/AuthContext';
+import {
+  SDivider,
+  SLink,
+  SLinkContainer,
+  SLinkIcon,
+  SLinkLabel,
+  SLinkNotification,
+  SLogo,
+  SSidebar,
+  SSidebarButton,
+  SLayout
+} from "../styles";
 
 function Logout() {
-    const {dispatch} = React.useContext(AuthContext);
+    const { dispatch } = React.useContext(AuthContext);
     const navigate = useNavigate();
-    const [open] = useState(true);
+    const [sidebarOpen] = useState(false);
     const HandleLogout = () => {
-      
-      dispatch({type: "LOGOUT"})
+
+      dispatch({ type: "LOGOUT" });
       navigate("/");
-      
+
     };
-  
+
     return (
-      <NavLink className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
-      ${HandleLogout.gap ? "mt-9" : "mt-2"} ${
-        "bg-light-white"
-      }`}
-      activeclassname="active"
-      onClick={HandleLogout} 
-      >
-        <div className="icon"><FaSignOutAlt/></div>
-        <div className={`${!open && "hidden"} origin-left duration-200`}>
-            Logout
-        </div>
-    </NavLink>
+      <SLinkContainer onClick={HandleLogout} key="Logout">
+        <SLink style={!sidebarOpen ? { width: `fit-content` } : {}} >
+          <SLinkIcon>{<FaSignOutAlt></FaSignOutAlt>}</SLinkIcon>
+          {sidebarOpen && (
+            <>
+              <SLinkLabel>Logout</SLinkLabel>
+            </>
+          )}
+        </SLink>
+      </SLinkContainer>
     );
   }
   
