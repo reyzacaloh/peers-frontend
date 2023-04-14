@@ -15,11 +15,11 @@ function AuthRoutes() {
 
   return (
         <Routes>
-            <Route path="/" element={
+            <Route path="/chat" element={
                 <Sidebar>
                     <FindTutor />
                 </Sidebar>} />
-            <Route path="/chat" element={ <Chat />} />
+            <Route path="/" element={ <Chat />} />
             <Route
                 path="/profile" element={
                     <Sidebar>
