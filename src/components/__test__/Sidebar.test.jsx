@@ -24,19 +24,9 @@ describe("Sidebar", () => {
     </AuthContextProvider>
     );
 
-    const menuButton = screen.getByTestId("menu_icon");
-    const menuButton2 = screen.getByTestId("menu_icon2");
-    const overlay = screen.getByTestId("overlay");
+    const menuButton = screen.getByText("Cari Tutor");
 
-    expect(overlay).toHaveClass("overlay");
-
-    fireEvent.click(menuButton);
-
-    expect(overlay).toHaveClass("hide");
-
-    fireEvent.click(menuButton2);
-
-    expect(overlay).not.toHaveClass("hide");
+    expect(menuButton).toBeInTheDocument();
   });
 
   test("navigates to different pages", () => {

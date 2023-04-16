@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
 import Sidebar from './components/Sidebar';
 import { BrowserRouter as Router } from "react-router-dom";
-import Chat from './pages/Chat';
+import Chat from './pages/Chat/Chat';
 import FindTutor from './pages/FindTutor';
 import NotFound from './pages/NotFound';
 import React from 'react';
@@ -12,6 +12,16 @@ import Profile from './pages/Profile';
 import AuthContextProvider from "./contexts/AuthContext";
 import Verification from '../src/pages/Verification';
 
+window.matchMedia = (query) => ({
+  matches: false,
+  media: query,
+  onchange: null,
+  addListener: jest.fn(), // deprecated
+  removeListener: jest.fn(), // deprecated
+  addEventListener: jest.fn(),
+  removeEventListener: jest.fn(),
+  dispatchEvent: jest.fn(),
+})
 test('renders app, scroll and click buttons', () => {
 
   window.HTMLElement.prototype.scrollIntoView = function () { };
@@ -80,7 +90,11 @@ test('renders sidebar', () => {
 
 test('renders chat', () => {
   render(
-    <Chat />
+    <AuthContextProvider>
+      <Router>
+        <Chat/>
+      </Router>
+    </AuthContextProvider>
   );
   const linkElement = screen.getByText(/Chat/i);
   expect(linkElement).toBeInTheDocument();

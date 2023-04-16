@@ -4,3 +4,60 @@
   text-decoration: none;
   box-sizing: border-box;
 }
+
+.container {
+  display: flex;
+}
+
+main {
+  width: 100%;
+  padding: 20px;
+}
+
+.sidebar {
+  width: 20%;
+  background: #279686;
+  color: #fff;
+  min-height: 100vh;
+  transition: all 0.5s;
+}
+
+.top_section {
+  display: flex;
+  align-items: center;
+  padding: 20px 15px;
+}
+
+.logo {
+  font-size: 30px;
+  display: block;
+}
+
+.link {
+  display: flex;
+  color: #fff;
+  padding: 10px 15px;
+  gap: 15px;
+  transition: all 0.5s;
+}
+
+.link:hover {
+  background: #e0e0e07f;
+  transition: all 0.5s;
+}
+
+.active {
+  background: #e0e0e07f;
+}
+
+.link_text {
+  display: block;
+}
+
+.logout{
+background-color: #279686;
+}
+.icon,
+.link_text {
+  font-size: 20px;
+}
