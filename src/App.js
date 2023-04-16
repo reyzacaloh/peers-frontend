@@ -9,7 +9,6 @@ import AuthRoutes from "./routes/AuthRoutes";
 function App() {
 
   const { state } = React.useContext(AuthContext);
-
   return (
     <div className="App">
       <Router>
