@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import axios from 'axios';
-import { Space, Table, Tag , Tabs} from 'antd';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useEffect } from 'react';
+import {Table, Tabs} from 'antd';
 import {addHours} from 'date-fns';
-import { userRequest } from '../axiosInstance';
+import axios from 'axios';
 
 const LearnerSchedule = () => {
   const [upcoming, addUpcoming] = useState([]);
@@ -12,13 +12,20 @@ const LearnerSchedule = () => {
   const processSchedule = (schedule) => {
     const current_time = new Date()
     const schedule_time = new Date(schedule.date_time)
-    if (schedule_time<current_time) {
-        addUpcoming(current => [...current, schedule])
-    } else if (schedule_time >= current_time && schedule_time <= addHours(current_time, 1)){
-        addOngoing(current => [...current, schedule])
-    } else {    
-        addHistory(current => [...current, schedule])
+    const transformed_schedule = {
+      key : `${schedule['id']}`,
+      tutor : `${schedule['tutor_id']['uid']['first_name']} ${schedule['tutor_id']['uid']['last_name']}`,
+      date : `${schedule_time.getFullYear()}-${schedule_time.getMonth()+1}-${schedule_time.getDate()}`,
+      time : schedule_time.toLocaleTimeString()
     }
+    if (current_time<schedule_time) {
+        addUpcoming(current => current.find(e => e.key === transformed_schedule.key)?[...current]:[transformed_schedule,...current])
+    } else if (schedule_time >= current_time && schedule_time <= addHours(current_time, 1)){
+        addOngoing(current => current.find(e => e.key === transformed_schedule.key)?[...current]:[transformed_schedule,...current])
+    } else {    
+        addHistory(current => current.find(e => e.key === transformed_schedule.key)?[...current]:[transformed_schedule,...current])
+    }
+    
     return schedule
   }
 
@@ -39,61 +46,39 @@ const LearnerSchedule = () => {
         key: 'time',
     }
   ];
-  const upcomingData= [
-    {
-      tutor: 'John@gmail.com',
-      date: '2023-04-21',
-      time: '09.00'
-    },
-    {
-        tutor: 'Nick@gmail.com',
-        date: '2023-04-22',
-        time: '10.00'
-    },
-  ];
-  const ongoingData= [
-    {
-      tutor: 'Wick@gmail.com',
-      date: '2023-04-14',
-      time: '13.00'
-    }
-  ];
-  const historyData= [
-    {
-      tutor: 'Brad@gmail.com',
-      date: '2023-04-11',
-      time: '12.00'
-    }
-  ];
   const items = [
     {
       key: '1',
       label: `Upcoming`,
-      children: <Table columns={columns} dataSource={upcomingData} />,
+      children: <Table columns={columns} dataSource={upcoming} />,
     },
     {
       key: '2',
       label: `Ongoing`,
-      children: <Table columns={columns} dataSource={ongoingData} />,
+      children: <Table columns={columns} dataSource={ongoing} />,
     },
     {
       key: '3',
       label: `History`,
-      children: <Table columns={columns} dataSource={historyData} />,
+      children: <Table columns={columns} dataSource={history} />,
     },
   ];
   const fetchSchedule = async () => {
     try {
-      const response = await userRequest.get('api/schedule/', {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/schedule/?tutor=0`, {
         headers: {
           authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,
         },
       });
       response.data['schedules'].map(processSchedule)
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.log("Error: ", err.message);
     }
   };
+  useEffect(() => {
+    fetchSchedule();
+  },[]);
+  
   return <Tabs defaultActiveKey="1" centered items={items}/>;
 
 }

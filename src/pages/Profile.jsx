@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import './Profile.css';
 import axios from 'axios';
 import LearnerSchedule from '../components/LearnerSchedule';
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const [profile, setProfile] = useState([]);
 
-  const fetchData = async (setProfile) => {
+  const fetchData = async () => {
     try {
       const response = await axios.get('https://peers-backend-dev.up.railway.app/api/auth/user/profile/', {
         headers: {
@@ -21,7 +22,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    fetchData(setProfile);
+    fetchData();
   }, []);
 
   return (
@@ -42,6 +43,7 @@ const Profile = () => {
         </div>
       </div>
       <LearnerSchedule></LearnerSchedule>
+      <Link to='/chat' className='cv-btn'>Chat</Link>
     </div>
   );
 }
