@@ -1,0 +1,88 @@
+import {render, screen, waitFor} from "@testing-library/react";
+import {BrowserRouter} from "react-router-dom";
+import LearnerSchedule from "../LearnerSchedule";
+import axios from 'axios';
+import AuthContextProvider from "../../contexts/AuthContext";
+import "@testing-library/jest-dom/extend-expect";
+
+jest.mock("axios");
+describe('LearnerSchedule test', () => {
+    const setup = () => (
+        render(<AuthContextProvider> <LearnerSchedule /> </AuthContextProvider>, {wrapper: BrowserRouter})
+    );
+    test('all tabs should fully render with tutor data displayed', async () => {
+        const mockResponse = 
+        {"data" : {
+            "statusCode": 200,
+            "schedules": [
+                {
+                    "id": 1,
+                    "tutor_id": {
+                        "uid": {
+                            "email": "admin@gmail.com",
+                            "first_name": "Johanes",
+                            "last_name": "Raka"
+                        },
+                        "id": 3
+                    },
+                    "learner_id": null,
+                    "date_time": "2023-03-23T18:00:00Z",
+                    "is_booked": false,
+                    "is_finished": false
+                },
+                {
+                    "id": 2,
+                    "tutor_id": {
+                        "uid": {
+                            "email": "admin@gmail.com",
+                            "first_name": "Triadana Nikaputra",
+                            "last_name": ""
+                        },
+                        "id": 3
+                    },
+                    "learner_id": 6,
+                    "date_time": "2023-04-23T20:00:00Z",
+                    "is_booked": true,
+                    "is_finished": true
+                },
+                {
+                    "id": 3,
+                    "tutor_id": {
+                        "uid": {
+                            "email": "admin@gmail.com",
+                            "first_name": "JR",
+                            "last_name": "TN"
+                        },
+                        "id": 3
+                    },
+                    "learner_id": 6,
+                    "date_time": `${new Date().toJSON()}`,
+                    "is_booked": true,
+                    "is_finished": true
+                }
+            ]
+        }}
+        axios.get = jest.fn()
+        axios.get.mockResolvedValueOnce(mockResponse)
+        setup()
+        expect(screen.getByText("Upcoming")).toBeInTheDocument();
+        expect(screen.getByText("Ongoing")).toBeInTheDocument();
+        expect(screen.getByText("History")).toBeInTheDocument();
+        expect(axios.get).toHaveBeenCalled()
+        await waitFor(() => {
+            expect(screen.getByText("Triadana Nikaputra")).toBeInTheDocument();
+        });
+    });
+
+    test('fetch failed and no tutor data shown', async () => {
+        const expectedError = new Error("Network Error");
+        axios.get = jest.fn()
+        axios.get.mockRejectedValueOnce(expectedError);
+        setup()
+        expect(axios.get).toHaveBeenCalled()
+        await waitFor(() => {
+            expect(screen.queryByText("Triadana Nikaputra")).not.toBeInTheDocument();
+        });
+    });
+
+});
