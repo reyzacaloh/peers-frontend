@@ -13,6 +13,8 @@ describe("Sidebar", () => {
       </BrowserRouter>
      </AuthContextProvider>
     );
+
+
   });
 
   test("opens and closes the sidebar", () => {
@@ -57,6 +59,8 @@ describe("Sidebar", () => {
     fireEvent.click(screen.getByText("Verify Tutor"));
 
     expect(window.location.pathname).toBe("/verify");
+
+    expect(screen.getByTestId("sideButton")).toBeInTheDocument();
   });
 
   test("render the right menu for tutor when already accepted", () => {
@@ -72,6 +76,30 @@ describe("Sidebar", () => {
     fireEvent.click(screen.getByText("Dashboard"));
     
     expect(window.location.pathname).toBe("/tutor/dashboard");
+  });
+
+  test('should set sidebarOpen to true when window width is greater than 1024', () => {
+    global.innerWidth = 1200; // set window width to 1200px
+    global.dispatchEvent(new Event('resize'));
+    render(
+     <AuthContextProvider>
+       <BrowserRouter>
+        <Sidebar />
+      </BrowserRouter>
+     </AuthContextProvider>);
+    expect(screen.getByText("Cari Tutor")).toBeInTheDocument();
+  });
+
+  test('should set sidebarOpen to false when window width is less than or equal to 1024', () => {
+    global.innerWidth = 800; // set window width to 800px
+    global.dispatchEvent(new Event('resize'));
+    render(
+      <AuthContextProvider>
+        <BrowserRouter>
+         <Sidebar />
+       </BrowserRouter>
+      </AuthContextProvider>);
+    expect(screen.getByText("Cari Tutor")).toBeInTheDocument();
   });
 
 });

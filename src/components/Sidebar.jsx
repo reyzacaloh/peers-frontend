@@ -65,10 +65,10 @@ const Sidebar = ({ children }) => {
     useEffect(() => {
       const handleResize = () => {
         if (window.innerWidth > 1024) {
-          setOpen(true);
+          setSidebarOpen(true);
         }
         else{
-          setOpen(false);
+          setSidebarOpen(false);
         }
       };
       getCurrentUser(setCurrentUser);
@@ -111,7 +111,7 @@ const Sidebar = ({ children }) => {
       <SLayout>
         <SSidebar isOpen={sidebarOpen}>
             <>
-                <SSidebarButton isOpen={sidebarOpen} onClick={() => setSidebarOpen((p) => !p)}>
+                <SSidebarButton data-testid="sideButton" isOpen={sidebarOpen} onClick={() => setSidebarOpen((p) => !p)}>
                     <AiOutlineLeft />
                 </SSidebarButton>
             </>
