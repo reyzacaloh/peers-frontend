@@ -42,7 +42,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <LearnerSchedule></LearnerSchedule>
+      <LearnerSchedule/>
       <Link to='/chat' className='cv-btn'>Chat</Link>
     </div>
   );
