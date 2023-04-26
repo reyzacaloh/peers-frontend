@@ -22,6 +22,7 @@ import {
 import {
   AiOutlineLeft,
 } from "react-icons/ai";
+import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import { MdVerifiedUser } from "react-icons/md";
 import { useLocation } from 'react-router-dom'
 import Logout from './logout/Logout'
@@ -32,8 +33,9 @@ import "./Sidebar.css";
 
 const Sidebar = ({ children }) => {
     const { currentUser, setCurrentUser } = useContext(AuthContext);
-    const [sidebarOpen, setSidebarOpen] = useState(true);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
     const [open, setOpen] = useState(true);
+    const [button, setButton] = useState(true);
     const { pathname } = useLocation();
 
     const menuItem = [
@@ -66,9 +68,13 @@ const Sidebar = ({ children }) => {
       const handleResize = () => {
         if (window.innerWidth > 1024) {
           setSidebarOpen(true);
+          setOpen(true);
+          setButton(true);
         }
         else{
           setSidebarOpen(false);
+          setOpen(false);
+          setButton(false);
         }
       };
       getCurrentUser(setCurrentUser);
@@ -109,9 +115,21 @@ const Sidebar = ({ children }) => {
 
     return (
       <SLayout>
-        <SSidebar isOpen={sidebarOpen}>
+      <div className="navbar_top">
+        <div className="icon_section">
+          <MenuOutlinedIcon
+            data-testid="menu_icon"
+            className="menu_icon"
+            onClick={() => {setOpen(!open)}}
+          />
+        </div>
+        <div className="app_icon">
+          <img className="peers_icon" src="app-icon.png" alt="app-icon-peers" />
+        </div>
+      </div>
+        <SSidebar style={!open ? { display: `none` } : {}} isOpen={sidebarOpen}>
             <>
-                <SSidebarButton data-testid="sideButton" isOpen={sidebarOpen} onClick={() => setSidebarOpen((p) => !p)}>
+                <SSidebarButton style={!button ? { display: `none` } : {}} data-testid="sideButton" isOpen={sidebarOpen} onClick={() => setSidebarOpen((p) => !p)}>
                     <AiOutlineLeft />
                 </SSidebarButton>
             </>
