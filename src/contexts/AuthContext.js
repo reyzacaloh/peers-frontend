@@ -11,14 +11,14 @@ const AuthContextProvider = ({ children }) => {
         const token = localStorage.getItem('token');
         const tutor = localStorage.getItem('tutor');
 
-        if (tutor != null) {
+        if (tutor !== null) {
             dispatch({
                 type: 'TUTOR',
                 payload: {token: (token != null) ? token.replace(/['"]+/g, '') : null}
             })
         } else
 
-        if (token != null) {
+        if (token !== null) {
             dispatch({
                 type: 'LOGIN',
                 payload: {token: token.replace(/['"]+/g, '')}
