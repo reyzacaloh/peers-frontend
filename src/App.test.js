@@ -129,7 +129,7 @@ test('renders tutor dashboard page', () => {
 });
 
 test('renders Profile page', () => {
-  render(<Profile />);
+  render(<AuthContextProvider><Profile /></AuthContextProvider>, {wrapper: Router});
   const linkElement = screen.getByText(/Profile page/i);
   expect(linkElement).toBeInTheDocument();
 }); 
