@@ -32,6 +32,38 @@ describe('Tutor Detail component', () => {
                         "last_name": "test_last_name",
                     }
                 }
+            ],
+            "schedules": [
+                {
+                    "id": 1,
+                    "tutor_id": {
+                        "uid": {
+                            "email": "test@gmail.com",
+                            "first_name": "Test",
+                            "last_name": "Haha"
+                        },
+                        "id": 1
+                    },
+                    "learner_id": null,
+                    "date_time": "2023-12-28T09:30:00Z",
+                    "is_booked": false,
+                    "is_finished": false
+                },
+                {
+                    "id": 2,
+                    "tutor_id": {
+                      "uid": {
+                        "email": "test@gmail.com",
+                        "first_name": "Test",
+                        "last_name": "Haha"
+                      },
+                      "id": 1
+                    },
+                    "learner_id": null,
+                    "date_time": "2023-04-28T21:00:00Z",
+                    "is_booked": true,
+                    "is_finished": false
+                  },              
             ]
         };
         axios.get.mockResolvedValueOnce({ data: mockData });
