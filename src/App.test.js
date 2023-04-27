@@ -26,7 +26,7 @@ test('renders app, scroll and click buttons', () => {
 
   window.HTMLElement.prototype.scrollIntoView = function () { };
   render(
-  <AuthContext.Provider value={{state: {isAuthenticated: false, user: null, token: null, isTutor: false}, dispatch: {}}}>
+  <AuthContext.Provider value={{state: {isAuthenticated: false, user: null, token: null, isTutor: false}, dispatch: {}, tutor: {}}}>
     <App />
 </AuthContext.Provider>);
   const homeElement = screen.getByText(/beranda/i);
@@ -47,7 +47,7 @@ test('renders app, scroll and click buttons', () => {
 
 test('render app with not auth', () => {
   render(
-    <AuthContext.Provider value={{state: {isAuthenticated: false, user: null, token: null, isTutor: false}, dispatch: {}}}>
+    <AuthContext.Provider value={{state: {isAuthenticated: false, user: null, token: null, isTutor: false}, dispatch: {}, tutor: {}}}>
         <App />
     </AuthContext.Provider>
   );
@@ -57,7 +57,7 @@ test('render app with not auth', () => {
 
 test('render app with auth', () => {
   render(
-    <AuthContext.Provider value={{state: {isAuthenticated: true, user: null, token: null, isTutor: false}, dispatch: {}}}>
+    <AuthContext.Provider value={{state: {isAuthenticated: true, user: null, token: null, isTutor: false}, dispatch: {}, tutor: {}, currentUser: {role: 3}}}>
         <App />
     </AuthContext.Provider>
   );
@@ -67,7 +67,7 @@ test('render app with auth', () => {
 
 test('render app with auth and tutor', () => {
   render(
-    <AuthContext.Provider value={{state: {isAuthenticated: true, user: null, token: null, isTutor: true}, dispatch: {}}}>
+    <AuthContext.Provider value={{state: {isAuthenticated: true, user: null, token: null, isTutor: true}, dispatch: {}, tutor: {}, currentUser: {role: 3}}}>
         <App />
     </AuthContext.Provider>
   );
@@ -131,7 +131,7 @@ test('renders tutor dashboard page', () => {
 });
 
 test('renders Profile page', () => {
-  render(<Profile />);
+  render(<AuthContextProvider><Profile /></AuthContextProvider>, {wrapper: Router});
   const linkElement = screen.getByText(/Profile page/i);
   expect(linkElement).toBeInTheDocument();
 }); 
