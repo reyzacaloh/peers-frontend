@@ -25,10 +25,11 @@
     overflow: auto;
 }
 
-.rounded {
+img {
+    object-fit: cover;
     border-radius: 50%;
-    padding-top: 16px;
-    max-width: 200px;
+    height: 200px;
+    width: 200px;
 }
 
 .card .content {
@@ -66,5 +67,12 @@
         padding-top: 228px;
         text-align: left;
         font-family: PlusJakartaSans;
+    }
+
+    img {
+        object-fit: cover;
+        border-radius: 50%;
+        height: 175px;
+        width: 175px;
     }
   }

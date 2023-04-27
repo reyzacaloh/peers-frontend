@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import './Profile.css';
 import axios from 'axios';
 import LearnerSchedule from '../components/LearnerSchedule';
+import { Link } from "react-router-dom";
 import { MdEmail, MdDateRange } from "react-icons/md";
 
 const Profile = () => {
   const [profile, setProfile] = useState([]);
 
-  const fetchData = async (setProfile) => {
+  const fetchData = async () => {
     try {
       const response = await axios.get('https://peers-backend-dev.up.railway.app/api/auth/user/profile/', {
         headers: {
@@ -22,7 +23,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    fetchData(setProfile);
+    fetchData();
   }, []);
 
   return (
@@ -31,7 +32,7 @@ const Profile = () => {
       <div className="grid-container">
         <div className="card">
           <div>
-            <img className="rounded" src={profile.profile_picture} alt="profile"/>
+            <img src={profile.profile_picture} alt="profile"/>
           </div>
           <div className="content">
             <h1>
@@ -43,7 +44,8 @@ const Profile = () => {
           </div>
         </div>
         <div className="content">
-          <LearnerSchedule></LearnerSchedule> 
+          <LearnerSchedule/>
+          <Link to='/chat' className='cv-btn'>Chat</Link>
         </div>
       </div>
     </div>

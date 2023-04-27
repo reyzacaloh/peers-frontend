@@ -1,0 +1,93 @@
+@import url("https://fonts.googleapis.com/css?family=Lato:400,400i,700");
+
+body {
+    margin: 0;
+}
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+    padding: 10px;
+    border-radius: 5px;
+    color: "white";
+}
+
+
+.header {
+    min-height: 50vh;
+    color: white;
+    clip-path: ellipse(100vw 60vh at 50% 50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.details {
+    text-align: center;
+}
+
+.profile-pic {
+    height: 16rem;
+    width: 16rem;
+    object-fit: cover;
+    border-radius: 90%;
+    border: 2px solid #fff;
+}
+
+.location p {
+    display: inline-block;
+}
+
+.location svg {
+    vertical-align: middle;
+}
+
+.reservasi-button {
+    background-color:#279686;
+    padding:10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color:white;
+    border-radius: 10px;
+}
+
+.stats {
+    display: flex;
+}
+
+.stats .col-4 {
+    width: 10rem;
+    text-align: center;
+}
+
+.heading {
+    font-weight: bold;
+    font-size: 1.3rem;
+    margin: 1rem 0;
+}
+
+.table {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.table table {
+    overflow: hidden;
+    border-radius:20px;
+}
+
+.table th {
+    border-top: none;
+}
+
+.table td:first-child, th:first-child {
+     border-left: none;
+}
+
+.table h1 {
+    color: white;
+}
