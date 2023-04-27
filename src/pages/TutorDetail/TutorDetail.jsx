@@ -40,7 +40,7 @@ function TutorDetail() {
         },
       });
       console.log(response);
-      setSchedule(response.data.schedules.reverse());
+      setSchedule(response.data.schedules.sort((a,b) => Date.parse(new Date(a.date_time)) - Date.parse(new Date(b.date_time))));
       setProfile(response.data.tutors[0]);
     } catch (error) {
       console.log(error);
