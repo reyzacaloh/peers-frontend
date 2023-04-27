@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import ImageFull from "../image_fullscreen/ImageFull";
-import { MessageContainer } from "./styled/messageStyled";
+import { MessageContainer, Video } from "./styled/messageStyled";
 import {MessageImg, Img, MessageContent, MessageInfo, Span, Text} from "./styled/messageStyled";
 
 const Message = ({ data }) => {
@@ -24,7 +24,7 @@ const Message = ({ data }) => {
         {message_img && (
           <MessageImg src={message_img} alt="msg_pic" onClick={() => setOpen(!open)}/>
         )}
-        {/* <video src="https://www.youtube.com/watch?v=ilgjaWU9w70&ab_channel=RadityaDika"></video> */}
+        {message_vid && <Video  url={message_vid} light controls />}
       </MessageContent>
     </MessageContainer>
   );

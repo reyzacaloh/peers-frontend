@@ -1,6 +1,6 @@
 import React from "react";
 import Message from "./Message";
-import { MessageContainer } from "./styled/messagesStyled";
+import { MessagesContainer } from "./styled/messagesStyled";
 
 const Messages = () => {
   const getData = () => [
@@ -8,6 +8,7 @@ const Messages = () => {
       profile_pic: "https://photos.hancinema.net/photos/largephoto1636274.jpg",
       username: "Ahn Go Eun",
       isOwner: true,
+      message_vid: "https://youtu.be/oxCt4V8HwxU",
       message_img:
         "https://imgx.parapuan.co/crop/11x0:1249x640/945x630/photo/2022/01/26/kekerasan-pada-perempuan2jpg-20220126042709.jpg",
       message: "Hello, how are you doing? Have you watched this?",
@@ -17,6 +18,7 @@ const Messages = () => {
         "https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2021/09/04/4102259019.jpg",
       username: "Mawar Eva",
       isOwner: false,
+      message_vid: "",
       message_img: "",
       message: "Long time no see",
     },
@@ -24,6 +26,7 @@ const Messages = () => {
       profile_pic: "https://photos.hancinema.net/photos/largephoto1636274.jpg",
       username: "Ahn Go Eun",
       isOwner: true,
+      message_vid: "https://youtu.be/oxCt4V8HwxU",
       message_img: "",
       message: "Hello, how are you doing?",
     },
@@ -39,6 +42,7 @@ const Messages = () => {
       profile_pic: "https://photos.hancinema.net/photos/largephoto1636274.jpg",
       username: "Ahn Go Eun",
       isOwner: true,
+      message_vid: "",
       message_img: "",
       message: "Hello, how are you doing?",
     },
@@ -54,6 +58,7 @@ const Messages = () => {
         "https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2021/09/04/4102259019.jpg",
       username: "Mawar Eva",
       isOwner: false,
+      message_vid: "",
       message_img: "",
       message: "Long time no see",
     },
@@ -82,11 +87,11 @@ const Messages = () => {
     },
   ];
   return (
-    <MessageContainer data-testid="messages">
+    <MessagesContainer data-testid="messages">
       {getData()?.map((msg, idx) => (
         <Message data={msg} key={idx} />
       ))}
-    </MessageContainer>
+    </MessagesContainer>
   );
 };
 

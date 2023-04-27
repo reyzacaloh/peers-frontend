@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const MessageContainer = styled.div`
+export const MessagesContainer = styled.div`
   background-color: #ddddf7;
   padding: 10px;
   width: 100%;

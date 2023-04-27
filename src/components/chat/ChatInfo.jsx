@@ -25,7 +25,7 @@ const ChatInfo = ({ onClick, data }) => {
       </ChatInfoStyled>
       <UserChatInfo>
         <ChatInfoHeader>
-          <Username>{username || "Unknown"}</Username>
+          <Username onClick={onClick}>{username || "Unknown"}</Username>
           <Time>{time || "13.00"}</Time>
         </ChatInfoHeader>
         <LatestMessage>{latest_message || ""}</LatestMessage>

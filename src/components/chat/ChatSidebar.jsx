@@ -1,7 +1,6 @@
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "./ChatComponents.css";
 import ChatInfo from "./ChatInfo";
 import {
   BackBtn,
@@ -14,7 +13,7 @@ const ChatSidebar = ({ onClickChat, data, back }) => {
   const navigate = useNavigate();
 
   return (
-    <ChatSidebarContainer back={back}>
+    <ChatSidebarContainer back={back} data-testid="chat_sidebar">
       <SidebarTop>
         <ArrowBackIosIcon sx={{cursor: 'pointer'}} />
         <BackBtn onClick={() => navigate("/")}>Back</BackBtn>

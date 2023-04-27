@@ -1,5 +1,4 @@
 import React from "react";
-import "./ChatComponents.css";
 import BlankChatBox from "./BlankChatBox";
 import ReportOutlinedIcon from "@mui/icons-material/ReportOutlined";
 import Input from "./Input";
@@ -25,7 +24,7 @@ const ChatBox = ({ data, onClose, onClickBack, open, back }) => {
   const isMobile = useBreakpoint(down("md"));
   
   return (
-    <ChatBoxContainer back={back}>
+    <ChatBoxContainer back={back} data-testid="chat_box">
       {open || isMobile ? (
         <>
           <ChatBoxTop>

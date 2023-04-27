@@ -2,11 +2,14 @@ import styled from "styled-components";
 
 export const ChatBoxContainer = styled.div`
   flex: 3;
+  display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
   height: 100vh;
   overflow: hidden;
+
+  @media only screen and (max-width: 780px) {
+    flex: ${(props) => props.back && "0"};
+  }
 `;
 export const ChatBoxTop = styled.div`
   display: flex;
@@ -60,6 +63,9 @@ export const ReportBtnContainer = styled.div`
 export const CloseBtn = styled.span`
   cursor: pointer;
   text-transform: uppercase;
+  @media only screen and (max-width: 780px) {
+    display: none;
+  }
 `;
 
 /* Blank Chat Container */

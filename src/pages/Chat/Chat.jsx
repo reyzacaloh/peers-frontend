@@ -75,8 +75,8 @@ const Chat = ({ data }) => {
     <ChatPage>
       <ChatPageWrapper>
         <ChatSidebar
-          back={back}
-          data={getData()}
+          back={!back}
+          data={data}
           onClickChat={(e) => handleOnClickChat(e)}
         />
         <ChatBox

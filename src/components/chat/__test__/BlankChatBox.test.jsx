@@ -10,9 +10,4 @@ describe('BlankChatBox component', () => {
     expect(messageElement).toBeInTheDocument();
     expect(imageElement).toBeInTheDocument();
   });
-
-  it('renders with the correct CSS class', () => {
-    render(<BlankChatBox />);
-    expect(screen.getByTestId('blank-chat-container')).toHaveClass('blank_chat_container');
-  });
 });

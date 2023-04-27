@@ -39,7 +39,7 @@ describe("ChatSidebar component", () => {
     const mockOnClickChat = jest.fn();
     render(<ChatSidebar data={mockData} onClickChat={mockOnClickChat} />);
     // eslint-disable-next-line testing-library/no-node-access
-    const chatInfo = screen.getByText("Ahn Go Eun").closest(".chat_info_container");
+    const chatInfo = screen.getByText("Ahn Go Eun");
     fireEvent.click(chatInfo);
     expect(mockOnClickChat).toHaveBeenCalledWith(mockData[0]);
   });

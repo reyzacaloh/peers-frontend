@@ -14,6 +14,11 @@ export const ChatInfoContainer = styled.div`
   &:hover {
     background-color: #1d7a6e;
   }
+
+  @media only screen and (max-width: 780px) {
+    padding-bottom: 10px;
+    max-height: 80px;
+  }
 `;
 
 export const ChatInfoStyled = styled.div`
