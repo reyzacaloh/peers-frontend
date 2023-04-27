@@ -70,11 +70,6 @@ export default class UploadButton extends React.Component {
     this.setState((prevState) => {
 
       const loadedFiles = [...prevState.loadedFiles];
-      _.find(loadedFiles, (file, idx) => {
-        if (file === oldFile) 
-          loadedFiles[idx] = newFile;
-        }
-      );
 
       return {loadedFiles};
     });
