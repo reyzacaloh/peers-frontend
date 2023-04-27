@@ -12,7 +12,25 @@ import './TutorDetail.css'
 function TutorDetail() {
 
   const [profile, setProfile] = useState({ uid: {}, subject: "" });
+  const [schedule, setSchedule] = useState([]);
   const { id } = useParams();
+
+  function dateFormat(datetime) {
+    let date = new Date(datetime);
+    let day = date.getUTCDate();
+    let month = date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
+    let year = date.getFullYear();
+    
+    return `${day}/${month}/${year}`;
+  }
+
+  function timeFormat(datetime) {
+    let date = new Date(datetime);
+    let hour = date.getUTCHours() < 10 ? `0${date.getUTCHours()}` : date.getUTCHours();
+    let minute = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+    
+    return `${hour}:${minute}`;
+  }
 
   const fetchData = async (setProfile) => {
     try {
@@ -22,6 +40,7 @@ function TutorDetail() {
         },
       });
       console.log(response);
+      setSchedule(response.data.schedules.reverse());
       setProfile(response.data.tutors[0]);
     } catch (error) {
       console.log(error);
@@ -33,50 +52,15 @@ function TutorDetail() {
     //eslint-disable-next-line
   }, []);
 
-  const authorsTableData = [
-    {
-      date: "Kamis, 6 April 2023",
-      time: "16:00",
-      status: true,
-    },
-    {
-      date: "Kamis, 6 April 2023",
-      time: "17:00",
-      status: false,
-    },
-    {
-      date: "Kamis, 6 April 2023",
-      time: "18:00",
-      status: true,
-    },
-    {
-      date: "Kamis, 6 April 2023",
-      time: "19:00",
-      status: true,
-    },
-    {
-      date: "Jumat, 7 April 2023",
-      time: "16:00",
-      status: false,
-    },
-    {
-      date: "Jumat, 7 April 2023",
-      time: "17:00",
-      status: false,
-    },
-  ];
-
-
   return (
-    <section className="profile">
+    <section className="tutor-detail">
       <header className="header">
       <div className="back-button">
         <NavLink to={"/"}><ArrowLeftCircleIcon color="white"/></NavLink>
       </div>
         <div className="details">
-          <img src={profile.uid.profile_picture} alt="John Doe" className="profile-pic" />
+          <img src={`${process.env.REACT_APP_API_URL}${profile.uid.profile_picture}`} alt="John Doe" className="profile-pic" />
           <h1 className="heading">{profile.uid.first_name} {profile.uid.last_name}</h1>
-         
           <div className="stats">
             <div className="col-4">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -109,30 +93,30 @@ function TutorDetail() {
           </tr>
         </thead>
         <tbody>
-          {authorsTableData.map(
-            ({ date, time, status }, key) => {
-              const className = `py-3 px-5 ${key === authorsTableData.length - 1
+          {schedule.map(
+            ({ date_time, is_booked }, key) => {
+              const className = `py-3 px-5 ${key === schedule.length - 1
                 ? ""
                 : "border-b border-blue-gray-50"
                 }`;
 
               return (
-                <tr key={date + time}>
+                <tr key={date_time}>
                   <td className={className}>
                     <div className="items-center gap-4" style={{ textAlign: "center" }}>
                       <div>
                         <b>
-                          {time}
+                          {timeFormat(date_time)}
                         </b>
                         <br />
-                        {date}
+                        {dateFormat(date_time)}
                       </div>
                     </div>
                   </td>
-                  <td className={className} style={{ textAlign: "center", color: status ? "green" : "red" }}>
-                    {status ? "Available" : "Booked"}
+                  <td className={className} style={{ textAlign: "center", color: !is_booked ? "green" : "red" }}>
+                    {!is_booked ? "Available" : "Booked"}
                   </td>
-                  {status ? <td className={className} style={{ textAlign: "center" }}>
+                  {!is_booked ? <td className={className} style={{ textAlign: "center" }}>
                     <NavLink className={"reservasi-button"}>
                     Reservasi
                     </NavLink>
