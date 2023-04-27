@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_API_URL;
-const accessToken = localStorage.getItem("access_token");
+const accessToken = JSON.parse(localStorage.getItem("token"));
 
 const TOKEN = accessToken;
 
