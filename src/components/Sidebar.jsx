@@ -33,7 +33,7 @@ import "./Sidebar.css";
 
 const Sidebar = ({ children }) => {
     const { currentUser, setCurrentUser } = useContext(AuthContext);
-    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(true);
     const [open, setOpen] = useState(true);
     const [button, setButton] = useState(true);
     const { pathname } = useLocation();
