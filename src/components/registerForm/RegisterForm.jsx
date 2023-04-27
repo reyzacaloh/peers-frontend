@@ -62,13 +62,18 @@ const RegisterForm = () => {
               actions.setStatus("success");
               navigate("/login");
             } catch (err) {
-              console.log("Error: ", err.message);
-              actions.setStatus(err.message);
+              console.log("Error: ", err.code);
+              actions.setStatus(err.code);
             }
           }}
         >
           {(formik) => (
             <Form onSubmit={formik.handleSubmit} data-testid="form">
+              <Error center>
+                {formik.status === undefined || formik.status === "success"
+                  ? ""
+                  : errorHandler(formik.status)}
+              </Error>
               <Title>Register Form</Title>
               <Label htmlFor="email"></Label>
               <Input
@@ -185,4 +190,13 @@ const RegisterForm = () => {
   );
 };
 
+function errorHandler(status) {
+  if (status === "ERR_BAD_REQUEST") {
+    return "Email anda sudah terdaftar. Mohon login";
+  } else if (status === "ERR_NETWORK") {
+    return "Network error! Try again later";
+  } else {
+    return "Unknown error!";
+  }
+}
 export default RegisterForm;
