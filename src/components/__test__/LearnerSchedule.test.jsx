@@ -41,7 +41,7 @@ describe('LearnerSchedule test', () => {
                         "id": 3
                     },
                     "learner_id": 6,
-                    "date_time": "2023-04-23T20:00:00Z",
+                    "date_time": "2025-12-23T20:00:00Z",
                     "is_booked": true,
                     "is_finished": true
                 },
@@ -71,6 +71,113 @@ describe('LearnerSchedule test', () => {
         expect(axios.get).toHaveBeenCalled()
         await waitFor(() => {
             expect(screen.getByText("Triadana Nikaputra")).toBeInTheDocument();
+        });
+    });
+
+    test('there should be no duplicate schedule', async () => {
+        const current_time = new Date().toJSON()
+        const mockResponse = 
+        {"data" : {
+            "statusCode": 200,
+            "schedules": [
+                {
+                    "id": 1,
+                    "tutor_id": {
+                        "uid": {
+                            "email": "admin@gmail.com",
+                            "first_name": "Johanes",
+                            "last_name": "Raka"
+                        },
+                        "id": 3
+                    },
+                    "learner_id": null,
+                    "date_time": "2023-03-23T18:00:00Z",
+                    "is_booked": false,
+                    "is_finished": false
+                },
+                {
+                    "id": 1,
+                    "tutor_id": {
+                        "uid": {
+                            "email": "admin@gmail.com",
+                            "first_name": "Johanes",
+                            "last_name": "Raka"
+                        },
+                        "id": 3
+                    },
+                    "learner_id": null,
+                    "date_time": "2023-03-23T18:00:00Z",
+                    "is_booked": false,
+                    "is_finished": false
+                },
+                {
+                    "id": 2,
+                    "tutor_id": {
+                        "uid": {
+                            "email": "admin@gmail.com",
+                            "first_name": "Triadana Nikaputra",
+                            "last_name": ""
+                        },
+                        "id": 3
+                    },
+                    "learner_id": 6,
+                    "date_time": "2025-12-23T20:00:00Z",
+                    "is_booked": true,
+                    "is_finished": true
+                },
+                {
+                    "id": 2,
+                    "tutor_id": {
+                        "uid": {
+                            "email": "admin@gmail.com",
+                            "first_name": "Triadana Nikaputra",
+                            "last_name": ""
+                        },
+                        "id": 3
+                    },
+                    "learner_id": 6,
+                    "date_time": "2025-12-23T20:00:00Z",
+                    "is_booked": true,
+                    "is_finished": true
+                },
+                {
+                    "id": 3,
+                    "tutor_id": {
+                        "uid": {
+                            "email": "admin@gmail.com",
+                            "first_name": "JR",
+                            "last_name": "TN"
+                        },
+                        "id": 3
+                    },
+                    "learner_id": 6,
+                    "date_time": `${current_time}`,
+                    "is_booked": true,
+                    "is_finished": true
+                },
+                {
+                    "id": 3,
+                    "tutor_id": {
+                        "uid": {
+                            "email": "admin@gmail.com",
+                            "first_name": "JR",
+                            "last_name": "TN"
+                        },
+                        "id": 3
+                    },
+                    "learner_id": 6,
+                    "date_time": `${current_time}`,
+                    "is_booked": true,
+                    "is_finished": true
+                }
+            ]
+        }}
+        axios.get = jest.fn()
+        axios.get.mockResolvedValueOnce(mockResponse)
+        setup()
+        expect(axios.get).toHaveBeenCalled()
+        await waitFor(() => {
+            expect(screen.getAllByText("Triadana Nikaputra").length).toEqual(1);
         });
     });
 
