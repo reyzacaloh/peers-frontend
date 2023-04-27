@@ -8,7 +8,7 @@ import {
   ChatSidebarContainer,
   SidebarBottom,
   SidebarTop,
-} from "./chatSidebarStyled";
+} from "./styled/chatSidebarStyled";
 
 const ChatSidebar = ({ onClickChat, data, back }) => {
   const navigate = useNavigate();

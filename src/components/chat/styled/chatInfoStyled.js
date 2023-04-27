@@ -9,6 +9,7 @@ export const ChatInfoContainer = styled.div`
   padding: 5px;
   color: white;
   max-height: 70px;
+  cursor: pointer;
 
   &:hover {
     background-color: #1d7a6e;

@@ -7,46 +7,65 @@ import Messages from "./Messages";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { down } from "styled-breakpoints";
 import { useBreakpoint } from "styled-breakpoints/react-styled";
+import {
+  ChatBoxContainer,
+  ChatBoxHeader,
+  ChatBoxTop,
+  CloseBtn,
+  Img,
+  Profile,
+  ReportBtnContainer,
+  UserInfo,
+  UserInfoProfile,
+  Username,
+} from "./styled/chatBoxStyled";
+
 const ChatBox = ({ data, onClose, onClickBack, open, back }) => {
   let { profile_pic, username } = data || {};
   const isMobile = useBreakpoint(down("md"));
+  
   return (
-    <div className={`chat_box ${back ? "hidden" : ""}`} data-testid="chat_box">
-      {open || isMobile? (
+    <ChatBoxContainer back={back}>
+      {open || isMobile ? (
         <>
-          <div className="chat_box_top">
-            <div className="chat_box_header">
-              <div className="user_info">
-              <div className="user_info_profile">
-              <ArrowBackIosIcon className="back_btn" onClick={onClickBack}/>
-                <div className="profile">
-                  <img
-                    src={profile_pic || "user_pic_placeholder.png"}
-                    alt="profile_picture"
-                  />
-                  <span>{username || "Unknown"}</span>
-              </div>
-                </div>
-                <div className="chat_box_header_button_container">
-                  <ReportOutlinedIcon
-                    sx={{
-                      color: "orange",
-                      fontSize: "30px",
-                      cursor: "pointer",
-                    }}
-                  />
-                  <span data-testid="close_btn" onClick={onClose}>Close</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <ChatBoxTop>
+            <ChatBoxHeader>
+              <UserInfo>
+                <UserInfoProfile>
+                 {isMobile && <ArrowBackIosIcon
+                    className="back_btn"
+                    onClick={onClickBack}
+                  />}
+                  <Profile>
+                    <Img
+                      src={profile_pic || "user_pic_placeholder.png"}
+                      alt="profile_picture"
+                    />
+                    <Username>{username || "Unknown"}</Username>
+                  </Profile>
+                </UserInfoProfile>
+              </UserInfo>
+              <ReportBtnContainer>
+                <ReportOutlinedIcon
+                  sx={{
+                    color: "orange",
+                    fontSize: "30px",
+                    cursor: "pointer",
+                  }}
+                />
+                <CloseBtn data-testid="close_btn" onClick={onClose}>
+                  Close
+                </CloseBtn>
+              </ReportBtnContainer>
+            </ChatBoxHeader>
+          </ChatBoxTop>
           <Messages />
-          <Input />
+          <Input  />
         </>
       ) : (
         <BlankChatBox />
       )}
-    </div>
+    </ChatBoxContainer>
   );
 };
 

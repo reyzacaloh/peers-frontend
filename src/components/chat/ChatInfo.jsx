@@ -9,7 +9,7 @@ import {
   Username,
   Time,
   LatestMessage,
-} from "./chatInfoStyled";
+} from "./styled/chatInfoStyled";
 
 const ChatInfo = ({ onClick, data }) => {
   let { profile_pic, username, latest_message, time } = data || {};

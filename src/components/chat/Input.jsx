@@ -2,6 +2,7 @@ import React from "react";
 import "./ChatComponents.css";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import SendIcon from "@mui/icons-material/Send";
+
 const Input = () => {
   return (
     <div className="input">

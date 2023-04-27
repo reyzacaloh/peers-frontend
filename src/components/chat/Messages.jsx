@@ -1,5 +1,6 @@
 import React from "react";
 import Message from "./Message";
+import { MessageContainer } from "./styled/messagesStyled";
 
 const Messages = () => {
   const getData = () => [
@@ -67,23 +68,25 @@ const Messages = () => {
       profile_pic: "https://photos.hancinema.net/photos/largephoto1636274.jpg",
       username: "Ahn Go Eun",
       isOwner: true,
-      message_img: "https://www.viu.com/ott/id/articles/wp-content/uploads/2023/03/preview-taxi-driver-2-episode-6-sub-indo-viu.jpg",
+      message_img:
+        "https://www.viu.com/ott/id/articles/wp-content/uploads/2023/03/preview-taxi-driver-2-episode-6-sub-indo-viu.jpg",
       message: "Hello, how are you doing?",
     },
     {
       profile_pic: "https://photos.hancinema.net/photos/largephoto1636274.jpg",
       username: "Ahn Go Eun",
       isOwner: true,
-      message_img: "https://jabarekspres.com/wp-content/uploads/2023/02/TX2.png",
+      message_img:
+        "https://jabarekspres.com/wp-content/uploads/2023/02/TX2.png",
       message: "I wish you all the best",
     },
   ];
   return (
-    <div className="messages" data-testid="messages">
+    <MessageContainer data-testid="messages">
       {getData()?.map((msg, idx) => (
-        <Message data={msg} key={idx}/>
+        <Message data={msg} key={idx} />
       ))}
-    </div>
+    </MessageContainer>
   );
 };
 

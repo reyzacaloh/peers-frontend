@@ -1,12 +1,13 @@
-import React from 'react'
-import "./ChatComponents.css"
+import React from "react";
+import "./ChatComponents.css";
+import { BlankChatContainer } from "./styled/chatBoxStyled";
 const BlankChatBox = () => {
   return (
-    <div className="blank_chat_container" data-testid="blank-chat-container">
+    <BlankChatContainer>
       <h1>Start Chatting Now!</h1>
-      <img src='app-icon.png' alt='peers'/>
-    </div>
-  )
-}
+      <img src="app-icon.png" alt="peers" />
+    </BlankChatContainer>
+  );
+};
 
-export default BlankChatBox
+export default BlankChatBox;

@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import ImageFull from "../image_fullscreen/ImageFull";
+import { MessageContainer } from "./styled/messageStyled";
+import {MessageImg, Img, MessageContent, MessageInfo, Span, Text} from "./styled/messageStyled";
 
 const Message = ({ data }) => {
-  const { profile_pic, message, time, message_img, isOwner } = data || {};
+  const { profile_pic, message, time, message_img, isOwner, message_vid } = data || {};
   const ref = useRef();
   const [open, setOpen] = useState(false);
 
@@ -10,19 +12,21 @@ const Message = ({ data }) => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
   }, []);
   return (
-    <div ref={ref} className={`message ${isOwner ? "owner" : ""}`}>
-      <ImageFull  open={open} url={message_img} onClick={() => setOpen(!open)} />
-      <div className="messageInfo">
-        <img src={profile_pic || "user_pic_placeholder.png"} alt="profile_pic" />
-        <span>{time || "Just Now"}</span>
-      </div>
-      <div className="messageContent">
-        {message && <p data-testid="message_text">{message}</p>}
+    <MessageContainer ref={ref} owner={isOwner}>
+      <ImageFull open={open} url={message_img} onClick={() => setOpen(!open)} />
+      <MessageInfo>
+      <Img src={profile_pic || "user_pic_placeholder.png"}
+          alt="profile_pic"/>
+        <Span>{time || "Just Now"}</Span>
+      </MessageInfo>
+      <MessageContent>
+      {message && <Text>{message}</Text>}
         {message_img && (
-          <img  src={message_img} alt="msg_pic" onClick={() => setOpen(!open)} />
+          <MessageImg src={message_img} alt="msg_pic" onClick={() => setOpen(!open)}/>
         )}
-      </div>
-    </div>
+        {/* <video src="https://www.youtube.com/watch?v=ilgjaWU9w70&ab_channel=RadityaDika"></video> */}
+      </MessageContent>
+    </MessageContainer>
   );
 };
 
