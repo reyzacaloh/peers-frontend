@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Profile.css';
 import axios from 'axios';
 import LearnerSchedule from '../components/LearnerSchedule';
+import { MdEmail, MdDateRange } from "react-icons/md";
 
 const Profile = () => {
   const [profile, setProfile] = useState([]);
@@ -30,18 +31,21 @@ const Profile = () => {
       <div className="grid-container">
         <div className="card">
           <div>
-            <img className="rounded" src="https://www.citypng.com/public/uploads/preview/png-profile-user-round-gray-icon-symbol-11639594342slkdqxcgi6.png" alt="profile" width="200" />
+            <img className="rounded" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="profile"/>
           </div>
           <div className="content">
-            <h4>
-              Nama: {profile.first_name} {profile.last_name}{' '}
-            </h4>
-            <h4>Email: {profile.email}</h4>
-            <h4>Tanggal: {profile.date_of_birth}</h4>
+            <h1>
+              Nama{profile.first_name} {profile.last_name}{' '}
+            </h1>
+            <br></br>
+            <h4><MdEmail></MdEmail> &nbsp;&nbsp;someone@email.com{profile.email}</h4>
+            <h4><MdDateRange></MdDateRange> &nbsp;&nbsp;10-10-2010{profile.date_of_birth}</h4>
           </div>
         </div>
+        <div className="content">
+          <LearnerSchedule></LearnerSchedule> 
+        </div>
       </div>
-      <LearnerSchedule></LearnerSchedule>
     </div>
   );
 }

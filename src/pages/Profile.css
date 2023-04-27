@@ -1,6 +1,6 @@
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(3, 0.5fr); /* three columns with equal width */
+    grid-template-columns: repeat(2, 0.5fr);
     gap: 1rem;
     margin: 50px;
 }
@@ -12,7 +12,7 @@
     height: 500px;
     border-radius: 20px;
     overflow: hidden;
-    background: linear-gradient(to bottom, #36dcc3, #279686);
+    background: none
 }
 
 .page_container {
@@ -27,20 +27,44 @@
 
 .rounded {
     border-radius: 50%;
-    padding-top: 16px
+    padding-top: 16px;
+    max-width: 200px;
 }
 
 .card .content {
     position: absolute;
     width: 100%;
-    padding: 30px;
     padding-top: 228px;
     text-align: left;
+    font-family: PlusJakartaSans;
 }
 
 .card .content h4 {
     margin-top: 10px;
     font-size: 1.5em;
-    color: #fff;
+    color: black;
     margin-bottom: 15px;
+    display: flex;
+    align-items: center;
 }
+
+@media screen and
+  (max-width: 1024px){
+    .grid-container {
+        grid-template-columns: repeat(3, 0.5fr); /* three columns with equal width */
+        gap: 1rem;
+        margin: 50px;
+        float:center;
+        height: auto;
+        display: inline;
+        justify-content: center;
+    }
+
+    .card .content {
+        position: absolute;
+        width: 50%;
+        padding-top: 228px;
+        text-align: left;
+        font-family: PlusJakartaSans;
+    }
+  }
