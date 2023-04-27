@@ -1,0 +1,17 @@
+.register_tutor_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-basis: 100%;
+}
+
+.page_container {
+  display: flex;
+  flex-basis: 100%;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.tutor_form {
+  flex-basis: 60%;
+}
