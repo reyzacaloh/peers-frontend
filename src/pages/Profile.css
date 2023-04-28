@@ -48,13 +48,13 @@
     align-items: center;
 }
 
-@media screen and
-  (max-width: 1024px){
+@media screen and (max-width: 1024px) {
     .grid-container {
-        grid-template-columns: repeat(3, 0.5fr); /* three columns with equal width */
+        grid-template-columns: repeat(3, 0.5fr);
+        /* three columns with equal width */
         gap: 1rem;
         margin: 50px;
-        float:center;
+        float: center;
         height: auto;
         display: inline;
         justify-content: center;
@@ -73,4 +73,4 @@
         height: 175px;
         width: 175px;
     }
-  }
+}
