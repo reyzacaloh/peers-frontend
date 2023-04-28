@@ -115,32 +115,3 @@ it('should call unsub function', () => {
 
 
 });
-
-// test('handleOnClickChat should dispatch action and update user state', () => {
-//   const currentUser = { uid: '123' };
-//   const dispatch = jest.fn();
-//   const setChats = jest.fn();
-//   const partner = { name: 'John', email: 'john@example.com' };
-//   const state = {chatId:"12",user:partner,currentUser:currentUser}
-//   render(
-//     <AuthContextProvider>
-//       <ChatContext.Provider value={{ currentUser }}>
-//         <ChatPartnerContext.Provider value={{ state,dispatch }}>
-//           <Chat setChats={setChats}/> 
-//         </ChatPartnerContext.Provider>
-//       </ChatContext.Provider>
-//     </AuthContextProvider>,
-//     { wrapper: BrowserRouter }
-//   );
-
-//   const chatBox = screen.getByTestId('chat_box');
-
-//   // Click on the chat sidebar to select the partner
-//   fireEvent.click(screen.getByText("John"));
-
-//   // Expect dispatch to have been called with the correct action
-//   expect(dispatch).toHaveBeenCalledWith({ type: 'CHANGE_USER', payload: partner });
-
-//   // Expect the user state to have been updated with the selected partner
-//   expect(chatBox).toHaveAttribute('data-user', JSON.stringify(partner));
-// });
