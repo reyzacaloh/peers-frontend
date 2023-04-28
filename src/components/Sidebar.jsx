@@ -17,7 +17,6 @@ import {
     FaChalkboardTeacher,
     FaCommentAlt,
     FaUser,
-    FaCalendar
 } from "react-icons/fa"
 import {
   AiOutlineLeft,
