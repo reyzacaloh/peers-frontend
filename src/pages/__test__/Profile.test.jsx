@@ -52,7 +52,7 @@ describe('Profile component', () => {
     axios.get.mockResolvedValueOnce({ data: {} });
     render(<AuthContextProvider><Profile /></AuthContextProvider>, {wrapper: BrowserRouter});
     await waitFor(() => expect(axios.get).toHaveBeenCalledWith(
-      'https://peers-backend-dev.up.railway.app/api/auth/user/profile/',
+      `${process.env.REACT_APP_API_URL}/api/auth/user/profile/`,
       { headers: { authorization: `Bearer ${token}` } }
     ));
   })

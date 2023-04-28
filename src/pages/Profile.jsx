@@ -10,7 +10,7 @@ const Profile = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('https://peers-backend-dev.up.railway.app/api/auth/user/profile/', {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/auth/user/profile/`, {
         headers: {
           authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,
         },
