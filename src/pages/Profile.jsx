@@ -32,7 +32,7 @@ const Profile = () => {
       <div className="grid-container">
         <div className="card">
           <div>
-            <img src={profile.profile_picture} alt="profile"/>
+            <img className="profile-usr" src={profile.profile_picture} alt="profile"/>
           </div>
           <div className="content">
             <h1>
@@ -48,8 +48,6 @@ const Profile = () => {
           <Link to='/chat' className='cv-btn'>Chat</Link>
         </div>
       </div>
-      <LearnerSchedule/>
-      <Link to='/chat' className='cv-btn'>Chat</Link>
     </div>
   );
 }

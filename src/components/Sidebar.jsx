@@ -57,12 +57,6 @@ const Sidebar = ({ children }) => {
             icon: <FaUser />,
             notification: 0
         },
-        {
-            to: "/schedule",
-            label: "Schedule",
-            icon: <FaCalendar />,
-            notification: 0
-        },
     ]
     useEffect(() => {
       const handleResize = () => {
