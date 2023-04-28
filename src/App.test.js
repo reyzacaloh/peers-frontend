@@ -10,6 +10,8 @@ import TutorDashboard from './pages/TutorDashboard';
 import { AuthContext } from './contexts/AuthContext';
 import Profile from './pages/Profile';
 import AuthContextProvider from "./contexts/AuthContext";
+import ChatContextProvider from './contexts/ChatContext';
+import ChatPartnerContextProvider from './contexts/ChatPartnerContext';
 import Verification from '../src/pages/Verification';
 
 window.matchMedia = (query) => ({
@@ -91,9 +93,13 @@ test('renders sidebar', () => {
 test('renders chat', () => {
   render(
     <AuthContextProvider>
+      <ChatContextProvider>
+        <ChatPartnerContextProvider>
       <Router>
         <Chat/>
       </Router>
+      </ChatPartnerContextProvider>
+      </ChatContextProvider>
     </AuthContextProvider>
   );
   const linkElement = screen.getByText(/Chat/i);
