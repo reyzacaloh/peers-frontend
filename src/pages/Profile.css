@@ -34,7 +34,7 @@ img {
 
 .card .content {
     position: absolute;
-    width: 100%;
+    padding: 30px;
     padding-top: 228px;
     text-align: left;
     font-family: PlusJakartaSans;
