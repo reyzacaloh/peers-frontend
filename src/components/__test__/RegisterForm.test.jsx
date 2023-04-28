@@ -67,29 +67,71 @@ describe('RegisterForm test', () => {
       logSpy.mockRestore();
   })
 
-  test('when backend API calls unsuccesful', async () => {
+  test('when backend API calls unsuccesful because network error', async () => {
     jest.mock('axios');
     axios.post = jest.fn();
     const logSpy = jest.spyOn(global.console,'log')
-    const expectedError = new Error("Network Error");
+    const expectedError = {
+      code: "ERR_NETWORK"
+    };
     axios.post.mockRejectedValueOnce(expectedError);
-    act(()=> {
-      userEvent.type(emailField, 'test@testmail.com')
-      userEvent.type(passwordField, 'testpassword')
-      userEvent.type(firstNameField, 'John')
-      userEvent.type(lastNameField, 'Doe')
-      userEvent.type(dateOfBirth, '2003-03-08')
-      userEvent.upload(profilePic, file)
-      userEvent.click(registerButton);
-      
-    })
+    userEvent.type(emailField, 'test@testmail.com')
+    userEvent.type(passwordField, 'testpassword')
+    userEvent.type(firstNameField, 'John')
+    userEvent.type(lastNameField, 'Doe')
+    userEvent.type(dateOfBirth, '2003-03-08')
+    userEvent.upload(profilePic, file)
+    userEvent.click(registerButton);
     await waitFor(() =>
         expect(axios.post).toHaveBeenCalled()
     );
-    expect(logSpy).toHaveBeenCalledWith('Error: ',expectedError.message);
+    expect(logSpy).toHaveBeenCalledWith('Error: ',expectedError.code);
     logSpy.mockRestore();
   })
 
+  test('when backend API calls unsuccesful because bad request', async () => {
+    jest.mock('axios');
+    axios.post = jest.fn();
+    const logSpy = jest.spyOn(global.console,'log')
+    const expectedError = {
+      code: "ERR_BAD_REQUEST"
+    };
+    axios.post.mockRejectedValueOnce(expectedError);
+    userEvent.type(emailField, 'test@testmail.com')
+    userEvent.type(passwordField, 'testpassword')
+    userEvent.type(firstNameField, 'John')
+    userEvent.type(lastNameField, 'Doe')
+    userEvent.type(dateOfBirth, '2003-03-08')
+    userEvent.upload(profilePic, file)
+    userEvent.click(registerButton);
+    await waitFor(() =>
+        expect(axios.post).toHaveBeenCalled()
+    );
+    expect(logSpy).toHaveBeenCalledWith('Error: ',expectedError.code);
+    logSpy.mockRestore();
+  })
+
+  test('when backend API calls unsuccesful because unknown error', async () => {
+    jest.mock('axios');
+    axios.post = jest.fn();
+    const logSpy = jest.spyOn(global.console,'log')
+    const expectedError = {
+      code: "500"
+    };
+    axios.post.mockRejectedValueOnce(expectedError);
+    userEvent.type(emailField, 'test@testmail.com')
+    userEvent.type(passwordField, 'testpassword')
+    userEvent.type(firstNameField, 'John')
+    userEvent.type(lastNameField, 'Doe')
+    userEvent.type(dateOfBirth, '2003-03-08')
+    userEvent.upload(profilePic, file)
+    userEvent.click(registerButton);
+    await waitFor(() =>
+        expect(axios.post).toHaveBeenCalled()
+    );
+    expect(logSpy).toHaveBeenCalledWith('Error: ',expectedError.code);
+    logSpy.mockRestore();
+  })
   test('not call API when fields are empty', async () => {
     jest.mock('axios');
     axios.post = jest.fn();

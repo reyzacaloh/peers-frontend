@@ -48,6 +48,8 @@ const Profile = () => {
           <Link to='/chat' className='cv-btn'>Chat</Link>
         </div>
       </div>
+      <LearnerSchedule/>
+      <Link to='/chat' className='cv-btn'>Chat</Link>
     </div>
   );
 }

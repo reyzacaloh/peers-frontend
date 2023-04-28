@@ -45,7 +45,7 @@ describe("Verify Table component", () => {
     render(<VerifyTable />);
     await waitFor(() => fireEvent.click(screen.getAllByText("accept")[0]));
     expect(axios.patch).toHaveBeenCalledWith(
-      "https://peers-backend-dev.up.railway.app/api/tutor_form/verify/",
+      `${process.env.REACT_APP_API_URL}/api/tutor_form/verify/`,
       expect.any(FormData),
       {
         headers: {
@@ -60,7 +60,7 @@ describe("Verify Table component", () => {
     render(<VerifyTable />);
     await waitFor(() => fireEvent.click(screen.getAllByText("deny")[0]));
     expect(axios.patch).toHaveBeenCalledWith(
-      "https://peers-backend-dev.up.railway.app/api/tutor_form/verify/",
+      `${process.env.REACT_APP_API_URL}/api/tutor_form/verify/`,
       expect.any(FormData),
       {
         headers: {
