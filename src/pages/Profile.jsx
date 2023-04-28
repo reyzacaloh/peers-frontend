@@ -3,6 +3,7 @@ import './Profile.css';
 import axios from 'axios';
 import LearnerSchedule from '../components/LearnerSchedule';
 import { Link } from "react-router-dom";
+import { MdEmail, MdDateRange } from "react-icons/md";
 
 const Profile = () => {
   const [profile, setProfile] = useState([]);
@@ -31,15 +32,20 @@ const Profile = () => {
       <div className="grid-container">
         <div className="card">
           <div>
-            <img className="rounded" src="https://www.citypng.com/public/uploads/preview/png-profile-user-round-gray-icon-symbol-11639594342slkdqxcgi6.png" alt="profile" width="200" />
+            <img src={profile.profile_picture} alt="profile"/>
           </div>
           <div className="content">
-            <h4>
-              Nama: {profile.first_name} {profile.last_name}{' '}
-            </h4>
-            <h4>Email: {profile.email}</h4>
-            <h4>Tanggal: {profile.date_of_birth}</h4>
+            <h1>
+              {profile.first_name} {profile.last_name}{' '}
+            </h1>
+            <br></br>
+            <h4><MdEmail></MdEmail> &nbsp;&nbsp;{profile.email}</h4>
+            <h4><MdDateRange></MdDateRange> &nbsp;&nbsp;{profile.date_of_birth}</h4>
           </div>
+        </div>
+        <div className="content">
+          <LearnerSchedule/>
+          <Link to='/chat' className='cv-btn'>Chat</Link>
         </div>
       </div>
       <LearnerSchedule/>
