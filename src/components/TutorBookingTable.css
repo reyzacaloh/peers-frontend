@@ -17,19 +17,9 @@
     overflow: hidden;
 }
 
-.fl-table td, .fl-table th {
-    text-align: center;
-    padding: 8px;
-}
-
-.fl-table td {
-    border-right: 1px solid #f8f8f8;
-    font-size: 12px;
-}
-
 .fl-table thead th {
     color: #ffffff;
-    background: #4FC3A1;
+    background: #324960;
 }
 
 
@@ -39,7 +29,7 @@
 }
 
 .fl-table thead th:nth-child(1) {
-    width: 5%;
+    width: 12%;
 }
 
 .fl-table thead th:nth-child(2) {
