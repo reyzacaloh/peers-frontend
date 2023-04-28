@@ -37,7 +37,6 @@
     padding: 30px;
     padding-top: 228px;
     text-align: left;
-    font-family: PlusJakartaSans;
 }
 
 .card .content h4 {
@@ -66,7 +65,6 @@
         width: 50%;
         padding-top: 228px;
         text-align: left;
-        font-family: PlusJakartaSans;
     }
 
     .profile-usr {
