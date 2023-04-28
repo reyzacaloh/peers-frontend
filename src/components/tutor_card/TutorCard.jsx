@@ -50,7 +50,7 @@ const TutorCard = ({ onClick, data }) => {
           <Review>({review_count} ulasan)</Review>
         </Rating>
         <Contents>
-          <Text>{descriptions}</Text>
+          <Text>{descriptions || "No Descriptions"}</Text>
         </Contents>
         <Price>
           <PriceTag>{currencyFormat(price_per_hour)}/jam</PriceTag>
