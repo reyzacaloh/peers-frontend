@@ -122,9 +122,11 @@ test('renders not found page', () => {
 
 test('renders tutor dashboard page', () => {
   render(
+    <Router>
     <TutorDashboard />
+    </Router>
   );
-  const linkElement = screen.getByText(/Tutor Dashboard/i);
+  const linkElement = screen.getByText(/Jadwal Mengajarmu/i);
   expect(linkElement).toBeInTheDocument();
 });
 

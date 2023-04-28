@@ -48,6 +48,9 @@ function AuthRoutes() {
             <Route path="/tutor/:id" element={
                 <TutorDetail />
             } />
+            <Route path="/tutor/add-schedule" element={
+                <TutorScheduleForm />
+            } />
             <Route path="*" element={<NotFound />} />
         </Routes>
     );

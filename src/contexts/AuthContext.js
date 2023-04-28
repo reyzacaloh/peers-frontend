@@ -12,12 +12,12 @@ const AuthContextProvider = ({ children }) => {
   React.useEffect(() => {
     const token = localStorage.getItem("token");
     const isTutor = localStorage.getItem("tutor");
-    if (isTutor) {
+    if (isTutor !== null) {
       dispatch({
         type: "TUTOR",
         payload: { token: token != null ? token.replace(/['"]+/g, "") : null },
       });
-    } else if (token != null) {
+    } else if (token !== null) {
       dispatch({
         type: "LOGIN",
         payload: { token: token.replace(/['"]+/g, "") },
