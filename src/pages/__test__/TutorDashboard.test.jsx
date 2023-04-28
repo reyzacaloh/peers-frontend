@@ -1,38 +1,28 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import axios from 'axios';
-import TutorDetail from '../TutorDetail/TutorDetail';
 import { BrowserRouter as Router } from "react-router-dom";
+import TutorDashboard from '../TutorDashboard';
 
 jest.mock('axios');
 
-describe('Tutor Detail component', () => {
+describe('Tutor Dashboard component', () => {
     beforeEach(() => {
         localStorage.clear();
     });
 
-    test('renders Tutor Detail component without errors', async () => {
+    test('renders Tutor Dashboard component without errors', async () => {
         render(
             <Router>
-                <TutorDetail />
+                <TutorDashboard />
             </Router>
         );
-        const schedule = await screen.findByText(/Jadwal Reservasi/);
+        const schedule = await screen.findByText(/Jadwal Mengajarmu/);
         expect(schedule).toBeInTheDocument();
     });
 
     test('displays correct user information after successful fetch', async () => {
         const mockData = {
-            "tutors": [
-                {
-                    "subject": "test_subject",
-                    "university": "test_university",
-                    "uid": {
-                        "first_name": "test_first_name",
-                        "last_name": "test_last_name",
-                    }
-                }
-            ],
             "schedules": [
                 {
                     "id": 1,
@@ -69,23 +59,10 @@ describe('Tutor Detail component', () => {
         axios.get.mockResolvedValueOnce({ data: mockData });
         render(
             <Router>
-                <TutorDetail />
-            </Router>);
-        const name = await screen.findByText(/test_first_name test_last_name/);
-        expect(name).toBeInTheDocument();
-    });
-
-    test('redirect if tutor is not found', async () => {
-        const mockData = {
-            "status": 404
-        };
-        axios.get.mockResolvedValueOnce({ data: mockData, });
-        render(
-            <Router>
-                <TutorDetail />
+                <TutorDashboard />
             </Router>);
         await waitFor(() => expect(axios.get));
-        const notFound = await screen.findByText(/g/);
-        expect(notFound).toBeInTheDocument();
+        const name = await screen.findByText(/Booked/);
+        expect(name).toBeInTheDocument();
     });
 });
