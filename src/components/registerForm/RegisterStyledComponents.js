@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   width: 100vw;
   height: 100vh;
+  background-color: #279686;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,7 +19,7 @@ export const Container = styled.div`
 
 export const Wrapper = styled.div`
   background-color: white;
-  width: 50%;
+  width: 40%;
   padding: 20px;
   padding-top: 5px;
   border-radius: 10px;
@@ -98,6 +99,7 @@ export const Button = styled.button`
 
 export const Error = styled.p`
   color: red;
+  font-size: 25px;
   margin-top: 10px;
-  text-align: ${(props) => props.center ? "center" : "left"};
+  text-align: center;
 `;
