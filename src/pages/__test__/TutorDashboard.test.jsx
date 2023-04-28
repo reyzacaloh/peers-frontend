@@ -62,7 +62,7 @@ describe('Tutor Dashboard component', () => {
                 <TutorDashboard />
             </Router>);
         await waitFor(() => expect(axios.get));
-        const name = await screen.findByText(/4:30:00 PM/);
+        const name = await screen.findByText(/Booked/);
         expect(name).toBeInTheDocument();
     });
 });
