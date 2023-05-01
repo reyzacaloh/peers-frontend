@@ -23,7 +23,7 @@ const Input = () => {
     <div className="input">
       <textarea placeholder="Type a message"></textarea>
       <div className="input_btn">
-        <input type="file" id="file"
+        <input type="file" id="file" data-testid="input"
            onChange={(event) => {setFileUpload(event.target.files[0]);}}
            style={{display: 'none'}}
         />
