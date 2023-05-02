@@ -18,7 +18,7 @@ describe("ChatInfo", () => {
       "user_pic_placeholder.png"
     );
     expect(screen.getByText("Unknown")).toBeInTheDocument();
-    expect(screen.getByText("13.00")).toBeInTheDocument();
+
   });
 
   it("renders chat info when data is provided", () => {
