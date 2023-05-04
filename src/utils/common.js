@@ -1,4 +1,5 @@
 import axios from "axios";
+import dayjs from "dayjs";
 
 export const getTutor = async (token, callback) => {
   const response = await axios.get(
@@ -28,3 +29,31 @@ export const getCurrentUser = async (callback) => {
     console.error(err);
   }
 };
+
+export function dateFormat(datetime) {
+  let date = new Date(datetime);
+  let day = date.getUTCDate();
+  let month =
+    date.getMonth() + 1 < 10
+      ? `0${date.getMonth() + 1}`
+      : date.getMonth() + 1;
+  let year = date.getFullYear();
+
+  return `${day}/${month}/${year}`;
+}
+
+export function timeFormat(datetime) {
+  let date = new Date(datetime);
+  return date.toLocaleTimeString();
+}
+
+export function toTimestamp(datetime) {
+  let date = new Date(datetime);
+  return dayjs(date).format("ddd, MMM D, YYYY hh:m A")
+}
+
+export function currencyFormat(num) {
+  return (
+    "Rp" + String(num).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
+  );
+}
