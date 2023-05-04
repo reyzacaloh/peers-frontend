@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { dateFormat, timeFormat, toTimestamp } from '../../utils/common';
 import { PaymentPage } from './styledPayment';
 import PaymentCard from '../../components/payment_card/PaymentCard';
 
