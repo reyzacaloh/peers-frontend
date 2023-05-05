@@ -17,7 +17,7 @@ build:
   except:
     - master
   environment:
-    name: if $CI_COMMIT_REF_NAME == "master"; then "production" else "staging"
+    name: "if ['$CI_COMMIT_REF_NAME' == 'master']; then 'production'; else 'staging'; fi"
   cache:
     key: $CI_COMMIT_REF_SLUG 
     paths:
