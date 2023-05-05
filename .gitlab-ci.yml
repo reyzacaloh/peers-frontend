@@ -53,6 +53,8 @@ build-production:
 test:
   stage: test
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+  except:
+    - master
   needs:
     - build-staging
   cache:
@@ -75,6 +77,33 @@ test:
         path: coverage/cobertura-coverage.xml
     expire_in: 1 days
 
+test-prod:
+  stage: test
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+  only:
+    - master
+  needs:
+    - build-production
+  cache:
+    key: $CI_COMMIT_REF_SLUG 
+    paths:
+      - node_modules/
+  before_script:
+    - npm install
+  script:
+    - npm run test:ci
+  artifacts:
+    paths:
+      - coverage/
+    when: always
+    reports:
+      junit:
+        - junit.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml
+    expire_in: 1 days
+  
 sast:
   stage: test
   artifacts:
