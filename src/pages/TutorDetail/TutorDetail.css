@@ -57,8 +57,11 @@ body {
     padding:10px;
     padding-left: 20px;
     padding-right: 20px;
+    margin: auto;
     color:white;
     border-radius: 10px;
+    cursor: pointer;
+    width: max-content;
 }
 
 .stats {
