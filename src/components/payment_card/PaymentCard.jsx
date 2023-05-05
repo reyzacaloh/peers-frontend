@@ -1,11 +1,12 @@
 import React from 'react'
 import { FieldItem, FieldLabel, FieldWrapper, PaymentCardContainer, TutorSection, Text, ButtonSection, Button } from './styledPaymentCard'
-import { currencyFormat, toTimestamp } from '../../utils/common';
+import { currencyFormat, showErrorToast, showSuccessToast, toTimestamp } from '../../utils/common';
+import axios from 'axios';
+import { ToastContainer } from 'react-toastify';
 
 const PaymentCard = ({data}) => {
   const {transaction_id, tutor_name, subject, schedule, price, date, snap_token} = data || {};
   const handlePayment = (transaction_token) => {
-    console.log(transaction_token)
     window.snap.pay(transaction_token, {
       onSuccess: function (result) {
         alert("Success");console.log(result);
@@ -14,9 +15,29 @@ const PaymentCard = ({data}) => {
         alert("Pending");console.log(result);
       },
       onError: function (result) {
-        alert(result);console.log(result);
+        console.log(result);
+      },
+      onClose: function() {
+        console.log("Closed")
       }
     });
+  }
+
+  const handleCancel = async (order_id) => {
+      try {
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/booking/cancel`,{
+          order_id
+        },{
+          headers: {
+            authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
+          }
+        })
+        console.log(response.data)
+        showSuccessToast("Booking has been cancelled!")
+      } catch(err) {
+        console.log(err)
+        showErrorToast("Booking can't be cancelled, Try again later!");
+      }
   }
   return (
     <PaymentCardContainer>
@@ -35,7 +56,7 @@ const PaymentCard = ({data}) => {
             <Text>{toTimestamp(schedule)}</Text>
           </FieldItem>
           <FieldItem>
-            <FieldLabel>Transaction ID</FieldLabel>
+            <FieldLabel>Order ID</FieldLabel>
             <Text>{transaction_id}</Text>
           </FieldItem>
           <FieldItem>
@@ -50,7 +71,8 @@ const PaymentCard = ({data}) => {
       </TutorSection>
       <ButtonSection>
         <Button primary onClick={() => handlePayment(snap_token)}>Pay</Button>
-        <Button cancel>Cancel</Button>
+        <Button cancel onClick={() => handleCancel(transaction_id)}>Cancel</Button>
+        <ToastContainer style={{width: 'fit-content',margin: 'auto'}} toastClassName={"toast-style"}/>
       </ButtonSection>
     </PaymentCardContainer>
   )

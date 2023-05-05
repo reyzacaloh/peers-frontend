@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { PaymentPage } from './styledPayment';
+import { BlankContainer, PaymentPage } from './styledPayment';
 import PaymentCard from '../../components/payment_card/PaymentCard';
 
 const Payment = () => {
@@ -26,8 +26,8 @@ const Payment = () => {
   useEffect(() => {
     // You can also change below url value to any script url you wish to load, 
     // for example this is snap.js for Sandbox Env (Note: remove `.sandbox` from url if you want to use production version)
-    const midtransScriptUrl = 'https://app.sandbox.midtrans.com/snap/snap.js';  
-  
+    const midtransScriptUrl = `${process.env.REACT_APP_MIDTRANS_SCRIPT_URL}`;  
+    console.log(midtransScriptUrl)
     let scriptTag = document.createElement('script');
     scriptTag.src = midtransScriptUrl;
   
@@ -45,11 +45,15 @@ const Payment = () => {
   
   return (
     <PaymentPage>
-      {bills?.map((bill, idx) => {
+      {bills.length > 0 ? bills?.map((bill, idx) => {
         return (
           <PaymentCard data={bill} key={idx}/>
         )
-      })}
+      }) : (
+        <BlankContainer>
+          No Billing
+        </BlankContainer>
+      )}
     </PaymentPage>
   )
 }

@@ -7,14 +7,16 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import "./TutorDetail.css";
-import { dateFormat, timeFormat } from "../../utils/common";
+import { dateFormat, showErrorToast, showSuccessToast, timeFormat } from "../../utils/common";
+import {ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 function TutorDetail() {
   const [profile, setProfile] = useState({ uid: {}, subject: "" });
   const [schedule, setSchedule] = useState([]);
   const { id } = useParams();
 
-  
+ 
 
   const createBooking = async (tutor_id, schedule_id) => {
     try{
@@ -29,9 +31,10 @@ function TutorDetail() {
         },
       })
       console.log(response)
-      alert("Reservation has been sent...")
+      showSuccessToast("Reservation has been sent! Please kindly check payment menu!");
     } catch(e) {
       console.log(e)
+      showErrorToast();
     }
   }
   const fetchData = async (setProfile) => {
@@ -154,6 +157,7 @@ function TutorDetail() {
                           style={{ textAlign: "center" }}
                         >
                           <div className={"reservasi-button"} onClick={() => createBooking(profile.uid.id, id)}>Reservasi</div>
+                          <ToastContainer style={{width: 'fit-content',margin: 'auto'}} toastClassName={"toast-style"}/>
                         </td>
                       ) : (
                         <div style={{ backgroundColor: "white" }}></div>

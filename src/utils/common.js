@@ -1,5 +1,6 @@
 import axios from "axios";
 import dayjs from "dayjs";
+import { toast } from "react-toastify";
 
 export const getTutor = async (token, callback) => {
   const response = await axios.get(
@@ -56,4 +57,30 @@ export function currencyFormat(num) {
   return (
     "Rp" + String(num).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
   );
+}
+
+export function showSuccessToast(msg)  {
+  toast.success(msg || "Success!", {
+    position: "top-center",
+    autoClose: 1500,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+    });
+}
+
+export function showErrorToast(msg)  {
+  toast.error(msg || "Something went wrong. Try again later!", {
+    position: "top-center",
+    autoClose: 1500,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+    });
 }

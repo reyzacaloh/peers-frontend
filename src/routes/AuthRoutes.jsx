@@ -18,7 +18,7 @@ function AuthRoutes() {
 
     return (
         <Routes>
-            <Route path="/payment" element={
+            <Route path="/" element={
                 <Sidebar>
                     <FindTutor />
                 </Sidebar>} />
@@ -54,7 +54,7 @@ function AuthRoutes() {
             } />
 
             <Route
-                path="/" element={
+                path="/payment" element={
                     <Sidebar>
                         <Payment />
                     </Sidebar>} />
