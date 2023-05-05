@@ -11,6 +11,7 @@ import Verification from "../pages/Verification.jsx"
 import TutorScheduleForm from "../components/tutorScheduleForm/TutorScheduleForm";
 import TutorDetail from '../pages/TutorDetail/TutorDetail.jsx';
 import { AuthContext } from "../contexts/AuthContext";
+import Payment from "../pages/payment/Payment.jsx";
 
 function AuthRoutes() {
     const { state } = React.useContext(AuthContext);
@@ -51,6 +52,12 @@ function AuthRoutes() {
             <Route path="/tutor/add-schedule" element={
                 <TutorScheduleForm />
             } />
+
+            <Route
+                path="/payment" element={
+                    <Sidebar>
+                        <Payment />
+                    </Sidebar>} />
             <Route path="*" element={<NotFound />} />
         </Routes>
     );
