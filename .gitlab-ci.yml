@@ -12,12 +12,12 @@ stages:
   - quality
 
 
-build:
+build-staging:
   stage: build
   except:
     - master
   environment:
-    name: "if ['$CI_COMMIT_REF_NAME' == 'master']; then 'production'; else 'staging'; fi"
+    name: staging
   cache:
     key: $CI_COMMIT_REF_SLUG 
     paths:
@@ -83,7 +83,7 @@ test-production:
   only:
     - master
   needs:
-    - build
+    - build-production
   cache:
     key: $CI_COMMIT_REF_SLUG 
     paths:
@@ -103,7 +103,6 @@ test-production:
         coverage_format: cobertura
         path: coverage/cobertura-coverage.xml
     expire_in: 1 days
-
 
 sast:
   stage: test
@@ -133,7 +132,7 @@ staging:
   script:
     - firebase deploy --token $FIREBASE_TOKEN -P $STAGING_ID
   dependencies:
-    - build
+    - build-staging
   only:
     - staging
     - coldfix
