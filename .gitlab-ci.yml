@@ -198,10 +198,6 @@ sonarqube-prod:
 
 code_quality:
   stage: quality
-  except:
-    - master
-  needs:
-    - sonarqube-staging
   artifacts:
     expose_as: 'Code Quality Report'
     paths: [gl-code-quality-report.json]
