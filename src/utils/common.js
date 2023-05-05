@@ -29,7 +29,6 @@ export const getCurrentUser = async (callback) => {
   } catch (err) {
     console.error(err);
   }
-<<<<<<< HEAD
 };
 
 export function dateFormat(datetime) {
@@ -85,6 +84,3 @@ export function showErrorToast(msg)  {
     theme: "light",
     });
 }
-=======
-};
->>>>>>> master
