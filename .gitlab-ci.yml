@@ -12,12 +12,12 @@ stages:
   - quality
 
 
-build-staging:
+build:
   stage: build
   except:
     - master
   environment:
-    name: staging
+    name: if $CI_COMMIT_REF_NAME == "master"; then "production" else "staging"
   cache:
     key: $CI_COMMIT_REF_SLUG 
     paths:
@@ -30,31 +30,12 @@ build-staging:
     paths:
       - build/
     expire_in: 1 days
-
-build-production:
-  stage: build
-  environment:
-    name: production
-  cache:
-    key: $CI_COMMIT_REF_SLUG 
-    paths:
-      - node_modules/
-  before_script:
-    - npm install
-  script:
-    - npm run build
-  artifacts:
-    paths:
-      - build/
-    expire_in: 1 days
-  only:
-    - master
 
 test:
   stage: test
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
   needs:
-    - build-staging
+    - build
   cache:
     key: $CI_COMMIT_REF_SLUG 
     paths:
@@ -94,7 +75,7 @@ sast:
 staging:
   stage: deploy
   needs:
-    - build-staging
+    - build
     - test
   environment:
     name: staging
@@ -103,7 +84,7 @@ staging:
   script:
     - firebase deploy --token $FIREBASE_TOKEN -P $STAGING_ID
   dependencies:
-    - build-staging
+    - build
   only:
     - staging
     - coldfix
@@ -111,10 +92,10 @@ staging:
 production:
   stage: deploy
   needs:
-    - build-production
+    - build
     - test
   dependencies:
-    - build-production
+    - build
   environment:
     name: production
   before_script:
