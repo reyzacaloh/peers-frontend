@@ -4,10 +4,12 @@ import "./../components/TutorBookingTable.css"
 import { NavLink } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { currencyFormat, getTutorIncome } from '../utils/common';
 
 function TutorDashboard() {
 
     const [schedule, setSchedule] = useState([]);
+    const [tutorIncome, setTutorIncome] = useState({});
 
     function dateFormat(datetime) {
         let date = new Date(datetime);
@@ -39,6 +41,7 @@ function TutorDashboard() {
 
     useEffect(() => {
         fetchData(setSchedule);
+        setTutorIncome( getTutorIncome());
         //eslint-disable-next-line
     }, []);
 
@@ -70,7 +73,7 @@ function TutorDashboard() {
                         <FaWallet className='ion-icon' />
                     </div>
                     <div className="content">
-                        <h4>Rp480.000</h4>
+                        <h4>{currencyFormat(tutorIncome['total_income'] || 0)}</h4>
                     </div>
                 </div>
             </div>
