@@ -17,6 +17,7 @@ import {
     FaChalkboardTeacher,
     FaCommentAlt,
     FaUser,
+    FaMoneyBill,
 } from "react-icons/fa"
 import {
   AiOutlineLeft,
@@ -56,6 +57,12 @@ const Sidebar = ({ children }) => {
             icon: <FaUser />,
             notification: 0
         },
+        {
+          to: "/payment",
+          label: "Payment",
+          icon: <FaMoneyBill/>,
+          notification: 0
+      },
     ]
     useEffect(() => {
       const handleResize = () => {

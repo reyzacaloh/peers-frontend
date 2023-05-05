@@ -1,43 +1,62 @@
 import {
-  BuildingLibraryIcon,
   AcademicCapIcon,
   ArrowLeftCircleIcon,
+  BuildingLibraryIcon,
 } from "@heroicons/react/24/solid";
-import { NavLink } from "react-router-dom";
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import './TutorDetail.css'
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { NavLink, useParams } from "react-router-dom";
+import "./TutorDetail.css";
+import { dateFormat, showErrorToast, showSuccessToast, timeFormat } from "../../utils/common";
+import {ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 function TutorDetail() {
-
   const [profile, setProfile] = useState({ uid: {}, subject: "" });
   const [schedule, setSchedule] = useState([]);
   const { id } = useParams();
 
-  function dateFormat(datetime) {
-    let date = new Date(datetime);
-    let day = date.getUTCDate();
-    let month = date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
-    let year = date.getFullYear();
+ 
 
-    return `${day}/${month}/${year}`;
+  const createBooking = async (tutor_id, schedule_id) => {
+    try{
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/booking/book`, {
+        tutor_id,
+        schedule_id
+      }, {
+        headers: {
+          authorization: `Bearer ${JSON.parse(
+            localStorage.getItem("token")
+          )}`,
+        },
+      })
+      console.log(response)
+      showSuccessToast("Reservation has been sent! Please kindly check payment menu!");
+    } catch(e) {
+      console.log(e)
+      showErrorToast();
+    }
   }
-
-  function timeFormat(datetime) {
-    let date = new Date(datetime);
-    return date.toLocaleTimeString();
-  }
-
   const fetchData = async (setProfile) => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/search_tutor/?id=${id}`, {
-        headers: {
-          authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,
-        },
-      });
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/search_tutor/?id=${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("token")
+            )}`,
+          },
+        }
+      );
       console.log(response);
-      setSchedule(response.data.schedules.sort((a, b) => Date.parse(new Date(a.date_time)) - Date.parse(new Date(b.date_time))));
+      setSchedule(
+        response.data.schedules.sort(
+          (a, b) =>
+            Date.parse(new Date(a.date_time)) -
+            Date.parse(new Date(b.date_time))
+        )
+      );
       setProfile(response.data.tutors[0]);
     } catch (error) {
       console.log(error);
@@ -53,20 +72,38 @@ function TutorDetail() {
     <section className="tutor-detail">
       <header className="header">
         <div className="back-button">
-          <NavLink to={"/"}><ArrowLeftCircleIcon color="white" /></NavLink>
+          <NavLink to={"/"}>
+            <ArrowLeftCircleIcon color="white" />
+          </NavLink>
         </div>
         <div className="details-tutor">
-          <img src={`${profile.uid.profile_picture}`} alt="John Doe" className="profile-pic" />
-          <h1 className="heading">{profile.uid.first_name} {profile.uid.last_name}</h1>
+          <img
+            src={`${process.env.REACT_APP_API_URL}${profile.uid.profile_picture}`}
+            alt={profile.uid.first_name}
+            className="profile-pic"
+          />
+          <h1 className="heading">
+            {profile.uid.first_name} {profile.uid.last_name}
+          </h1>
           <div className="stats">
             <div className="col-4">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
                 <AcademicCapIcon />
               </svg>
               <p>{profile.subject}</p>
             </div>
             <div className="col-4">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
                 <BuildingLibraryIcon />
               </svg>
               <p>{profile.university}</p>
@@ -88,39 +125,46 @@ function TutorDetail() {
                 </tr>
               </thead>
               <tbody>
-                {schedule.map(
-                  ({ date_time, is_booked }, key) => {
-                    const className = `${key === schedule.length - 1
+                {schedule.map(({ date_time, is_booked, id }, key) => {
+                  const className = `td ${
+                    key === schedule.length - 1
                       ? ""
                       : "border-b border-blue-gray-50"
-                      }`;
+                  }`;
 
-                    return (
-                      <tr key={date_time}>
-                        <td className={className}>
-                          <div style={{ textAlign: "center" }}>
-                            {dateFormat(date_time)}
-
-                          </div>
+                  return (
+                    <tr key={date_time}>
+                      <td className={className}>
+                        <div style={{ textAlign: "center" }}>
+                          {dateFormat(date_time)}
+                        </div>
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        <b>{timeFormat(date_time)}</b>
+                      </td>
+                      <td
+                        className={className}
+                        style={{
+                          textAlign: "center",
+                          color: !is_booked ? "green" : "red",
+                        }}
+                      >
+                        {!is_booked ? "Available" : "Booked"}
+                      </td>
+                      {!is_booked ? (
+                        <td
+                          className={className}
+                          style={{ textAlign: "center" }}
+                        >
+                          <div className={"reservasi-button"} onClick={() => createBooking(profile.uid.id, id)}>Reservasi</div>
+                          <ToastContainer style={{width: 'fit-content',margin: 'auto'}} toastClassName={"toast-style"}/>
                         </td>
-                        <td style={{ textAlign: "center" }}>
-                          <b>
-                            {timeFormat(date_time)}
-                          </b>
-
-                        </td>
-                        <td className={className} style={{ textAlign: "center", color: !is_booked ? "green" : "red" }}>
-                          {!is_booked ? "Available" : "Booked"}
-                        </td>
-                        {!is_booked ? <td className={className} style={{ textAlign: "center"}}>
-                          <NavLink className={"reservasi-button"}>
-                            Reservasi
-                          </NavLink>
-                        </td> : <div style={{ backgroundColor: "white" }}></div>}
-                      </tr>
-                    );
-                  }
-                )}
+                      ) : (
+                        <div style={{ backgroundColor: "white" }}></div>
+                      )}
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -129,7 +173,5 @@ function TutorDetail() {
     </section>
   );
 }
-
-
 
 export default TutorDetail;
