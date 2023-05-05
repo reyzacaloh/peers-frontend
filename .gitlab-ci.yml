@@ -55,7 +55,6 @@ test:
   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
   needs:
     - build-staging
-    - build-production
   cache:
     key: $CI_COMMIT_REF_SLUG 
     paths:
