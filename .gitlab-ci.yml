@@ -196,23 +196,12 @@ sonarqube-prod:
   dependencies:
     - test-production
 
-code_quality_staging:
+code_quality:
   stage: quality
   except:
     - master
   needs:
     - sonarqube-staging
-  artifacts:
-    expose_as: 'Code Quality Report'
-    paths: [gl-code-quality-report.json]
-    expire_in: 1 days
-
-code_quality:
-  stage: quality
-  only:
-    - master
-  needs:
-    - sonarqube-prod
   artifacts:
     expose_as: 'Code Quality Report'
     paths: [gl-code-quality-report.json]
