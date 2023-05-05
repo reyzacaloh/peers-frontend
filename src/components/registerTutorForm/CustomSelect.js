@@ -8,7 +8,7 @@ const customSelect = ({ onChange, options, value, className }) => {
     };
 
     return (
-        <div className={className} data-testId={className}>
+        <div className={className} data-testid={className}>
             <Select
                 id={className}
                 name={className}

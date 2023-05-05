@@ -43,6 +43,14 @@ const LoginForm = () => {
           token: response.data["access"],
         },
       });
+
+      if (response.data["is_tutor"]) {
+        dispatch({
+          type: "TUTOR",
+        });
+      }
+      
+      console.log(response.data)
       navigate("/");
     } catch (err) {
       console.log("Error: ", err);
