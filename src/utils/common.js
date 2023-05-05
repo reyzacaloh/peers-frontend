@@ -59,7 +59,7 @@ export function currencyFormat(num) {
   );
 }
 
-export function showSuccessToast(msg)  {
+export function showSuccessToast(msg) {
   toast.success(msg || "Success!", {
     position: "top-center",
     autoClose: 1500,
@@ -69,10 +69,10 @@ export function showSuccessToast(msg)  {
     draggable: true,
     progress: undefined,
     theme: "light",
-    });
+  });
 }
 
-export function showErrorToast(msg)  {
+export function showErrorToast(msg) {
   toast.error(msg || "Something went wrong. Try again later!", {
     position: "top-center",
     autoClose: 1500,
@@ -82,5 +82,25 @@ export function showErrorToast(msg)  {
     draggable: true,
     progress: undefined,
     theme: "light",
-    });
+  });
+}
+
+
+export const getTutorIncome = async () => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_URL}/api/booking/tutor-income`,
+      {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(
+            localStorage.getItem("token")
+          )}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (err) {
+    console.error(err);
+    return {};
+  }
 }
