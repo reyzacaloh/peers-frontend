@@ -15,7 +15,10 @@ import {
   Review,
   Name,
   University,
+  Subject,
+  SubSpan
 } from "./tutorStyledComponents";
+import { currencyFormat } from "../../utils/common";
 
 const TutorCard = ({ onClick, data }) => {
   const {
@@ -26,12 +29,9 @@ const TutorCard = ({ onClick, data }) => {
     price_per_hour,
     review_count,
     rating,
+    subject,
   } = data || {};
-  function currencyFormat(num) {
-    return (
-      "Rp" + String(num).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
-    );
-  }
+  
   return (
     <Card onClick={onClick} data-testid="tutor_card">
       <ImageContainer>
@@ -52,6 +52,9 @@ const TutorCard = ({ onClick, data }) => {
         <Contents>
           <Text>{descriptions || "No Descriptions"}</Text>
         </Contents>
+        <Subject>
+          <SubSpan>{subject}</SubSpan>
+        </Subject>
         <Price>
           <PriceTag>{currencyFormat(price_per_hour)}/jam</PriceTag>
         </Price>
