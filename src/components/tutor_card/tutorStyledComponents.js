@@ -82,7 +82,7 @@ export const Text = styled.p`
   letter-spacing: 0.5px;
   display: -webkit-box;
   overflow: hidden;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 
   @media only screen and (max-width: 785px) {
@@ -94,13 +94,14 @@ export const Text = styled.p`
 
 export const Card = styled.div`
   display: flex;
+  flex-basis: auto
   cursor: pointer;
   flex-direction: column;
   min-width: 300px;
   max-width: 300px;
   border-radius: 30px;
   margin: 0;
-  height: 400px;
+  height: 450px;
   background-color: white;
   -webkit-box-shadow: 0px 11px 18px 1px rgba(0, 0, 0, 0.11);
   -moz-box-shadow: 0px 11px 18px 1px rgba(0, 0, 0, 0.11);
@@ -172,7 +173,7 @@ export const Contents = styled.div`
 export const Price = styled.div`
   background-color: lightgreen;
   border-radius: 18px;
-  max-width: 150px;
+  max-width: 220px;
   min-width: 100px;
   padding: 5px;
   display: flex;
@@ -189,7 +190,7 @@ export const Price = styled.div`
 export const Subject = styled.div`
   background-color: #6699ff;
   border-radius: 18px;
-  max-width: 150px;
+  max-width: 220px;
   min-width: 100px;
   padding: 5px;
   display: flex;

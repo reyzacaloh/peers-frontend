@@ -5,7 +5,7 @@ import SearchBar from "../components/SearchBar";
 import TutorCard from "../components/tutor_card/TutorCard";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { Empty } from "antd";
+import { Empty, notification } from "antd";
 const FindTutor = () => {
 
   const navigate = useNavigate();
@@ -30,10 +30,18 @@ const FindTutor = () => {
       setTutor(response.data['tutors'])
     } catch (err) {
       console.log("Error: ", err.message);
-      setTutor([])
+      showError()
     }
   };
-  
+  const [api, contextHolder] = notification.useNotification();
+    const showError = () => {
+      api.error({
+        message: 'Koneksi Gagal',
+        description:
+          'Mohon maaf jaringan kami sedang mengalami gangguan, silakan coba lagi nanti ',
+        placement: 'top',
+      });
+  };
   useEffect(() => {
     fetchTutors();
   },[]);
@@ -42,6 +50,7 @@ const FindTutor = () => {
   },[currentSub]);
   return (
     <div className="page_container">
+      {contextHolder}
       <div className="tutor__top_section" data-testid="search-bar">
         <h1 className="title">Cari Tutor</h1>
         <SearchBar onChange={(value)=>{

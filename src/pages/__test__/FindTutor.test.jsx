@@ -61,14 +61,14 @@ describe('FindTutor page test', () => {
         });
         expect(screen.getByText("Johanes Raka")).toBeInTheDocument();
     });
-    test('fetch error so no data is shown', async () => {
+    test('fetch error so error notification is shown', async () => {
         const expectedError = new Error("Network Error");
         axios.get = jest.fn()
         axios.get.mockRejectedValueOnce(expectedError);
         setup()
         expect(axios.get).toHaveBeenCalled()
         await waitFor(() => {
-            expect(screen.getByText("Tidak ada Tutor yang memenuhi syarat")).toBeInTheDocument();
+            expect(screen.getAllByText("Koneksi Gagal")).not.toBeNaN();
         });
     });
     test('render different tutors when switch subject', async () => {
