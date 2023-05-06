@@ -5,7 +5,7 @@ export const Image = styled.img`
   object-fit: cover;
   width: 100%;
   height: 100%;
-  border-radius: 15px;
+  border-radius: 5px;
 `;
 export const Wrapper = styled.div`
   position: absolute;
@@ -17,21 +17,20 @@ export const Wrapper = styled.div`
   z-index: 999;
   padding: 0 10px 10px 20px;
 
-  @media only screen and (max-width: 425px) {
-    font-size: 12px;
-    font-weight: 200;
+  @media only screen and (max-width: 785px) {
+    padding: 0 5px 5px 10px;
   }
 `;
 
 export const Name = styled.h3`
   text-align: left;
-  margin:0;
+  margin: 0;
   display: -webkit-box;
   overflow: hidden;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
-  @media only screen and (max-width: 425px) {
-    margin: 10px 5px 2px 0px;
+  @media only screen and (max-width: 785px) {
+    font-size: 12px;
   }
 `;
 
@@ -44,12 +43,18 @@ export const University = styled.p`
   overflow: hidden;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
+
+  @media only screen and (max-width: 785px) {
+    font-size: 10px;
+  }
 `;
 
 export const ImageContainer = styled.div`
   position: relative;
   display: flex;
-  flex: 3;
+  flex-basis: 60%;
+  flex-grow: 0;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -61,15 +66,40 @@ export const ImageContainer = styled.div`
   ${Wrapper} {
     transition: transform 1s ease;
   }
+
+  @media only screen and (max-width: 785px) {
+    border-radius: 5px;
+    flex-basis: 50%;
+  }
+`;
+
+export const Text = styled.p`
+  line-height: 15pt;
+  text-align: justify;
+  text-justify: inter-word;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+
+  @media only screen and (max-width: 785px) {
+    font-size: 10px;
+    -webkit-line-clamp: 4;
+    line-height: 10pt;
+  }
 `;
 
 export const Card = styled.div`
   display: flex;
   cursor: pointer;
   flex-direction: column;
+  min-width: 300px;
   max-width: 300px;
   border-radius: 30px;
-  min-width: 250px;
+  margin: 0;
+  height: 400px;
   background-color: white;
   -webkit-box-shadow: 0px 11px 18px 1px rgba(0, 0, 0, 0.11);
   -moz-box-shadow: 0px 11px 18px 1px rgba(0, 0, 0, 0.11);
@@ -89,25 +119,36 @@ export const Card = styled.div`
     }
   }
 
-  @media only screen and (max-width: 425px) {
-    max-width: 180px;
-    min-width: 100px;
+  @media only screen and (max-width: 785px) {
+    min-width: 175px;
+    max-width: 175px;
+    border-radius: 10px;
+    height: 280px;
+  }
 
-    border-radius: 15px;
+  @media only screen and (max-width: 1024px) and (min-width: 786px) {
+    min-width: 240px;
+    max-width: 240px;
   }
 `;
 
 export const Description = styled.div`
-  flex: 1;
+  flex-basis: 40%;
+  flex-grow: 0;
+  flex-shrink: 0;
   padding: 0 15px 15px 15px;
   display: flex;
   flex-direction: column;
   gap: 1px;
+  justify-content: space-between;
 
-  @media only screen and (max-width: 425px) {
+  ${Text} {
+    align-self: flex-start;
+    align-content: flex-start;
+  }
+  @media only screen and (max-width: 785px) {
     padding: 0 10px 10px 10px;
-    gap: 1px;
-    line-height: 0.2pt;
+    flex-basis: 50%;
   }
 `;
 export const Rating = styled.div`
@@ -115,14 +156,14 @@ export const Rating = styled.div`
   align-items: center;
   justify-content: center;
   margin: 0;
-  @media only screen and (max-width: 425px) {
-    padding-top: 10px;
+  @media only screen and (max-width: 785px) {
+    font-size: 10px;
   }
 `;
 export const Contents = styled.div`
- margin: 0;
-
-  @media only screen and (max-width: 425px) {
+  margin: 0;
+  padding-bottom: 5px;
+  @media only screen and (max-width: 785px) {
     padding-bottom: 0;
   }
 `;
@@ -136,30 +177,19 @@ export const Price = styled.div`
   justify-content: center;
   align-items: center;
 
-  @media only screen and (max-width: 425px) {
-    max-width: 100px;
-    padding: 10px;
+  @media only screen and (max-width: 785px) {
+    border-radius: 15px;
+    height: 20px;
+    max-width: 100vw;
   }
 `;
 export const Star = styled(StarIcon)`
   color: orange;
   margin-right: 5px;
-`;
 
-export const Text = styled.p`
-  line-height: 15pt;
-  text-align: justify;
-  text-justify: inter-word;
-  font-size: 15px;
-  letter-spacing: 0.5px;
-  display: -webkit-box;
-  overflow: hidden;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-
-  @media only screen and (max-width: 425px) {
-    font-size: 12px;
-    line-height: 12pt;
+  @media only screen and (max-width: 785px) {
+    margin-right: 2px;
+    padding: 3px;
   }
 `;
 
@@ -168,8 +198,8 @@ export const PriceTag = styled.span`
   color: green;
   padding: 5px;
 
-  @media only screen and (max-width: 425px) {
-    font-size: 12px;
+  @media only screen and (max-width: 785px) {
+    font-size: 10px;
     padding: 0;
   }
 `;
@@ -180,7 +210,7 @@ export const Rate = styled.div`
   justify-content: space-between;
   margin-right: 5px;
 
-  @media only screen and (max-width: 425px) {
+  @media only screen and (max-width: 785px) {
     font-size: 12px;
     align-items: center;
     justify-content: center;
@@ -191,7 +221,7 @@ export const Rate = styled.div`
 export const Review = styled.p`
   color: gray;
 
-  @media only screen and (max-width: 425px) {
+  @media only screen and (max-width: 785px) {
     font-size: 12px;
   }
 `;
