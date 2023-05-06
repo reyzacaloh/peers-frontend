@@ -53,7 +53,7 @@ const PaymentCard = ({data}) => {
           </FieldItem>
           <FieldItem>
             <FieldLabel>Schedule</FieldLabel>
-            <Text>{toTimestamp(schedule)}</Text>
+            <Text data-testid={"schedule-test"}>{toTimestamp(schedule)}</Text>
           </FieldItem>
           <FieldItem>
             <FieldLabel>Order ID</FieldLabel>
@@ -61,7 +61,7 @@ const PaymentCard = ({data}) => {
           </FieldItem>
           <FieldItem>
             <FieldLabel>Created at</FieldLabel>
-            <Text>{toTimestamp(date)}</Text>
+            <Text data-testid={"created-date"}>{toTimestamp(date)}</Text>
           </FieldItem>
           <FieldItem>
             <FieldLabel>Total</FieldLabel>
@@ -71,7 +71,7 @@ const PaymentCard = ({data}) => {
       </TutorSection>
       <ButtonSection>
         <Button primary onClick={() => handlePayment(snap_token)}>Pay</Button>
-        <Button cancel onClick={() => handleCancel(transaction_id)}>Cancel</Button>
+        <Button cancel onClick={() => handleCancel(transaction_id)} data-testid={"cancel"}>Cancel</Button>
         <ToastContainer style={{width: 'fit-content',margin: 'auto'}} toastClassName={"toast-style"}/>
       </ButtonSection>
     </PaymentCardContainer>
