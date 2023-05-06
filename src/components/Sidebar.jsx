@@ -92,7 +92,7 @@ const Sidebar = ({ children }) => {
                     </SLink>
                 </SLinkContainer>
             ))}
-            <Logout></Logout>
+            <Logout sidebarOpen={sidebarOpen} />
         </SSidebar>
             <main>{children}</main>
       </SLayout>
