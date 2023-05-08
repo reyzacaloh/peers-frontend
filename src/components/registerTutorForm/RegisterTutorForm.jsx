@@ -1,12 +1,12 @@
-import React from 'react';
-import {Formik} from 'formik';
 import axios from "axios";
-import * as Yup from "yup";
+import { Formik } from 'formik';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import {Form, Input, Label, Button, Error} from "../registerForm/RegisterStyledComponents.js"
-import { subjectOption } from "../../docs/data";
-import CustomSelect from './CustomSelect';
+import * as Yup from "yup";
 import { AuthContext } from '../../contexts/AuthContext.js';
+import { subjectOption } from "../../docs/data";
+import { Button, Error, Form, Input, Label } from "../registerForm/RegisterStyledComponents.js";
+import CustomSelect from './CustomSelect';
 
 const RegisterTutorForm = () => {
     const {dispatch} = React.useContext(AuthContext);
@@ -38,16 +38,16 @@ const RegisterTutorForm = () => {
             formData.append("transkrip", selectedFile3);
         try {
             <div><h1>Registration Form</h1></div>
-            const response =  await axios.post(
-                "https://peers-backend-dev.up.railway.app/api/tutor_form/upload/",
+            const response = await axios.post(
+                `${process.env.REACT_APP_API_URL}/api/tutor_form/upload/`,
                 formData,
                 {headers: {
                     "content-type": "multipart/form-data",
                     "authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
                 }}
                 );
-            console.log(response);
             actions.setStatus('success');
+            console.log(response);
             dispatch({
                 type: "TUTOR"
             });
@@ -59,7 +59,7 @@ const RegisterTutorForm = () => {
         }}>
         
         {formik => (
-            <Form onSubmit={formik.handleSubmit} data-testid="tutor_form">
+            <Form onSubmit={formik.handleSubmit} className='tutor_form' data-testid="tutor_form">
                 <h1>Tutor Register Form</h1>
                 <Label htmlFor="subject" >Subject :<br></br></Label>
                 <CustomSelect

@@ -1,37 +1,63 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import "./ChatComponents.css";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import SendIcon from "@mui/icons-material/Send";
-import { storage } from "../../firebase";
-import { ref, uploadBytes } from "firebase/storage";
-import { v4 } from "uuid";
+import { ChatContext } from "../../contexts/ChatContext";
+import { ChatPartnerContext } from "../../contexts/ChatPartnerContext";
+import { Timestamp, arrayUnion, doc, serverTimestamp, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase";
+import { v4 as uuid } from "uuid";
 
 const Input = () => {
-  const [fileUpload, setFileUpload] = useState(null);
-
-  const upload = () => {
-    if (fileUpload == null)
-      return;
-    const fileRef = ref(storage, `images/${v4()}/${fileUpload.name}`);
-    uploadBytes(fileRef, fileUpload).then(() => {
-      console.log("File uploaded");
-    })
+  const [message, setMessage] = useState("")
+  const {currentUser} = React.useContext(ChatContext)
+  const {data} = React.useContext(ChatPartnerContext)
+  const handleMessageChange = (event) => {
+    setMessage(event.target.value);
   };
 
+  React.useEffect(()=>{
+    setMessage("")
+},[])
+ 
+  const handleSend = async () => {
+    console.log(message)
+    await updateDoc(doc(db,"chats",data.chatId),{
+      messages: arrayUnion({
+        id:uuid(),
+        message,
+        senderId: currentUser.uid,
+        date: Timestamp.now(),
+      }),
+    })
+    await updateDoc(doc(db, "userChats", currentUser.uid), {
+      [data.chatId + ".userInfo.latest_message"]:message,
+      [data.chatId + ".date"]: serverTimestamp(),
+    });
+
+    await updateDoc(doc(db, "userChats", data.user.uid), {
+      [data.chatId + ".userInfo.latest_message"]:message,
+      [data.chatId + ".date"]: serverTimestamp(),
+    });
+
+    setMessage('')
+  };
+  const handleKeyDown = async (event) => {
+    if (event.key === "Enter") {
+      await handleSend();
+    }
+  }
   return (
     <div className="input">
-      <textarea placeholder="Type a message"></textarea>
+      <textarea placeholder="Type a message" value={message}  onChange={handleMessageChange} onKeyDown={handleKeyDown}/> 
       <div className="input_btn">
-        <input type="file" id="file" data-testid="input"
-           onChange={(event) => {setFileUpload(event.target.files[0]);}}
-           style={{display: 'none'}}
-        />
+        <input type="file" id="file" style={{display: 'none'}} />
         <label htmlFor="file">
           <AddCircleOutlineOutlinedIcon className="addIcon" sx={{fontSize: '30px', color: 'white'}}/>
         </label>
-        <SendIcon className="sendIcon" onClick={upload} sx={{fontSize: '30px', color: 'white'}}/>
+        <SendIcon className="sendIcon" sx={{fontSize: '30px', color: 'white'}} onClick={handleSend} />
       </div>
+      
     </div>
   );
 };

@@ -3,7 +3,7 @@ import React from "react";
 import Select from "react-select";
 import { subjectOption } from "../docs/data";
 
-const SearchBar = () => {
+const SearchBar = ({onChange}) => {
     return (
         <>
             <Select
@@ -12,6 +12,7 @@ const SearchBar = () => {
                 placeholder="Ingin belajar apa hari ini?"
                 name="subject"
                 options={subjectOption}
+                onChange={onChange}
             />
         </>
     );
