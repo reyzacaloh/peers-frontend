@@ -65,7 +65,7 @@ const FindTutor = () => {
             data={{
               firstname: `${item.uid['first_name']} ${item.uid['last_name']}`,
               university: item.university,
-              profile_picture: `${process.env.REACT_APP_API_URL}`+item.uid['profile_picture'],
+              profile_picture: item.uid['profile_picture'],
               descriptions: item.desc,
               price_per_hour: item.price_per_hour,
               review_count: item.review_count,
