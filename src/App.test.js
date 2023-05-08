@@ -10,6 +10,8 @@ import TutorDashboard from './pages/TutorDashboard';
 import { AuthContext } from './contexts/AuthContext';
 import Profile from './pages/Profile';
 import AuthContextProvider from "./contexts/AuthContext";
+import ChatContextProvider from './contexts/ChatContext';
+import ChatPartnerContextProvider from './contexts/ChatPartnerContext';
 import Verification from '../src/pages/Verification';
 
 window.matchMedia = (query) => ({
@@ -26,7 +28,7 @@ test('renders app, scroll and click buttons', () => {
 
   window.HTMLElement.prototype.scrollIntoView = function () { };
   render(
-  <AuthContext.Provider value={{state: {isAuthenticated: false, user: null, token: null, isTutor: false}, dispatch: {}}}>
+  <AuthContext.Provider value={{state: {isAuthenticated: false, user: null, token: null, isTutor: false}, dispatch: {}, tutor: {}}}>
     <App />
 </AuthContext.Provider>);
   const homeElement = screen.getByText(/beranda/i);
@@ -47,7 +49,7 @@ test('renders app, scroll and click buttons', () => {
 
 test('render app with not auth', () => {
   render(
-    <AuthContext.Provider value={{state: {isAuthenticated: false, user: null, token: null, isTutor: false}, dispatch: {}}}>
+    <AuthContext.Provider value={{state: {isAuthenticated: false, user: null, token: null, isTutor: false}, dispatch: {}, tutor: {}}}>
         <App />
     </AuthContext.Provider>
   );
@@ -57,7 +59,7 @@ test('render app with not auth', () => {
 
 test('render app with auth', () => {
   render(
-    <AuthContext.Provider value={{state: {isAuthenticated: true, user: null, token: null, isTutor: false}, dispatch: {}}}>
+    <AuthContext.Provider value={{state: {isAuthenticated: true, user: null, token: null, isTutor: false}, dispatch: {}, tutor: {}, currentUser: {role: 3}}}>
         <App />
     </AuthContext.Provider>
   );
@@ -67,7 +69,7 @@ test('render app with auth', () => {
 
 test('render app with auth and tutor', () => {
   render(
-    <AuthContext.Provider value={{state: {isAuthenticated: true, user: null, token: null, isTutor: true}, dispatch: {}}}>
+    <AuthContext.Provider value={{state: {isAuthenticated: true, user: null, token: null, isTutor: true}, dispatch: {}, tutor: {}, currentUser: {role: 3}}}>
         <App />
     </AuthContext.Provider>
   );
@@ -91,9 +93,13 @@ test('renders sidebar', () => {
 test('renders chat', () => {
   render(
     <AuthContextProvider>
+      <ChatContextProvider>
+        <ChatPartnerContextProvider>
       <Router>
         <Chat/>
       </Router>
+      </ChatPartnerContextProvider>
+      </ChatContextProvider>
     </AuthContextProvider>
   );
   const linkElement = screen.getByText(/Chat/i);
@@ -122,14 +128,16 @@ test('renders not found page', () => {
 
 test('renders tutor dashboard page', () => {
   render(
+    <Router>
     <TutorDashboard />
+    </Router>
   );
-  const linkElement = screen.getByText(/Tutor Dashboard/i);
+  const linkElement = screen.getByText(/Jadwal Mengajarmu/i);
   expect(linkElement).toBeInTheDocument();
 });
 
 test('renders Profile page', () => {
-  render(<Profile />);
+  render(<AuthContextProvider><Profile /></AuthContextProvider>, {wrapper: Router});
   const linkElement = screen.getByText(/Profile page/i);
   expect(linkElement).toBeInTheDocument();
 }); 

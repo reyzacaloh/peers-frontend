@@ -12,6 +12,7 @@ import {
 function Logout({ sidebarOpen }) {
     const { dispatch } = React.useContext(AuthContext);
     const navigate = useNavigate();
+    const [sidebarOpen] = useState(false);
     const HandleLogout = () => {
 
       dispatch({ type: "LOGOUT" });

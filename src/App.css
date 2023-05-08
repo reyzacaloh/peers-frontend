@@ -4,6 +4,10 @@
   text-decoration: none;
   box-sizing: border-box;
 }
+.toast-style {
+  width: max-content;
+  margin: auto;
+}
 
 .container {
   display: flex;

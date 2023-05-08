@@ -11,7 +11,7 @@ const ChatInfo = ({ onClick, data }) => {
         <div className="user_chat_info">
           <div className="chat_header_info">
             <span>{username || "Unknown"}</span>
-            <p>{time || "13.00"}</p>
+            <p>{time || ""}</p>
           </div>
           <p>{latest_message || ""}</p>
         </div>
