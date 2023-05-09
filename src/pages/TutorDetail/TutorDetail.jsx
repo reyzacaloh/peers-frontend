@@ -10,6 +10,12 @@ import "./TutorDetail.css";
 import { dateFormat, showErrorToast, showSuccessToast, timeFormat } from "../../utils/common";
 import {ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import {
+  Rating,
+  Star,  
+  Rate,
+  Review,
+} from "../../components/tutor_card/tutorStyledComponents";
 
 function TutorDetail() {
   const [profile, setProfile] = useState({ uid: {}, subject: "" });
@@ -70,7 +76,7 @@ function TutorDetail() {
 
   return (
     <section className="tutor-detail">
-      <header className="header">
+      <header className="header-tutor-detail">
         <div className="back-button">
           <NavLink to={"/"}>
             <ArrowLeftCircleIcon color="white" />
@@ -78,7 +84,7 @@ function TutorDetail() {
         </div>
         <div className="details-tutor">
           <img
-            src={profile.uid.profile_picture}
+            src={`${process.env.REACT_APP_API_URL}${profile.uid.profile_picture}`}
             alt={profile.uid.first_name}
             className="profile-pic"
           />
@@ -108,11 +114,22 @@ function TutorDetail() {
               </svg>
               <p>{profile.university}</p>
             </div>
+            
           </div>
+          <Rating style={{paddingTop: "20px"}}>
+          <Rate>
+            <Star />
+            <p style={{ fontWeight: "bold" }}>{profile.rating}</p>
+          </Rate>
+          <Review>({profile.review_count} ulasan)</Review>
+        </Rating>
         </div>
       </header>
       <div className="table-tutor-detail">
         <div>
+          <div className="descriptions-tutor">
+          {profile.descriptions || "Tidak ada Deskripsi"}
+          </div>
           <h1>Jadwal Reservasi</h1>
           <div className="table-wrapper">
             <table className="fl-table">

@@ -1,7 +1,13 @@
 @import url("https://fonts.googleapis.com/css?family=Lato:400,400i,700");
 
-body {
-    margin: 0;
+.tutor-detail {
+    background: linear-gradient(to right, #279686, #36cfb8);
+}
+
+.descriptions-tutor {
+    padding-top: 50px;
+    font-size: 1.2rem;
+    margin-left: 70px;
 }
 
 .back-button {
@@ -16,10 +22,8 @@ body {
 }
 
 
-.header {
-
+.header-tutor-detail {
     color: black;
-    background: linear-gradient(to bottom right, #279686, #36cfb8);
     clip-path: ellipse(100vw 60vh at 50% 50%);
     display: flex;
     align-items: center;
@@ -77,6 +81,13 @@ body {
     font-weight: bold;
     font-size: 2rem;
     margin: 1rem 0;
+}
+
+.table-tutor-detail {
+    background-color: white;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+
 }
 
 .table-tutor-detail h1 {
