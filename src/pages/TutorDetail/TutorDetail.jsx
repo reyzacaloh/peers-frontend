@@ -84,7 +84,7 @@ function TutorDetail() {
         </div>
         <div className="details-tutor">
           <img
-            src={`${process.env.REACT_APP_API_URL}${profile.uid.profile_picture}`}
+            src={profile.uid.profile_picture}
             alt={profile.uid.first_name}
             className="profile-pic"
           />
