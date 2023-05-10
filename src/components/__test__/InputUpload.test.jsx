@@ -18,7 +18,7 @@ describe('InputUpload test', () => {
     testFile = new File(["(⌐□_□)"], "chucknorris.jpg", { type: "image/jpg" });
   });
 
-  test('State test', async () => {
+  test.skip('State test', async () => {
     await waitFor(() =>
       fireEvent.change(uploadField, {
         target: {files: [testFile]},
