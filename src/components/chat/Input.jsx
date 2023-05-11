@@ -29,7 +29,7 @@ const Input = () => {
       uploadBytes(fileRef, fileUpload).then(() => {
         console.log("File uploaded");
       });
-      return `https://storage.googleapis.com/peers-staging-9d8ed.appspot.com/images/${data.chatId}/${fileUpload.name}`;
+      return `https://storage.googleapis.com/peers-staging-9d8ed.appspot.com/files/${data.chatId}/${fileUpload.name}`;
     } catch (e) {
       console.log(e);
     }
