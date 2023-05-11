@@ -1,12 +1,15 @@
 import axios from "axios";
-import React, { useEffect, useState, createContext } from "react";
+import React, { useEffect, useState, createContext, useReducer } from "react";
+import { authReducer, initialState } from "../reducers/AuthReducer";
 
 export const ChatContext = createContext();
 
 const ChatContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState({});
+  const[state, dispatch] = useReducer(authReducer, initialState);
 
   useEffect(() => {
+    
     const getCurrentUser = async () => {
       try {
         const response = await axios.get(
@@ -21,10 +24,11 @@ const ChatContextProvider = ({ children }) => {
         );
         setCurrentUser(response.data.user);
       } catch (err) {
-        console.error(err);
+        dispatch({type: "LOGOUT", payload: {...state}});
       }
     };
     getCurrentUser();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <ChatContext.Provider value={{ currentUser }}>
