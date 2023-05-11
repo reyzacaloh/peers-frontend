@@ -1,7 +1,10 @@
 import axios from "axios";
-import { getTutor, getCurrentUser } from "../common";
+import { getTutor, getCurrentUser, toTimestamp, showSuccessToast, getTutorIncome, showErrorToast } from "../common";
+import dayjs from "dayjs";
+import { toast } from "react-toastify";
 
 jest.mock("axios");
+jest.mock('react-toastify');
 
 describe("getTutor", () => {
   it("should call axios.get with correct parameters", async () => {
@@ -91,5 +94,129 @@ describe("getCurrentUser", () => {
     console.error = jest.fn();
     await getCurrentUser(callback);
     expect(console.error).toHaveBeenCalledWith(errorMessage);
+  });
+});
+
+describe('toTimestamp', () => {
+  test('should format a date as "ddd, MMM D, YYYY hh:m A"', () => {
+    const date = new Date('2022-12-31T23:59:59.999Z');
+    const expectedOutput = dayjs(date).format('ddd, MMM D, YYYY hh:m A');
+    const actualOutput = toTimestamp(date.toISOString());
+    expect(actualOutput).toEqual(expectedOutput);
+  });
+
+  test('should return the string when given an invalid date', () => {
+    const actualOutput = toTimestamp('invalid date');
+    expect(actualOutput).toEqual('Invalid Date');
+  });
+});
+
+
+
+describe('showSuccessToast', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
+  it('should show a success toast with the given message', () => {
+    const msg = 'Test message';
+    showSuccessToast(msg);
+    expect(toast.success).toHaveBeenCalledWith(msg, expect.any(Object));
+  });
+
+  it('should show a default success toast when no message is provided', () => {
+    showSuccessToast();
+    expect(toast.success).toHaveBeenCalledWith('Success!', expect.any(Object));
+  });
+
+  it('should set the correct options on the success toast', () => {
+    showSuccessToast('Test message');
+    expect(toast.success).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        position: 'top-center',
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      })
+    );
+  });
+});
+
+describe('showErrorToast', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
+  it('should show a error toast with the given message', () => {
+    const msg = 'Test message';
+    showErrorToast(msg);
+    expect(toast.error).toHaveBeenCalledWith(msg, expect.any(Object));
+  });
+
+  it('should show a default error toast when no message is provided', () => {
+    showErrorToast();
+    expect(toast.error).toHaveBeenCalledWith("Something went wrong. Try again later!", expect.any(Object));
+  });
+
+  it('should set the correct options on the error toast', () => {
+    showErrorToast('Test message');
+    expect(toast.error).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining( {
+        position: "top-center",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      })
+    );
+  });
+});
+
+describe('getTutorIncome', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
+  it('should call the correct API endpoint with the correct headers', async () => {
+    const mockToken = 'mock-token';
+    localStorage.setItem('token', JSON.stringify(mockToken));
+    const mockResponseData = { income: 100 };
+    axios.get.mockResolvedValueOnce({ data: mockResponseData });
+
+    const expectedEndpoint = `${process.env.REACT_APP_API_URL}/api/booking/tutor-income`;
+    const expectedHeaders = { Authorization: `Bearer ${mockToken}` };
+
+    await getTutorIncome();
+
+    expect(axios.get).toHaveBeenCalledWith(expectedEndpoint, {
+      headers: expectedHeaders,
+    });
+  });
+
+  it('should return the response data on success', async () => {
+    const mockResponseData = { income: 100 };
+    axios.get.mockResolvedValueOnce({ data: mockResponseData });
+
+    const result = await getTutorIncome();
+
+    expect(result).toEqual(mockResponseData);
+  });
+
+  it('should return an empty object on failure', async () => {
+    const mockError = new Error('mock error');
+    axios.get.mockRejectedValueOnce(mockError);
+
+    const result = await getTutorIncome();
+
+    expect(result).toEqual({});
   });
 });
