@@ -9,7 +9,7 @@ import ChatPartnerContextProvider from "./contexts/ChatPartnerContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  
     <AuthContextProvider>
       <ChatContextProvider>
         <ChatPartnerContextProvider>
@@ -17,5 +17,5 @@ root.render(
         </ChatPartnerContextProvider>
       </ChatContextProvider>
     </AuthContextProvider>
-  </React.StrictMode>
+ 
 );
