@@ -1,5 +1,6 @@
 import React from "react";
 import { authReducer, initialState } from "../reducers/AuthReducer";
+import { isExpired, decodeToken } from "react-jwt";
 
 export const AuthContext = React.createContext();
 
@@ -8,10 +9,20 @@ const AuthContextProvider = ({ children }) => {
   const [tutor, setTutor] = React.useState({});
   const [currentUser, setCurrentUser] = React.useState({});
 
-  
   React.useEffect(() => {
     const token = localStorage.getItem("token");
     const isTutor = localStorage.getItem("tutor");
+    const isSessionActive =
+      token === null
+        ? false
+        : isExpired(token.replace(/['"]+/g, "")) &&
+          decodeToken(token.replace(/['"]+/g, "")) !== null;
+    if (!isSessionActive) {
+      dispatch({
+        type: "LOGOUT",
+      });
+    }
+
     if (isTutor !== null) {
       dispatch({
         type: "TUTOR",
@@ -33,7 +44,7 @@ const AuthContextProvider = ({ children }) => {
         tutor,
         setTutor,
         currentUser,
-        setCurrentUser
+        setCurrentUser,
       }}
     >
       {children}
