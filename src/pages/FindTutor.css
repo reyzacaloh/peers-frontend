@@ -22,6 +22,7 @@
 }
 .card_container {
   display: flex;
+  height:100%;
   flex-wrap: wrap;
   gap: 0.5rem;
   justify-content: center;
