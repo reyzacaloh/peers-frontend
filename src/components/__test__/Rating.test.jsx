@@ -1,5 +1,5 @@
 import { render, fireEvent } from '@testing-library/react';
-import Rating from '../rating';
+import Rating from '../Rating';
 
 describe('Rating component', () => {
   test('renders the component', () => {
