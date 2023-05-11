@@ -22,7 +22,7 @@ const TutorScheduleForm = () => {
 
     const onSubmit = async (values, actions) => {
         try {
-            await axios.post("https://peers-backend-dev.up.railway.app/api/schedule/", {
+            await axios.post(`${process.env.REACT_APP_API_URL}/api/schedule/`, {
                 date_time: `${values.date.format('YYYY-MM-DD')}T${values.time.format('HH:00:00.0Z')}`
                 }, {
                 headers: {

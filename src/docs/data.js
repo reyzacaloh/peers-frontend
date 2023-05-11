@@ -1,10 +1,15 @@
 export const subjectOption = [
-    { value: "matematika", label: "Matematika" },
-    { value: "fisika", label: "Fisika" },
-    { value: "kimia", label: "Kimia" },
-    { value: "biologi", label: "Biologi" },
-    { value: "sejarah", label: "Sejarah" },
-    { value: "akuntansi", label: "Akuntansi" },
-    { value: "bahasainggris", label: "Bahasa Inggris" },
-    { value: "bahasaindonesia", label: "Bahasa Indonesia" }
+    { value: "-", label: "Perlihatkan Semua" },
+    { value: "Matematika SMA", label: "Matematika SMA" },
+    { value: "Fisika SMA", label: "Fisika SMA" },
+    { value: "Kimia SMA", label: "Kimia SMA" },
+    { value: "Biologi SMA", label: "Biologi SMA" },
+    { value: "Sejarah SMA", label: "Sejarah SMA" },
+    { value: "Akuntansi SMA", label: "Akuntansi SMA" },
+    { value: "Bahasa Inggris SMA", label: "Bahasa Inggris SMA" },
+    { value: "Bahasa Indonesia SMA", label: "Bahasa Indonesia SMA" },
+    { value: "Dasar-dasar Pemrograman", label: "Dasar-dasar Pemrograman" },
+    { value: "Kalkulus 1", label: "Kalkulus 1" },
+    { value: "Kalkulus 2", label: "Kalkulus 2" },
+    { value: "Matematika Diskret", label: "Matematika Diskret" },
 ];

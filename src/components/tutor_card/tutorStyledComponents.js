@@ -11,10 +11,11 @@ export const Wrapper = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
+  background-color: rgba(156, 156, 156, 0.65);
   color: white;
   width: 100%;
   bottom: 0;
-  z-index: 999;
+  z-index: 0;
   padding: 0 10px 10px 20px;
 
   @media only screen and (max-width: 785px) {
@@ -61,7 +62,7 @@ export const ImageContainer = styled.div`
   border-radius: 15px;
   overflow: hidden;
   ${Image} {
-    transition: transform 1s ease;
+    transition: transform 0s ease;
   }
   ${Wrapper} {
     transition: transform 1s ease;
@@ -81,7 +82,7 @@ export const Text = styled.p`
   letter-spacing: 0.5px;
   display: -webkit-box;
   overflow: hidden;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 
   @media only screen and (max-width: 785px) {
@@ -93,13 +94,14 @@ export const Text = styled.p`
 
 export const Card = styled.div`
   display: flex;
+  flex-basis: auto
   cursor: pointer;
   flex-direction: column;
   min-width: 300px;
   max-width: 300px;
   border-radius: 30px;
   margin: 0;
-  height: 400px;
+  height: 450px;
   background-color: white;
   -webkit-box-shadow: 0px 11px 18px 1px rgba(0, 0, 0, 0.11);
   -moz-box-shadow: 0px 11px 18px 1px rgba(0, 0, 0, 0.11);
@@ -113,8 +115,8 @@ export const Card = styled.div`
     background-color: #fafafa;
 
     ${ImageContainer} {
-      ${Image} {
-        transform: scale(1.1);
+      ${Wrapper}{
+        z-index: 999;
       }
     }
   }
@@ -139,6 +141,7 @@ export const Description = styled.div`
   padding: 0 15px 15px 15px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 1px;
   justify-content: space-between;
 
@@ -170,7 +173,7 @@ export const Contents = styled.div`
 export const Price = styled.div`
   background-color: lightgreen;
   border-radius: 18px;
-  max-width: 150px;
+  max-width: 220px;
   min-width: 100px;
   padding: 5px;
   display: flex;
@@ -183,6 +186,24 @@ export const Price = styled.div`
     max-width: 100vw;
   }
 `;
+
+export const Subject = styled.div`
+  background-color: #6699ff;
+  border-radius: 18px;
+  max-width: 220px;
+  min-width: 100px;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media only screen and (max-width: 785px) {
+    border-radius: 15px;
+    height: 20px;
+    max-width: 100vw;
+  }
+`;
+
 export const Star = styled(StarIcon)`
   color: orange;
   margin-right: 5px;
@@ -196,6 +217,17 @@ export const Star = styled(StarIcon)`
 export const PriceTag = styled.span`
   font-size: 15px;
   color: green;
+  padding: 5px;
+
+  @media only screen and (max-width: 785px) {
+    font-size: 10px;
+    padding: 0;
+  }
+`;
+
+export const SubSpan = styled.span`
+  font-size: 15px;
+  color: white;
   padding: 5px;
 
   @media only screen and (max-width: 785px) {

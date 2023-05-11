@@ -1,4 +1,4 @@
-import React, { useState } from 'react' 
+import React from 'react' 
 import { useNavigate } from 'react-router-dom';
 import { FaSignOutAlt} from 'react-icons/fa';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -9,10 +9,9 @@ import {
   SLinkLabel,
 } from "../styles";
 
-function Logout() {
+function Logout({ sidebarOpen }) {
     const { dispatch } = React.useContext(AuthContext);
     const navigate = useNavigate();
-    const [sidebarOpen] = useState(false);
     const HandleLogout = () => {
 
       dispatch({ type: "LOGOUT" });
