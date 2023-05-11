@@ -30,6 +30,14 @@ const RegisterForm = () => {
         placement: 'top',
       });
   };
+  const showSuccess = () => {
+    api.success({
+      message: 'Registrasi Berhasil!',
+      description:
+        'Selamat! akun anda berhasil terbuat, silahkan login ',
+      placement: 'top',
+    });
+};
   function errorHandler(status) {
     if (status === "ERR_BAD_REQUEST") {
       showError("Email anda sudah terdaftar. Mohon login");
@@ -98,7 +106,10 @@ const RegisterForm = () => {
               );
               console.log("success");
               actions.setStatus("success");
-              navigate("/login");
+              showSuccess();
+              setTimeout(() => {
+                navigate("/login");
+              }, "1500");
             } catch (err) {
               console.log("Error: ", err.code);
               actions.setStatus(err.code);
