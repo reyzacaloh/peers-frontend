@@ -16,8 +16,9 @@ import { Register } from "./LoginFormStyle";
 import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { Input, notification } from 'antd';
-
+import { Input } from 'antd';
+import { showErrorToast } from "../../utils/common";
+import { ToastContainer } from "react-toastify";
 const LoginForm = () => {
   const { dispatch } = React.useContext(AuthContext);
   const navigate = useNavigate();
@@ -25,15 +26,6 @@ const LoginForm = () => {
   const initialValues = {
     email: "",
     pass: "",
-  };
-  const [api, contextHolder] = notification.useNotification();
-  const showError = (desc) => {
-      api.error({
-        message: 'Login Gagal',
-        description:
-          desc,
-        placement: 'top',
-      });
   };
   const onSubmit = async (values, actions) => {
     try {
@@ -80,11 +72,11 @@ const LoginForm = () => {
 
   function errorHandler(status) {
     if (status === "ERR_BAD_REQUEST") {
-      showError("email/password salah!");
+      showErrorToast("email/password salah!");
     } else if (status === "ERR_NETWORK") {
-      showError("Jaringan error! Silahkan coba lagi nanti");
+      showErrorToast("Jaringan error! Silahkan coba lagi nanti");
     } else {
-      showError("Unknown error!");
+      showErrorToast("Unknown error!");
     }
   }
   const formik = useFormik({
@@ -94,7 +86,7 @@ const LoginForm = () => {
   });
   return (
     <Container>
-      {contextHolder}
+      <ToastContainer />
       <Wrapper>
         <Title>Sign In</Title>
         <Form onSubmit={formik.handleSubmit}>
