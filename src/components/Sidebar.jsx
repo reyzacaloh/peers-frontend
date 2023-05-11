@@ -153,9 +153,10 @@ const Sidebar = ({ children }) => {
                     </SLink>
                 </SLinkContainer>
             ))}
+            
             <TutorMenu role={currentUser.role} />
             <VerifyTutor role={currentUser.role} />
-            <Logout></Logout>
+            <Logout sidebarOpen={sidebarOpen} />
         </SSidebar>
             <main>{children}</main>
       </SLayout>
