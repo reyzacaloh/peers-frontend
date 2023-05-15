@@ -15,6 +15,8 @@ describe('RegisterForm test', () => {
   let ktp;
   let ktm_person;
   let transkrip;
+  let desc;
+  let price_per_hour
   let file;
   let pdfile;
   let registerButton;
@@ -32,6 +34,8 @@ describe('RegisterForm test', () => {
     ktp = screen.getByTestId("ktp");
     ktm_person = screen.getByTestId("ktm_person");
     transkrip = screen.getByTestId("transkrip");
+    desc = screen.getByTestId("desc");
+    price_per_hour = screen.getByTestId("price_per_hour");
     registerButton = screen.getByText('Register');
   });
 
@@ -41,6 +45,8 @@ describe('RegisterForm test', () => {
     expect(pddiktiField).toBeInTheDocument();
     expect(ktp).toBeInTheDocument();
     expect(ktm_person).toBeInTheDocument();
+    expect(desc).toBeInTheDocument();
+    expect(price_per_hour).toBeInTheDocument();
     expect(transkrip).toBeInTheDocument();
   });
 
@@ -63,6 +69,8 @@ describe('RegisterForm test', () => {
     act(() => {
       userEvent.type(universityField, 'UI')
       userEvent.type(pddiktiField, 'https://pddikti.kemdikbud.go.id/data_mahasiswa/Rjc2QjdDRDMtNUY5Ny00NjM5LUJCMkItMDc3ODZGMjkxMTVF')
+      userEvent.type(desc, 'hai')
+      userEvent.type(price_per_hour, '40000')
       userEvent.upload(ktp, file)
       userEvent.upload(ktm_person, file)
       userEvent.upload(transkrip, pdfile)
@@ -86,6 +94,8 @@ describe('RegisterForm test', () => {
       userEvent.type(subjectField, 'Matematika')
       userEvent.type(universityField, 'UI')
       userEvent.type(pddiktiField, 'https://pddikti.kemdikbud.go.id/data_mahasiswa/Rjc2QjdDRDMtNUY5Ny00NjM5LUJCMkItMDc3ODZGMjkxMTVF')
+      userEvent.type(desc, 'hai')
+      userEvent.type(price_per_hour, '40000')
       userEvent.upload(ktp, file)
       userEvent.upload(ktm_person, file)
       userEvent.upload(transkrip, pdfile)
@@ -152,6 +162,8 @@ describe('RegisterForm test', () => {
       userEvent.type(pddiktiField, 'kosong')
       userEvent.upload(ktp, file)
       userEvent.upload(ktm_person, file)
+      userEvent.type(desc, 'hai')
+      userEvent.type(price_per_hour, '40000')
       userEvent.upload(transkrip, pdfile)
       userEvent.click(registerButton);
     })
