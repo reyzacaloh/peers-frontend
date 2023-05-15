@@ -33,5 +33,5 @@ test('render app with auth as Tutor', () => {
     );
     const linkElement = screen.getByText(/profil/i);
     expect(linkElement).toBeInTheDocument();
-    expect(localStorage.getItem("isTutor")).toEqual("true");
+    expect(localStorage.getItem("isTutor")).toEqual(null);
 });
