@@ -4,7 +4,7 @@ import { Formik } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { Input, notification } from 'antd';
+import { Input} from 'antd';
 import { Link, useNavigate } from "react-router-dom";
 import {
   Form,
@@ -17,34 +17,19 @@ import {
   Text,
   Login,
 } from "./RegisterStyledComponents";
+import { showErrorToast, showSuccessToast } from "../../utils/common";
+import { ToastContainer } from "react-toastify";
 import Resizer from "react-image-file-resizer";
 const RegisterForm = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
-  const [api, contextHolder] = notification.useNotification();
-  const showError = (desc) => {
-      api.error({
-        message: 'Submisi Gagal',
-        description:
-          desc,
-        placement: 'top',
-      });
-  };
-  const showSuccess = () => {
-    api.success({
-      message: 'Registrasi Berhasil!',
-      description:
-        'Selamat! akun anda berhasil terbuat, silahkan login ',
-      placement: 'top',
-    });
-};
   function errorHandler(status) {
     if (status === "ERR_BAD_REQUEST") {
-      showError("Email anda sudah terdaftar. Mohon login");
+      showErrorToast("Email anda sudah terdaftar. Mohon login");
     } else if (status === "ERR_NETWORK") {
-      showError("Jaringan error! Silahkan coba lagi nanti");
+      showErrorToast("Jaringan error! Silahkan coba lagi nanti");
     } else {
-      showError("Unknown error!");
+      showErrorToast("Unknown error!");
     }
   }
   const onImgChange = (img) => {
@@ -79,7 +64,7 @@ const RegisterForm = () => {
   });
   return (
     <Container id="regis-form">
-      {contextHolder}
+      <ToastContainer />
       <Wrapper>
         <Formik
           initialValues={{}}
@@ -106,7 +91,7 @@ const RegisterForm = () => {
               );
               console.log("success");
               actions.setStatus("success");
-              showSuccess();
+              showSuccessToast();
               setTimeout(() => {
                 navigate("/login");
               }, "1500");
