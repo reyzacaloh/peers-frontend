@@ -39,7 +39,7 @@ const Input = () => {
 
     let fileUrl = "";
     if (fileUpload != null) {
-      fileUrl = `${handleUpload()} `;
+      fileUrl = `${handleUpload()}|`;
     }
 
     console.log(fileUrl + message)
