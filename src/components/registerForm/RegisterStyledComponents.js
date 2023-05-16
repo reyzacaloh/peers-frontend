@@ -19,10 +19,10 @@ export const Container = styled.div`
 
 export const Wrapper = styled.div`
   background-color: white;
-  width: 40%;
+  width: 35%;
   padding: 20px;
   padding-top: 5px;
-  border-radius: 10px;
+  border-radius: 30px;
   -webkit-box-shadow: 0px 11px 18px 1px rgba(0, 0, 0, 0.11);
   -moz-box-shadow: 0px 11px 18px 1px rgba(0, 0, 0, 0.11);
   box-shadow: 0px 11px 18px 1px rgba(0, 0, 0, 0.11);
@@ -64,6 +64,8 @@ export const Label = styled.label`
 
 export const Title = styled.h1`
   font-weight: 400;
+  text-align: center;
+  color: #279686;
 `;
 
 export const Login = styled.div`
@@ -78,7 +80,7 @@ export const Text = styled.p``;
 export const Button = styled.button`
   min-width: 40%;
   padding: 5px;
-  margin: 30px 10px 0px 0px;
+  margin: 30px 10px 0px 10px;
   font-weight: 500;
   font-size: 20px;
   background-color: #279686;
@@ -87,6 +89,7 @@ export const Button = styled.button`
   cursor: pointer;
   opacity: 0.8;
   transition: all 0.4s ease;
+  border-radius: 30px;
   &:hover {
     opacity: 1;
   }
@@ -99,7 +102,7 @@ export const Button = styled.button`
 
 export const Error = styled.p`
   color: red;
-  font-size: 25px;
+  font-size: 18px;
   margin-top: 10px;
   text-align: center;
 `;
