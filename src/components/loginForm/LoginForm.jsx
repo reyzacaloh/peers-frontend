@@ -88,8 +88,8 @@ const LoginForm = () => {
     <Container>
       <ToastContainer />
       <Wrapper>
-        <Title>Sign In</Title>
         <Form onSubmit={formik.handleSubmit}>
+        <Title>Sign In</Title>
           <Label>Email</Label>
           <Input
             type="email"
