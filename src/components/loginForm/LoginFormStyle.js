@@ -65,34 +65,3 @@ export const Register = styled.div`
   margin: 15px 0px;
   text-align: center;
 `;
-
-
-export const Text = styled.p``;
-
-export const Button = styled.button`
-  min-width: 40%;
-  padding: 5px;
-  margin: 40px 10px 0px 0px;
-  font-weight: 500;
-  font-size: 20px;
-  background-color: #279686;
-  color: white;
-  border: 1px solid #279686;
-  cursor: pointer;
-  opacity: 0.8;
-  transition: all 0.4s ease;
-  &:hover {
-    opacity: 1;
-  }
-  &:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-  }
-`;
-
-
-export const Error = styled.p`
-  color: red;
-  margin-top: 10px;
-  text-align: ${(props) => props.center ? "center" : "left"};
-`;
