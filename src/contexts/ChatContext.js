@@ -1,12 +1,10 @@
 import axios from "axios";
-import React, { useEffect, useState, createContext, useReducer } from "react";
-import { authReducer, initialState } from "../reducers/AuthReducer";
+import React, { useEffect, useState, createContext } from "react";
 
 export const ChatContext = createContext();
 
 const ChatContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState({});
-  const[state, dispatch] = useReducer(authReducer, initialState);
 
   useEffect(() => {
     
@@ -24,7 +22,7 @@ const ChatContextProvider = ({ children }) => {
         );
         setCurrentUser(response.data.user);
       } catch (err) {
-        dispatch({type: "LOGOUT", payload: {...state}});
+        console.error(err);
       }
     };
     getCurrentUser();
