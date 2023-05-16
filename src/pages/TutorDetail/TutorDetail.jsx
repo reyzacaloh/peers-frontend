@@ -32,7 +32,6 @@ function TutorDetail() {
     const schedule_time = new Date(schedule.date_time)
     const transformed_schedule = {
       key: `${schedule['id']}`,
-      tutor: `${schedule['tutor_id']['uid']['first_name']} ${schedule['tutor_id']['uid']['last_name']}`,
       date: `${schedule_time.getFullYear()}-${schedule_time.getMonth() + 1}-${schedule_time.getDate()}`,
       time: schedule_time.toLocaleTimeString(),
       book: schedule['is_booked']
@@ -42,7 +41,7 @@ function TutorDetail() {
     } else if (schedule_time >= subSeconds(current_time, 1) && schedule_time <= addHours(current_time, 1)) {
       addOngoing(current => current.find(e => e.key === transformed_schedule.key) ? [...current] : [transformed_schedule, ...current])
     } else {
-      transformed_schedule.book = true
+      transformed_schedule.book = 
       addHistory(current => current.find(e => e.key === transformed_schedule.key) ? [...current] : [transformed_schedule, ...current])
     }
 
@@ -50,11 +49,6 @@ function TutorDetail() {
   }
 
   const columns = [
-    {
-      title: 'Tutor',
-      dataIndex: 'tutor',
-      key: 'tutor',
-    },
     {
       title: 'Tanggal',
       dataIndex: 'date',
@@ -74,7 +68,7 @@ function TutorDetail() {
           <div
             style={{ textAlign: "center" }}
           >
-            <div className={"reservasi-button"} onClick={() => createBooking(profile.uid.id, id)}>Reservasi</div>
+            <div className={"reservasi-button"} onClick={() => createBooking(profile.uid.id, record.key)}>Reservasi</div>
             <ToastContainer style={{ width: 'fit-content', margin: 'auto' }} toastClassName={"toast-style"} />
           </div>
         ) : (
