@@ -5,9 +5,8 @@ import SendIcon from "@mui/icons-material/Send";
 import { ChatContext } from "../../contexts/ChatContext";
 import { ChatPartnerContext } from "../../contexts/ChatPartnerContext";
 import { Timestamp, arrayUnion, doc, serverTimestamp, updateDoc } from "firebase/firestore";
-import { storage } from "../../firebase";
+import { storage,db  } from "../../firebase";
 import { ref, uploadBytes } from "firebase/storage";
-import { db } from "../../firebase";
 import { v4 as uuid } from "uuid";
 
 const Input = () => {
