@@ -121,38 +121,6 @@ const RegisterTutorForm = () => {
                 required
                 /><br></br>
                 {formik.touched.pddikti && (<Error className="error">{formik.errors.pddikti}</Error>)}
-                <Label htmlFor="desc" required>Deskripsi :<br></br></Label>
-                <Input.TextArea
-                id="desc"
-                data-testid="desc"
-                name="desc"
-                type="text"
-                rows={3}
-                maxLength={150}
-                placeholder="Deskripsikan diri anda secara singkat (maks 150 huruf)"
-                onChange={formik.handleChange}
-                value={formik.values.desc}
-                size="large"
-                status= {formik.touched.desc && formik.errors.desc ? 'error' : ''}
-                required
-                /><br></br>
-                {formik.touched.desc && (<Error className="error">{formik.errors.desc}</Error>)}
-                <Label htmlFor="price_per_hour" required>Harga Tutoring :<br></br></Label>
-                <Input
-                id="price_per_hour"
-                data-testid="price_per_hour"
-                name="price_per_hour"
-                type="number"
-                min="0"
-                onChange={formik.handleChange}
-                value={formik.values.price_per_hour}
-                size="large"
-                addonBefore="Rp " 
-                addonAfter="/jam"
-                status= {formik.touched.price_per_hour && formik.errors.price_per_hour ? 'error' : ''}
-                required
-                /><br></br>
-                {formik.touched.price_per_hour && (<Error className="error">{formik.errors.price_per_hour}</Error>)}
                 <Label htmlFor="ktp" required>Kartu Identitas/KTP :<br></br></Label>
                 <Input
                 id="ktp"
