@@ -38,7 +38,9 @@ function AuthRoutes() {
                     </Sidebar>} />
 
             <Route path="/tutor" element={
+                <Sidebar>
                     <RegisterTutor /> 
+                </Sidebar>
             } />
             <Route path="/tutor/dashboard" element={
                 <Sidebar>
