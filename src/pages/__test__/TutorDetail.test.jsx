@@ -52,18 +52,18 @@ describe('Tutor Detail component', () => {
                 {
                     "id": 2,
                     "tutor_id": {
-                      "uid": {
-                        "email": "test@gmail.com",
-                        "first_name": "Test",
-                        "last_name": "Haha"
-                      },
-                      "id": 1
+                        "uid": {
+                            "email": "test@gmail.com",
+                            "first_name": "Test",
+                            "last_name": "Haha"
+                        },
+                        "id": 1
                     },
                     "learner_id": null,
                     "date_time": "2023-04-28T21:00:00Z",
                     "is_booked": true,
                     "is_finished": false
-                  },              
+                },
             ]
         };
         axios.get.mockResolvedValueOnce({ data: mockData });
@@ -85,7 +85,7 @@ describe('Tutor Detail component', () => {
                 <TutorDetail />
             </Router>);
         await waitFor(() => expect(axios.get));
-        const notFound = await screen.findByText(/g/);
+        const notFound = await screen.findByText(/v/);
         expect(notFound).toBeInTheDocument();
     });
 });
