@@ -41,7 +41,7 @@ function TutorDetail() {
     } else if (schedule_time >= subSeconds(current_time, 1) && schedule_time <= addHours(current_time, 1)) {
       addOngoing(current => current.find(e => e.key === transformed_schedule.key) ? [...current] : [transformed_schedule, ...current])
     } else {
-      transformed_schedule.book = 
+      transformed_schedule.book = false
       addHistory(current => current.find(e => e.key === transformed_schedule.key) ? [...current] : [transformed_schedule, ...current])
     }
 
