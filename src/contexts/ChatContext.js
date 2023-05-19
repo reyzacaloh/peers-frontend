@@ -7,6 +7,7 @@ const ChatContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState({});
 
   useEffect(() => {
+    
     const getCurrentUser = async () => {
       try {
         const response = await axios.get(
@@ -25,6 +26,7 @@ const ChatContextProvider = ({ children }) => {
       }
     };
     getCurrentUser();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <ChatContext.Provider value={{ currentUser }}>

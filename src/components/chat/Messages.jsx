@@ -11,8 +11,8 @@ const Messages = () => {
     const {data} = React.useContext(ChatPartnerContext)
     React.useEffect (()=>{
       if(data.chatId != null){
-        const unSub = onSnapshot(doc(db,"chats",data.chatId),(doc)=>{
-          doc.exists() && setMessages(doc.data().messages)
+        const unSub = onSnapshot(doc(db,"chats",data.chatId),(dok)=>{
+          dok.exists() && setMessages(dok.data().messages)
         })
         
         return () =>{
@@ -21,13 +21,13 @@ const Messages = () => {
       }
     },[data.chatId])
     
-    const handleMessages= (messages,user, partner)=>{
-      const updatedMessages = messages.map(message => ({
+    const handleMessages= (allMessage,user, partner)=>{
+      return allMessage.map(message => ({
         ...message,
         isOwner: message.senderId === user.uid,
         profile_pic: message.senderId === user.uid ? user.profile_picture : partner.profile_pic
       }));
-      return updatedMessages
+      
     }
     
   return (
