@@ -4,10 +4,13 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from "yup";
 import { AuthContext } from '../../contexts/AuthContext.js';
+import { Input } from 'antd';
 import { subjectOption } from "../../docs/data";
-import { Button, Error, Form, Input, Label } from "../registerForm/RegisterStyledComponents.js";
+import { Button, Error, Form, Label, Wrapper, Title } from "../registerForm/RegisterStyledComponents.js";
+import { showErrorToast, showSuccessToast } from "../../utils/common";
+import { ToastContainer } from "react-toastify";
 import CustomSelect from './CustomSelect';
-
+import Resizer from "react-image-file-resizer";
 const RegisterTutorForm = () => {
     const {dispatch} = React.useContext(AuthContext);
     const [selectedFile1, setSelectedFile1] = React.useState(null);
@@ -19,25 +22,44 @@ const RegisterTutorForm = () => {
         university: Yup.string().required('Required').min(2, 'Universitas tidak valid'),
         pddikti: Yup.string().required('Required').min(40, 'Alamat tidak valid'),
     })
-    
+    const onImgChange = (img, setter) => {
+        const file = img;
+        Resizer.imageFileResizer(
+          file, // the file from input
+          1100, // width
+          1100, // height
+          "JPEG", // compress format WEBP, JPEG, PNG
+          80, // quality
+          0, // rotation
+          (uri) => {
+            setter(uri);
+            // You upload logic goes here
+          },
+          "file"
+        );
+      }
     return (
+        <Wrapper>
+            <ToastContainer />
         <Formik
         initialValues={{
             subject : " ",
+            price_per_hour : 35000
         }}
         enableReinitialize={true}
         validationSchema = {validationSchema}
         onSubmit= {async (values,actions) => {
-        console.log("Values: ", values);
         const formData = new FormData();
             formData.append("subject", values.subject);
             formData.append("university", values.university);
             formData.append("pddikti", values.pddikti);
+            formData.append("desc", values.desc);
+            formData.append("price_per_hour", values.price_per_hour);
             formData.append("ktp", selectedFile1);
             formData.append("ktm_person", selectedFile2);
             formData.append("transkrip", selectedFile3);
+        console.log(formData)
         try {
-            <div><h1>Registration Form</h1></div>
             const response = await axios.post(
                 `${process.env.REACT_APP_API_URL}/api/tutor_form/upload/`,
                 formData,
@@ -51,16 +73,20 @@ const RegisterTutorForm = () => {
             dispatch({
                 type: "TUTOR"
             });
-            navigate("/");
+            showSuccessToast("Registrasi berhasil!");
+            setTimeout(() => {
+                navigate("/");
+            }, "1500");
         } catch (err) {
             console.log("Error: ", err);
             actions.setStatus(err.message);
+            showErrorToast("Maaf gagal mengirimkan data, silahkan dicoba lagi")
         }
         }}>
         
         {formik => (
             <Form onSubmit={formik.handleSubmit} className='tutor_form' data-testid="tutor_form">
-                <h1>Tutor Register Form</h1>
+                <Title>Tutor Register Form</Title>
                 <Label htmlFor="subject" >Subject :<br></br></Label>
                 <CustomSelect
                 className="subject"
@@ -78,6 +104,8 @@ const RegisterTutorForm = () => {
                 type="text"
                 onChange={formik.handleChange}
                 value={formik.values.university}
+                size="large"
+                status= {formik.touched.university && formik.errors.university ? 'error' : ''}
                 required
                 /> <br></br>
                 {formik.touched.university && (<Error className="error">{formik.errors.university}</Error>)}
@@ -89,9 +117,43 @@ const RegisterTutorForm = () => {
                 type="text"
                 onChange={formik.handleChange}
                 value={formik.values.pddikti}
+                size="large"
+                status= {formik.touched.pddikti && formik.errors.pddikti ? 'error' : ''}
                 required
                 /><br></br>
                 {formik.touched.pddikti && (<Error className="error">{formik.errors.pddikti}</Error>)}
+                <Label htmlFor="desc" required>Deskripsi :<br></br></Label>
+                <Input.TextArea
+                id="desc"
+                data-testid="desc"
+                name="desc"
+                type="text"
+                rows={3}
+                maxLength={150}
+                placeholder="Deskripsikan diri anda secara singkat (maks 150 huruf)"
+                onChange={formik.handleChange}
+                value={formik.values.desc}
+                size="large"
+                status= {formik.touched.desc && formik.errors.desc ? 'error' : ''}
+                required
+                /><br></br>
+                {formik.touched.desc && (<Error className="error">{formik.errors.desc}</Error>)}
+                <Label htmlFor="price_per_hour" required>Harga Tutoring :<br></br></Label>
+                <Input
+                id="price_per_hour"
+                data-testid="price_per_hour"
+                name="price_per_hour"
+                type="number"
+                min="0"
+                onChange={formik.handleChange}
+                value={formik.values.price_per_hour}
+                size="large"
+                addonBefore="Rp " 
+                addonAfter="/jam"
+                status= {formik.touched.price_per_hour && formik.errors.price_per_hour ? 'error' : ''}
+                required
+                /><br></br>
+                {formik.touched.price_per_hour && (<Error className="error">{formik.errors.price_per_hour}</Error>)}
                 <Label htmlFor="ktp" required>Kartu Identitas/KTP :<br></br></Label>
                 <Input
                 id="ktp"
@@ -99,10 +161,11 @@ const RegisterTutorForm = () => {
                 name="ktp"
                 type="file"
                 onChange={(event) => {
-                    setSelectedFile1(event.currentTarget.files[0]);
+                    onImgChange(event.currentTarget.files[0], setSelectedFile1)
                   }}
                 value={formik.values.ktp}
                 accept=".jpg,.jpeg"
+                size="large"
                 required
                 /><br></br>
                 <Label htmlFor="ktm_person" required>KTM dan Muka:<br></br></Label>
@@ -112,10 +175,11 @@ const RegisterTutorForm = () => {
                 name="ktm_person"
                 type="file"
                 onChange={(event) => {
-                    setSelectedFile2(event.currentTarget.files[0]);
+                    onImgChange(event.currentTarget.files[0], setSelectedFile2)
                   }}
                 value={formik.values.ktm_person}
                 accept=".jpg,.jpeg"
+                size="large"
                 required
                 /><br></br>
                 <Label htmlFor="transkrip" required>Transkrip Nilai :<br></br></Label>
@@ -129,6 +193,7 @@ const RegisterTutorForm = () => {
                   }}
                 value={formik.values.transkrip}
                 accept=".pdf"
+                size="large"
                 required
                 /><br></br>
                 <Button type="submit" disabled={formik.isSubmitting || formik.status==='success'}>
@@ -141,6 +206,7 @@ const RegisterTutorForm = () => {
             </Form>)
             }
         </Formik>
+        </Wrapper>
     );
  };
 

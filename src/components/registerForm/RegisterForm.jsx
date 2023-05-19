@@ -1,11 +1,13 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import {React, useState} from "react";
 import { Formik } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { Input} from 'antd';
 import { Link, useNavigate } from "react-router-dom";
 import {
   Form,
-  Input,
   Label,
   Button,
   Error,
@@ -15,9 +17,37 @@ import {
   Text,
   Login,
 } from "./RegisterStyledComponents";
+import { showErrorToast, showSuccessToast } from "../../utils/common";
+import { ToastContainer } from "react-toastify";
+import Resizer from "react-image-file-resizer";
 const RegisterForm = () => {
-  const [selectedFile, setSelectedFile] = React.useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
+  function errorHandler(status) {
+    if (status === "ERR_BAD_REQUEST") {
+      showErrorToast("Email anda sudah terdaftar. Mohon login");
+    } else if (status === "ERR_NETWORK") {
+      showErrorToast("Jaringan error! Silahkan coba lagi nanti");
+    } else {
+      showErrorToast("Unknown error!");
+    }
+  }
+  const onImgChange = (img) => {
+    const file = img;
+    Resizer.imageFileResizer(
+      file, // the file from input
+      480, // width
+      480, // height
+      "JPEG", // compress format WEBP, JPEG, PNG
+      70, // quality
+      0, // rotation
+      (uri) => {
+        setSelectedFile(uri);
+        // You upload logic goes here
+      },
+      "file"
+    );
+  }
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .email("Invalid")
@@ -28,12 +58,13 @@ const RegisterForm = () => {
       .min(5, "Password minimal 5 karakter"),
     date_of_birth: Yup.date()
       .required("Required")
-      .max("2010-1-1", "Minimal 10 tahun untuk registrasi"),
+      .max("2010-1-1", "Minimal 13 tahun untuk registrasi"),
     first_name: Yup.string().required("Required").min(2, "Minimal 2 karakter"),
     last_name: Yup.string().required("Required").min(2, "Minimal 2 karakter"),
   });
   return (
     <Container id="regis-form">
+      <ToastContainer />
       <Wrapper>
         <Formik
           initialValues={{}}
@@ -60,22 +91,21 @@ const RegisterForm = () => {
               );
               console.log("success");
               actions.setStatus("success");
-              navigate("/login");
+              showSuccessToast();
+              setTimeout(() => {
+                navigate("/login");
+              }, "1500");
             } catch (err) {
               console.log("Error: ", err.code);
               actions.setStatus(err.code);
+              errorHandler(err.code);
             }
           }}
         >
           {(formik) => (
             <Form onSubmit={formik.handleSubmit} data-testid="form">
-              <Error center>
-                {formik.status === undefined || formik.status === "success"
-                  ? ""
-                  : errorHandler(formik.status)}
-              </Error>
               <Title>Register Form</Title>
-              <Label htmlFor="email"></Label>
+              <Label htmlFor="email">Alamat Email</Label>
               <Input
                 id="email"
                 data-testid="email"
@@ -83,14 +113,16 @@ const RegisterForm = () => {
                 type="email"
                 onChange={formik.handleChange}
                 value={formik.values.email}
+                size="large"
+                status= {formik.touched.email && formik.errors.email ? 'error' : ''}
                 placeholder="Email Address"
-                required
+                
               />
               {formik.touched.email && (
                 <Error className="error">{formik.errors.email}</Error>
               )}
-              <Label htmlFor="password"></Label>
-              <Input
+              <Label htmlFor="password">Password</Label>
+              <Input.Password
                 id="password"
                 data-testid="password"
                 name="password"
@@ -98,12 +130,15 @@ const RegisterForm = () => {
                 onChange={formik.handleChange}
                 value={formik.values.password}
                 placeholder="Password"
-                required
+                size="large"
+                status= {formik.touched.password && formik.errors.password ? 'error' : ''}
+                iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+                
               />
               {formik.touched.password && (
                 <Error className="error">{formik.errors.password}</Error>
               )}
-              <Label htmlFor="first_name" required></Label>
+              <Label htmlFor="first_name" >Nama Depan</Label>
               <Input
                 id="first_name"
                 data-testid="first_name"
@@ -112,12 +147,14 @@ const RegisterForm = () => {
                 onChange={formik.handleChange}
                 value={formik.values.first_name}
                 placeholder="First Name"
-                required
+                size="large"
+                status= {formik.touched.first_name && formik.errors.first_name ? 'error' : ''}
+                
               />
               {formik.touched.first_name && (
                 <Error className="error">{formik.errors.first_name}</Error>
               )}
-              <Label htmlFor="last_name" required></Label>
+              <Label htmlFor="last_name" >Nama Belakang</Label>
               <Input
                 id="last_name"
                 data-testid="last_name"
@@ -126,28 +163,32 @@ const RegisterForm = () => {
                 onChange={formik.handleChange}
                 value={formik.values.last_name}
                 placeholder="Last Name"
-                required
+                size="large"
+                status= {formik.touched.last_name && formik.errors.last_name ? 'error' : ''}
+                
               />
               {formik.touched.last_name && (
                 <Error className="error">{formik.errors.last_name}</Error>
               )}
               <Label htmlFor="date_of_birth" required>
-                Date of Birth
+                Tanggal Lahir
               </Label>
               <Input
                 id="date_of_birth"
                 data-testid="date_of_birth"
                 name="date_of_birth"
                 type="date"
+                size="large"
+                status= {formik.touched.date_of_birth && formik.errors.date_of_birth ? 'error' : ''}
                 onChange={formik.handleChange}
                 value={formik.values.date_of_birth}
-                required
+                
               />
               {formik.touched.date_of_birth && (
                 <Error className="error">{formik.errors.date_of_birth}</Error>
               )}
               <Label htmlFor="profile_picture" required>
-                Profile Picture
+                Gambar Profil
               </Label>
               <Input
                 id="profile_picture"
@@ -155,7 +196,7 @@ const RegisterForm = () => {
                 name="profile_picture"
                 type="file"
                 onChange={(event) => {
-                  setSelectedFile(event.currentTarget.files[0]);
+                  onImgChange(event.currentTarget.files[0])
                 }}
                 value={formik.values.profile_picture}
                 accept=".jpg,.jpeg"
@@ -169,7 +210,7 @@ const RegisterForm = () => {
               </Button>
               <Login>
                 <Text>
-                  Already have an account?&nbsp;
+                  Sudah punya akun?&nbsp;
                   <Link
                     style={{
                       textDecoration: "none",
@@ -190,13 +231,5 @@ const RegisterForm = () => {
   );
 };
 
-function errorHandler(status) {
-  if (status === "ERR_BAD_REQUEST") {
-    return "Email anda sudah terdaftar. Mohon login";
-  } else if (status === "ERR_NETWORK") {
-    return "Network error! Try again later";
-  } else {
-    return "Unknown error!";
-  }
-}
+
 export default RegisterForm;
