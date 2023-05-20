@@ -3,8 +3,12 @@ import "./Chat.css";
 import { ChatSidebar, ChatBox } from "../../components/chat";
 import { ChatContext } from "../../contexts/ChatContext";
 import { ChatPartnerContext } from "../../contexts/ChatPartnerContext";
-import { doc, onSnapshot } from "firebase/firestore";
+import {
+  doc,
+  onSnapshot,
+} from "firebase/firestore";
 import { db } from "../../firebase";
+
 
 const Chat = () => {
   const [open, setOpen] = useState(false);
@@ -14,28 +18,28 @@ const Chat = () => {
   const [chats, setChats] = useState([]);
   const { currentUser } = React.useContext(ChatContext);
   const { dispatch } = React.useContext(ChatPartnerContext);
+  
 
   useEffect(() => {
     const getChats = () => {
-      const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
-        setChats(doc.data());
+      const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (dok) => {
+        setChats(dok.data());
       });
 
       return () => {
         unsub();
       };
     };
-
     currentUser.uid && getChats();
   }, [currentUser.uid]);
 
-  const handleData = (chats) => {
+  const handleData = (allChat) => {
     try {
-      const sortedChat = Object.entries(chats)?.sort(
+      const sortedChat = Object.entries(allChat)?.sort(
         (a, b) => b[1].date - a[1].date
       );
-      const chatData = sortedChat.map((map) => map[1].userInfo);
-      return chatData;
+      return sortedChat.map((map) => map[1].userInfo);
+      
     } catch (error) {
       return [];
     }

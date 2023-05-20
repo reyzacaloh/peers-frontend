@@ -44,6 +44,7 @@ const RegisterTutorForm = () => {
         <Formik
         initialValues={{
             subject : " ",
+            price_per_hour : 35000
         }}
         enableReinitialize={true}
         validationSchema = {validationSchema}
@@ -53,10 +54,11 @@ const RegisterTutorForm = () => {
             formData.append("university", values.university);
             formData.append("pddikti", values.pddikti);
             formData.append("desc", values.desc);
-            formData.append("price_per_hour", values.price);
+            formData.append("price_per_hour", values.price_per_hour);
             formData.append("ktp", selectedFile1);
             formData.append("ktm_person", selectedFile2);
             formData.append("transkrip", selectedFile3);
+        console.log(formData)
         try {
             const response = await axios.post(
                 `${process.env.REACT_APP_API_URL}/api/tutor_form/upload/`,
@@ -142,6 +144,7 @@ const RegisterTutorForm = () => {
                 data-testid="price_per_hour"
                 name="price_per_hour"
                 type="number"
+                min="0"
                 onChange={formik.handleChange}
                 value={formik.values.price_per_hour}
                 size="large"
