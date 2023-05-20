@@ -6,13 +6,9 @@ import { ChatPartnerContext } from "../../contexts/ChatPartnerContext";
 import {
   doc,
   onSnapshot,
-  getDoc,
-  setDoc,
-  updateDoc,
-  serverTimestamp,
 } from "firebase/firestore";
 import { db } from "../../firebase";
-import axios from "axios";
+
 
 const Chat = () => {
   const [open, setOpen] = useState(false);
@@ -34,79 +30,8 @@ const Chat = () => {
         unsub();
       };
     };
-    const getContacts = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/booking/booking-paid`,
-          {
-            headers: {
-              authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-            },
-          }
-        );
-        const book_list = response.data.booking_list;
-        book_list.forEach(async (item) => {
-          const combinedId =
-            currentUser.uid > item.tutor_uid
-              ? currentUser.uid + item.tutor_uid
-              : item.tutor_uid + currentUser.uid;
-
-          const learner_check = await getDoc(
-            doc(db, "userChats", currentUser.uid)
-          );
-          if (!learner_check.exists()) {
-            await setDoc(doc(db, "userChats", currentUser.uid), {});
-          }
-
-          const tutor_check = await getDoc(
-            doc(db, "userChats", item.tutor_uid)
-          );
-          if (!tutor_check.exists()) {
-            await setDoc(doc(db, "userChats", item.tutor_uid), {});
-          }
-
-          const res = await getDoc(doc(db, "chats", combinedId));
-
-          if (!res.exists()) {
-            //create a chat in chats collection
-            await setDoc(doc(db, "chats", combinedId), { messages: [] });
-
-            //create user chats
-            await updateDoc(doc(db, "userChats", currentUser.uid), {
-              [combinedId + ".userInfo"]: {
-                latest_message: "",
-                profile_pic: item.profile_pic,
-                uid: item.tutor_uid,
-                username: item.tutor_name,
-              },
-              [combinedId + ".date"]: serverTimestamp(),
-            });
-
-            await updateDoc(doc(db, "userChats", item.tutor_uid), {
-              [combinedId + ".userInfo"]: {
-                latest_message: "",
-                profile_pic: currentUser.profile_picture,
-                uid: currentUser.uid,
-                username: currentUser.first_name + " " + currentUser.last_name,
-              },
-              [combinedId + ".date"]: serverTimestamp(),
-            });
-          }
-        });
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    getContacts();
-
     currentUser.uid && getChats();
-  }, [
-    currentUser.first_name,
-    currentUser.last_name,
-    currentUser.profile_picture,
-    currentUser.uid,
-  ]);
+  }, [currentUser.uid]);
 
   const handleData = (allChat) => {
     try {
