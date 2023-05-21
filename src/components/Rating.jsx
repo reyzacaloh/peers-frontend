@@ -1,58 +1,80 @@
-import { useState } from "react";
-import { FaStar } from "react-icons/fa";
+import { Rate } from 'antd';
+import axios from "axios";
+import {useFormik} from "formik";
+import {useNavigate} from "react-router-dom";
+import { Form, Button } from './registerForm/RegisterStyledComponents';
+import Popup from 'reactjs-popup';
 
-const colors = {
-    orange: "#FFBA5A",
-    grey: "#a9a9a9"
+function Rating(props) {
+  
+  const navigate = useNavigate();
+  const tutorId = Number(props.tutorId);
+
+  const initialValues = {
+    tutor_id: tutorId,
+    rating: 0,
+  };
+  
+  const onSubmit = async (values, actions) => {
+    
+    try {
+        await axios.post(`${process.env.REACT_APP_API_URL}/api/tutor_form/rate/`, {rating:`${values.rating}`}, {
+            headers: {
+                "content-type": "application/x-www-form-urlencoded",
+                authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+            }}
+        );
+        actions.setSubmitting(false);
+        console.log("Success");
+        actions.setStatus("success");
+
+        navigate("/tutor");
+
+    } catch (err) {
+        console.log(values);
+        console.log("Error: ", err);
+        actions.setStatus(err.code);
+        actions.setSubmitting(false);
+    }
 };
 
-const Rating = () => {
-  const [currentValue, setCurrentValue] = useState(0);
-  const [hoverValue, setHoverValue] = useState(undefined);
-  const stars = Array(5).fill(0)
+const formik = useFormik({
+  initialValues,
+  onSubmit,
+});
 
-  const handleClick = value => {
-    setCurrentValue(value)
-  }
-
-  const handleMouseOver = newHoverValue => {
-    setHoverValue(newHoverValue)
-  };
-
-  const handleMouseLeave = () => {
-    setHoverValue(undefined)
-  }
-
+function MouseOver(event) {
+  event.target.style.background = 'grey';
+}
+function MouseOut(event){
+  event.target.style.background="";
+}
 
   return (
     <div style={styles.container}>
-      <h2> Berikan Rating untuk Tutor Anda </h2>
-      <div style={styles.stars}>
-        {stars.map((_, index) => {
-          return (
-            <FaStar
-              key={index}
-              size={24}
-              onClick={() => handleClick(index + 1)}
-              onMouseOver={() => handleMouseOver(index + 1)}
-              onMouseLeave={handleMouseLeave}
-              color={(hoverValue || currentValue) > index ? colors.orange : colors.grey}
-              style={{
-                marginRight: 10,
-                cursor: "pointer"
-              }}
-            />
-          )
-        })}
-        <br></br>
-      </div>
-      <br></br>
-      <button
-        style={styles.button}
-      >
-        Submit
+      <Popup trigger=
+                {<button style={styles.button}> Rate Tutor</button>}
+                modal nested>
+      {close => (
+      <><div style={styles.form}>
+      <button style={{backgroundColor:"white"}} onMouseOver={MouseOver} onMouseOut={MouseOut} onClick={() => close()}>
+        [x]
       </button>
-      
+            <Form onSubmit={formik.handleSubmit}>
+              <h2> Berikan Rating untuk Tutor Anda </h2>
+              <Rate style={styles.rate}
+                onChange={(value) => formik.setFieldValue("rating", value)} />
+              <Button
+                type="submit"
+                disabled={formik.isSubmitting || formik.status === "success"}
+              >
+                {formik.isSubmitting ? "Processing..." : "Save"}
+              </Button>
+            </Form>
+          </div><div>
+            </div></>)
+      }
+      </Popup>
     </div>
   );
 };
@@ -72,10 +94,22 @@ const styles = {
   button: {
     border: "1px solid #a9a9a9",
     borderRadius: 5,
+    width: 90,
+    padding: 7,
+  },
+  form: {
+    border: "1px solid #a9a9a9",
+    borderRadius: 5,
     width: 300,
+    height: 230,
+    padding: 10,
+    backgroundColor: "white",
+    margin:"auto"
+  },
+  rate: {
+    margin: "auto",
     padding: 10,
   }
-
 };
 
 export default Rating;
