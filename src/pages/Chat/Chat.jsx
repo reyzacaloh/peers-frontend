@@ -6,13 +6,9 @@ import { ChatPartnerContext } from "../../contexts/ChatPartnerContext";
 import {
   doc,
   onSnapshot,
-  getDoc,
-  setDoc,
-  updateDoc,
-  serverTimestamp,
 } from "firebase/firestore";
 import { db } from "../../firebase";
-import axios from "axios";
+
 
 const Chat = () => {
   const [open, setOpen] = useState(false);
