@@ -111,4 +111,14 @@ describe("Message", () => {
 
     expect(separateMsg(input)).toEqual(expectedOutput);
   });
+
+  test('should handle unexpected input', () => {
+    const input = 999;
+    const expectedOutput = {
+      message: 999,
+      message_img: ''
+    };
+
+    expect(separateMsg(input)).toEqual(expectedOutput);
+  });
 });
