@@ -23,7 +23,7 @@ import {
   AiOutlineLeft,
 } from "react-icons/ai";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import { MdVerifiedUser } from "react-icons/md";
+import { MdVerifiedUser, MdRateReview } from "react-icons/md";
 import { useLocation } from 'react-router-dom'
 import Logout from './logout/Logout'
 import logo from "../images/logo_small.png"
@@ -62,7 +62,13 @@ const Sidebar = ({ children }) => {
           label: "Payment",
           icon: <FaMoneyBill/>,
           notification: 0
-      },
+        },
+        {
+          to: "/rate",
+          label: "Rating",
+          icon: <MdRateReview/>,
+          notification: 0
+        },
     ]
     useEffect(() => {
       const handleResize = () => {

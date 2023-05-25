@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import "./Chat.css";
 import { ChatSidebar, ChatBox } from "../../components/chat";
 import { ChatContext } from "../../contexts/ChatContext";
@@ -6,8 +6,14 @@ import { ChatPartnerContext } from "../../contexts/ChatPartnerContext";
 import {
   doc,
   onSnapshot,
+  getDoc,
+  setDoc,
+  updateDoc,
+  serverTimestamp,
 } from "firebase/firestore";
 import { db } from "../../firebase";
+import axios from "axios";
+import { notification } from "antd";
 
 
 const Chat = () => {
@@ -18,20 +24,115 @@ const Chat = () => {
   const [chats, setChats] = useState([]);
   const { currentUser } = React.useContext(ChatContext);
   const { dispatch } = React.useContext(ChatPartnerContext);
-  
-
+  const [api, contextHolder] = notification.useNotification();
+  const showErrorRef = useRef(false);
   useEffect(() => {
-    const getChats = () => {
-      const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (dok) => {
-        setChats(dok.data());
+    showErrorRef.current = false;
+    const showError = () => {
+      api.error({
+        message: 'Koneksi Gagal',
+        description:
+          'Mohon refresh halaman anda',
+        placement: 'top',
       });
+  };
 
-      return () => {
-        unsub();
-      };
+
+    const getChats = async () => {
+      try {
+        const unsub = onSnapshot(
+          doc(db, "userChats", currentUser.uid),
+          (dok) => {
+            if (dok.exists()) {
+              setChats(dok.data());
+            } else {
+              console.log("No chats data available.");
+            }
+          }
+        );
+
+        return () => {
+          unsub();
+        };
+      } catch (error) {
+        console.log("Error getting chats:", error);
+      }
     };
+    const getContacts = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/api/booking/booking-paid`,
+          {
+            headers: {
+              authorization: `Bearer ${JSON.parse(
+                localStorage.getItem("token")
+              )}`,
+            },
+          }
+        );
+
+        const learner_check = await getDoc(
+          doc(db, "userChats", currentUser.uid)
+        );
+        if (!learner_check.exists()) {
+          await setDoc(doc(db, "userChats", currentUser.uid), {});
+        }
+
+        const book_list = response.data.booking_list;
+        book_list.forEach(async (item) => {
+          const combinedId =
+            currentUser.uid > item.tutor_uid
+              ? currentUser.uid + item.tutor_uid
+              : item.tutor_uid + currentUser.uid;
+
+          const tutor_check = await getDoc(
+            doc(db, "userChats", item.tutor_uid)
+          );
+          if (!tutor_check.exists()) {
+            await setDoc(doc(db, "userChats", item.tutor_uid), {});
+          }
+
+          const res = await getDoc(doc(db, "chats", combinedId));
+
+          if (!res.exists()) {
+            //create a chat in chats collection
+            await setDoc(doc(db, "chats", combinedId), { messages: [] });
+
+            //create user chats
+            await updateDoc(doc(db, "userChats", currentUser.uid), {
+              [combinedId + ".userInfo"]: {
+                latest_message: "",
+                profile_pic: item.profile_pic,
+                uid: item.tutor_uid,
+                username: item.tutor_name,
+              },
+              [combinedId + ".date"]: serverTimestamp(),
+            });
+
+            await updateDoc(doc(db, "userChats", item.tutor_uid), {
+              [combinedId + ".userInfo"]: {
+                latest_message: "",
+                profile_pic: currentUser.profile_picture,
+                uid: currentUser.uid,
+                username: currentUser.first_name + " " + currentUser.last_name,
+              },
+              [combinedId + ".date"]: serverTimestamp(),
+            });
+          }
+        });
+      } catch (err) {
+        console.log(err)
+        if(!showErrorRef.current){
+          showError()
+          showErrorRef.current = true;
+          window.location.reload();
+        }
+      }
+    };
+    getContacts();
     currentUser.uid && getChats();
-  }, [currentUser.uid]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleData = (allChat) => {
     try {
@@ -39,7 +140,6 @@ const Chat = () => {
         (a, b) => b[1].date - a[1].date
       );
       return sortedChat.map((map) => map[1].userInfo);
-      
     } catch (error) {
       return [];
     }
@@ -54,6 +154,7 @@ const Chat = () => {
 
   return (
     <div className="chat_container">
+      {contextHolder}
       <div className="wrapper">
         <ChatSidebar
           back={back}
