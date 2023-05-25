@@ -4,7 +4,6 @@ import * as Yup from "yup";
 import axios from "axios";
 import {
   Form,
-  Input,
   Label,
   Button,
   Error,
@@ -12,12 +11,14 @@ import {
   Container,
   Text,
   Title,
-  Register,
-} from "./LoginFormStyle";
+} from "../registerForm/RegisterStyledComponents";
+import { Register } from "./LoginFormStyle";
 import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
-
-
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { Input } from 'antd';
+import { showErrorToast } from "../../utils/common";
+import { ToastContainer } from "react-toastify";
 const LoginForm = () => {
   const { dispatch } = React.useContext(AuthContext);
   const navigate = useNavigate();
@@ -26,7 +27,6 @@ const LoginForm = () => {
     email: "",
     pass: "",
   };
-
   const onSubmit = async (values, actions) => {
     try {
       let response = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/token/`, {
@@ -55,6 +55,7 @@ const LoginForm = () => {
     } catch (err) {
       console.log("Error: ", err);
       actions.setStatus(err.code);
+      errorHandler(err.code)
       actions.setSubmitting(false);
     }
   };
@@ -69,6 +70,15 @@ const LoginForm = () => {
       .min(5, "Password minimal 5 karakter"),
   });
 
+  function errorHandler(status) {
+    if (status === "ERR_BAD_REQUEST") {
+      showErrorToast("email/password salah!");
+    } else if (status === "ERR_NETWORK") {
+      showErrorToast("Jaringan error! Silahkan coba lagi nanti");
+    } else {
+      showErrorToast("Unknown error!");
+    }
+  }
   const formik = useFormik({
     initialValues,
     onSubmit,
@@ -76,37 +86,39 @@ const LoginForm = () => {
   });
   return (
     <Container>
+      <ToastContainer />
       <Wrapper>
-        <Title>Sign In</Title>
-        <Error center>
-          {formik.status === undefined || formik.status === "success"
-            ? ""
-            : errorHandler(formik.status)}
-        </Error>
         <Form onSubmit={formik.handleSubmit}>
+        <Title>Sign In</Title>
           <Label>Email</Label>
           <Input
             type="email"
             id="email"
             name="email"
-            placeholder="Email Address"
+            placeholder="Alamat Email"
             data-testid="email"
             onChange={formik.handleChange}
             value={formik.values.email}
+            size="large"
+            status= {formik.touched.email && formik.errors.email ? 'error' : ''}
           />
           {formik.touched.email && (
             <Error className="error">{formik.errors.email}</Error>
           )}
 
           <Label>Password</Label>
-          <Input
-            type="password"
-            id="pass"
-            name="pass"
-            placeholder="Password"
-            data-testid="pass"
-            onChange={formik.handleChange}
-            value={formik.values.pass}
+          <Input.Password
+              id="pass"
+              data-testid="pass"
+              name="pass"
+              type="password"
+              onChange={formik.handleChange}
+              value={formik.values.password}
+              placeholder="Password"
+              size="large"
+              status= {formik.touched.pass && formik.errors.pass ? 'error' : ''}
+              iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+              required
           />
           {formik.touched.pass && (
             <Error className="error">{formik.errors.pass}</Error>
@@ -120,7 +132,7 @@ const LoginForm = () => {
           </Button>
           <Register>
             <Text>
-              Doesn't have an account?&nbsp;
+              Belum punya akun?&nbsp;
               <Link
                 style={{
                   textDecoration: "none",
@@ -138,15 +150,5 @@ const LoginForm = () => {
     </Container>
   );
 };
-
-function errorHandler(status) {
-  if (status === "ERR_BAD_REQUEST") {
-    return "Incorrect email/password!";
-  } else if (status === "ERR_NETWORK") {
-    return "Network error! Try again later";
-  } else {
-    return "Unknown error!";
-  }
-}
 
 export default LoginForm;

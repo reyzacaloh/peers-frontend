@@ -25,7 +25,7 @@
     overflow: auto;
 }
 
-img {
+.profile-usr {
     object-fit: cover;
     border-radius: 50%;
     height: 200px;
@@ -47,6 +47,33 @@ img {
     margin-bottom: 15px;
     display: flex;
     align-items: center;
+}
+
+@media screen and (max-width: 1024px) {
+    .grid-container {
+        grid-template-columns: repeat(3, 0.5fr);
+        /* three columns with equal width */
+        gap: 1rem;
+        margin: 50px;
+        float: center;
+        height: auto;
+        display: inline;
+        justify-content: center;
+    }
+
+    .card .content {
+        position: absolute;
+        width: 50%;
+        padding-top: 228px;
+        text-align: left;
+    }
+
+    .profile-usr {
+        object-fit: cover;
+        border-radius: 50%;
+        height: 175px;
+        width: 175px;
+    }
 }
 
 @media screen and

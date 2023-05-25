@@ -11,6 +11,7 @@ const mockTutorData = {
   price_per_hour: 50000,
   review_count: 10,
   rating: 4.5,
+  subject: 'Matematika',
 };
 
 describe("TutorCard", () => {

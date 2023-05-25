@@ -6,14 +6,13 @@ import FindTutor from "../pages/FindTutor.jsx";
 import NotFound from "../pages/NotFound";
 import TutorDashboard from "../pages/TutorDashboard";
 import Profile from "../pages/Profile";
-import RegisterTutorForm from "../components/registerTutorForm/RegisterTutorForm";
+import RegisterTutor from "../pages/RegisterTutor.jsx";
 import Verification from "../pages/Verification.jsx"
 import TutorScheduleForm from "../components/tutorScheduleForm/TutorScheduleForm";
 import TutorDetail from '../pages/TutorDetail/TutorDetail.jsx';
-import { AuthContext } from "../contexts/AuthContext";
+import Payment from "../pages/payment/Payment.jsx";
 
 function AuthRoutes() {
-    const { state } = React.useContext(AuthContext);
 
     return (
         <Routes>
@@ -39,11 +38,14 @@ function AuthRoutes() {
                     </Sidebar>} />
 
             <Route path="/tutor" element={
-                !state.isTutor ?
-                    <RegisterTutorForm /> :
-                    <Sidebar>
-                        <TutorDashboard />
-                    </Sidebar>
+                <Sidebar>
+                    <RegisterTutor /> 
+                </Sidebar>
+            } />
+            <Route path="/tutor/dashboard" element={
+                <Sidebar>
+                    <TutorDashboard />
+                </Sidebar>
             } />
             <Route path="/tutor/:id" element={
                 <TutorDetail />
@@ -51,6 +53,12 @@ function AuthRoutes() {
             <Route path="/tutor/add-schedule" element={
                 <TutorScheduleForm />
             } />
+
+            <Route
+                path="/payment" element={
+                    <Sidebar>
+                        <Payment />
+                    </Sidebar>} />
             <Route path="*" element={<NotFound />} />
         </Routes>
     );

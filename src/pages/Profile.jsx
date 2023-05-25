@@ -4,13 +4,14 @@ import axios from 'axios';
 import LearnerSchedule from '../components/LearnerSchedule';
 import { Link } from "react-router-dom";
 import { MdEmail, MdDateRange } from "react-icons/md";
+import { MdEmail, MdDateRange } from "react-icons/md";
 
 const Profile = () => {
   const [profile, setProfile] = useState([]);
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('https://peers-backend-dev.up.railway.app/api/auth/user/profile/', {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/auth/user/profile/`, {
         headers: {
           authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,
         },
@@ -32,7 +33,7 @@ const Profile = () => {
       <div className="grid-container">
         <div className="card">
           <div>
-            <img src={profile.profile_picture} alt="profile"/>
+            <img className="profile-usr" src={profile.profile_picture} alt="profile"/>
           </div>
           <div className="content">
             <h1>
@@ -48,8 +49,6 @@ const Profile = () => {
           <Link to='/chat' className='cv-btn'>Chat</Link>
         </div>
       </div>
-      <LearnerSchedule/>
-      <Link to='/chat' className='cv-btn'>Chat</Link>
     </div>
   );
 }

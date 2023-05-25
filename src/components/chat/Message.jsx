@@ -2,9 +2,15 @@ import React, { useEffect, useRef, useState } from "react";
 import ImageFull from "../image_fullscreen/ImageFull";
 
 const Message = ({ data }) => {
-  const { profile_pic, message, time, message_img, isOwner } = data || {};
+  const { profile_pic, time, isOwner } = data || {};
+  let { message, message_img } = data || {};
   const ref = useRef();
   const [open, setOpen] = useState(false);
+
+  const pattern = /^((http|https|ftp):\/\/)/;
+  if(pattern.test(message)) {
+    ({ message, message_img } = separateMsg(message, message_img));
+  }
 
   useEffect(() => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
@@ -24,6 +30,17 @@ const Message = ({ data }) => {
       </div>
     </div>
   );
+};
+
+const separateMsg = (message, message_img) => {
+  try {
+    const splitMsg = message.split("|");
+    message = splitMsg[1];
+    message_img = splitMsg[0];
+  } catch (e) {
+    console.log(e);
+  }
+  return { message, message_img };
 };
 
 export default Message;

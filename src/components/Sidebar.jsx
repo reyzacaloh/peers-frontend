@@ -17,7 +17,7 @@ import {
     FaChalkboardTeacher,
     FaCommentAlt,
     FaUser,
-    FaCalendar
+    FaMoneyBill,
 } from "react-icons/fa"
 import {
   AiOutlineLeft,
@@ -58,11 +58,11 @@ const Sidebar = ({ children }) => {
             notification: 0
         },
         {
-            to: "/schedule",
-            label: "Schedule",
-            icon: <FaCalendar />,
-            notification: 0
-        },
+          to: "/payment",
+          label: "Payment",
+          icon: <FaMoneyBill/>,
+          notification: 0
+      },
     ]
     useEffect(() => {
       const handleResize = () => {
@@ -153,9 +153,10 @@ const Sidebar = ({ children }) => {
                     </SLink>
                 </SLinkContainer>
             ))}
+            
             <TutorMenu role={currentUser.role} />
             <VerifyTutor role={currentUser.role} />
-            <Logout></Logout>
+            <Logout sidebarOpen={sidebarOpen} />
         </SSidebar>
             <main>{children}</main>
       </SLayout>

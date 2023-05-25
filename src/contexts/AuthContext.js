@@ -8,10 +8,10 @@ const AuthContextProvider = ({ children }) => {
   const [tutor, setTutor] = React.useState({});
   const [currentUser, setCurrentUser] = React.useState({});
 
-  
   React.useEffect(() => {
     const token = localStorage.getItem("token");
     const isTutor = localStorage.getItem("tutor");
+
     if (isTutor !== null) {
       dispatch({
         type: "TUTOR",
@@ -33,7 +33,7 @@ const AuthContextProvider = ({ children }) => {
         tutor,
         setTutor,
         currentUser,
-        setCurrentUser
+        setCurrentUser,
       }}
     >
       {children}
