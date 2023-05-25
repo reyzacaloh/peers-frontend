@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getTutor, getCurrentUser, toTimestamp, showSuccessToast, getTutorIncome, showErrorToast } from "../common";
+import { getTutor, getCurrentUser, toTimestamp, showSuccessToast, getTutorIncome, showErrorToast, dateFormat, timeFormat } from "../common";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
 
@@ -218,5 +218,50 @@ describe('getTutorIncome', () => {
     const result = await getTutorIncome();
 
     expect(result).toEqual({});
+  });
+});
+
+describe('dateFormat', () => {
+  test('dateFormat should return the correct formatted date string', () => {
+    // Test input
+    const datetime = '2023-05-25T12:34:56Z';
+  
+    // Expected output
+    const expected = '25/05/2023';
+  
+    // Call the function being tested
+    const result = dateFormat(datetime);
+  
+    // Assert the result
+    expect(result).toBe(expected);
+  });
+
+  test('returns the formatted date string without leading zero for month', () => {
+    // Test input with month >= 10
+    const datetime = '2023-10-25T12:34:56Z';
+
+    // Call the function being tested
+    const result = dateFormat(datetime);
+
+    // Assert the result
+    expect(result).toBe('25/10/2023');
+  });
+})
+
+describe('timeFormat', () => {
+  test('returns the formatted time string', () => {
+    // Test input
+    const datetime = '2023-05-25T12:34:56Z';
+
+    // Mock the toLocaleTimeString method
+    const mockToLocaleTimeString = jest.fn(() => '12:34:56 PM');
+    Date.prototype.toLocaleTimeString = mockToLocaleTimeString;
+
+    // Call the function being tested
+    const result = timeFormat(datetime);
+
+    // Assert the result
+    expect(result).toBe('12:34:56 PM');
+   
   });
 });

@@ -84,7 +84,7 @@ const PaymentCard = ({ data }) => {
           </FieldItem>
           <FieldItem>
             <FieldLabel>Schedule</FieldLabel>
-            <Text>{toTimestamp(schedule)}</Text>
+            <Text data-testid="schedule-test">{toTimestamp(schedule)}</Text>
           </FieldItem>
           <FieldItem>
             <FieldLabel>Order ID</FieldLabel>
@@ -92,7 +92,7 @@ const PaymentCard = ({ data }) => {
           </FieldItem>
           <FieldItem>
             <FieldLabel>Created at</FieldLabel>
-            <Text>{toTimestamp(date)}</Text>
+            <Text data-testid="created-date">{toTimestamp(date)}</Text>
           </FieldItem>
           <FieldItem>
             <FieldLabel>Total</FieldLabel>
