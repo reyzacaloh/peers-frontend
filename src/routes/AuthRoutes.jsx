@@ -11,6 +11,7 @@ import Verification from "../pages/Verification.jsx"
 import TutorScheduleForm from "../components/tutorScheduleForm/TutorScheduleForm";
 import TutorDetail from '../pages/TutorDetail/TutorDetail.jsx';
 import Payment from "../pages/payment/Payment.jsx";
+import EditPrice from "../components/editPrice/EditPrice";
 
 function AuthRoutes() {
 
@@ -52,6 +53,9 @@ function AuthRoutes() {
             } />
             <Route path="/tutor/add-schedule" element={
                 <TutorScheduleForm />
+            } />
+            <Route path="/tutor/edit-price" element={
+                <EditPrice />
             } />
 
             <Route
