@@ -28,20 +28,18 @@
 .profile-usr {
     object-fit: cover;
     border-radius: 50%;
+    border: 3px solid black;
     height: 200px;
     width: 200px;
 }
 
-.card .content {
-    position: absolute;
-    padding: 30px;
-    padding-top: 228px;
-    text-align: left;
+.card_h1 {
+    padding-top: 15px;
     font-family: PlusJakartaSans;
 }
 
-.card .content h4 {
-    margin-top: 10px;
+.card_h4 {
+    margin-top: 3px;
     font-size: 1.5em;
     color: black;
     margin-bottom: 15px;
@@ -61,16 +59,14 @@
         justify-content: center;
     }
 
-    .card .content {
-        position: absolute;
-        width: 50%;
-        padding-top: 228px;
-        text-align: left;
+    .card_h1 {
+        font-family: PlusJakartaSans;
     }
 
     .profile-usr {
         object-fit: cover;
         border-radius: 50%;
+        border: 3px solid black;
         height: 175px;
         width: 175px;
     }
@@ -88,17 +84,14 @@
         justify-content: center;
     }
 
-    .card .content {
-        position: absolute;
-        width: 50%;
-        padding-top: 228px;
-        text-align: left;
+    .card_h1 {
         font-family: PlusJakartaSans;
     }
 
     img {
         object-fit: cover;
         border-radius: 50%;
+        border: 3px solid black;
         height: 175px;
         width: 175px;
     }
