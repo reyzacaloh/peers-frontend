@@ -28,10 +28,11 @@ const Input = () => {
 
   React.useEffect(() => {
     setMessage("");
-    const getBookData = async () => {
+    setDisable(true)
+    const getBookData = async (endpoint) => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/booking/booking-paid`,
+          `${process.env.REACT_APP_API_URL}${endpoint}`,
           {
             headers: {
               authorization: `Bearer ${JSON.parse(
@@ -42,7 +43,7 @@ const Input = () => {
         );
         const bookList = response.data.booking_list;
         bookList.forEach((element) => {
-          if (element.tutor_uid === data.user.uid) {
+          if (element.uid === data.user.uid) {
             const current_time = new Date();
             const schedule_time = new Date(element.schedule);
             const schedule_time_end = new Date(schedule_time);
@@ -59,8 +60,12 @@ const Input = () => {
         console.log(err);
       }
     };
-    getBookData();
-  }, [data]);
+    if (currentUser.role === 2){
+      getBookData("/api/booking/tutor-paid-list")
+    } else if (currentUser.role === 3){
+      getBookData("/api/booking/booking-paid");
+    }
+  }, [currentUser.role, data]);
 
   const handleUpload = () => {
     const fileRef = ref(storage, `files/${data.chatId}/${fileUpload.name}`);
