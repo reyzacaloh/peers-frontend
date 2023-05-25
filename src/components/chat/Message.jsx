@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import ImageFull from "../image_fullscreen/ImageFull";
-import separateMsg from "./SeparateMessage";
+import SeparateMessage from "./SeparateMessage";
 
 const Message = ({ data }) => {
   const { profile_pic, time, isOwner } = data || {};
@@ -10,7 +10,7 @@ const Message = ({ data }) => {
 
   const pattern = /^((http|https|ftp):\/\/)/;
   if(pattern.test(message)) {
-    ({ message, message_img } = separateMsg(message));
+    ({ message, message_img } = SeparateMessage(message));
   }
 
   useEffect(() => {

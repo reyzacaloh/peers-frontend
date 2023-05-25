@@ -1,4 +1,4 @@
-const separateMsg = (message) => {
+const SeparateMessage = (message) => {
   let message_text;
   let message_link = "";
 
@@ -16,4 +16,4 @@ const separateMsg = (message) => {
   return { message: message_text, message_img: message_link };
 };
 
-export default separateMsg;
+export default SeparateMessage;

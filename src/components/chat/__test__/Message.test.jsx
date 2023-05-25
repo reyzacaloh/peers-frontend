@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import Message from "../Message";
-import separateMsg from "../SeparateMessage";
+import SeparateMessage from "../SeparateMessage";
 
 describe("Message", () => {
   const data = {
@@ -89,7 +89,7 @@ describe("Message", () => {
       message_img: 'https://example.com/image.jpg'
     };
 
-    expect(separateMsg(input)).toEqual(expectedOutput);
+    expect(SeparateMessage(input)).toEqual(expectedOutput);
   });
 
   test('should set message as original input when link is missing', () => {
@@ -99,7 +99,7 @@ describe("Message", () => {
       message_img: ''
     };
 
-    expect(separateMsg(input)).toEqual(expectedOutput);
+    expect(SeparateMessage(input)).toEqual(expectedOutput);
   });
 
   test('should handle empty input', () => {
@@ -109,7 +109,7 @@ describe("Message", () => {
       message_img: ''
     };
 
-    expect(separateMsg(input)).toEqual(expectedOutput);
+    expect(SeparateMessage(input)).toEqual(expectedOutput);
   });
 
   test('should handle unexpected input', () => {
@@ -119,6 +119,6 @@ describe("Message", () => {
       message_img: ''
     };
 
-    expect(separateMsg(input)).toEqual(expectedOutput);
+    expect(SeparateMessage(input)).toEqual(expectedOutput);
   });
 });
