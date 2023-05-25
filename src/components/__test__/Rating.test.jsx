@@ -1,13 +1,10 @@
 /* eslint-disable testing-library/no-unnecessary-act */
-import { render, screen, act, waitFor, fireEvent } from '@testing-library/react';
+import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import axios from 'axios';
 import AuthContextProvider from '../../contexts/AuthContext';
-import userEvent from '@testing-library/user-event'
 import Rating from '../Rating';
 import "@testing-library/jest-dom/extend-expect";
-import { BrowserRouter, useNavigate } from 'react-router-dom';
-import { Rate } from 'antd';
-import Popup from 'reactjs-popup';
+import { BrowserRouter} from 'react-router-dom';
 
 describe('Rating test', () => {
   const mockUseNavigate = jest.fn();
