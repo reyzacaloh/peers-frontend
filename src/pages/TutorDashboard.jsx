@@ -20,7 +20,7 @@ function TutorDashboard() {
         const schedule_time = new Date(schedule.date_time)
         const transformed_schedule = {
             key: schedule['id'],
-            learner: schedule['learner_id'] ?? 'Belum ada',
+            learner: schedule['learner_id']['first_name'] + ' ' + schedule['learner_id']['last_name'] ?? 'Belum ada',
             date: `${schedule_time.getFullYear()}-${schedule_time.getMonth() + 1}-${schedule_time.getDate()}`,
             time: schedule_time.toLocaleTimeString()
         }
