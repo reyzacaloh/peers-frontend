@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Space } from 'antd';
+import { Card } from 'antd';
 import './Profile.css';
 import axios from 'axios';
 import LearnerSchedule from '../components/LearnerSchedule';

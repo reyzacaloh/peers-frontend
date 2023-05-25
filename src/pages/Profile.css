@@ -31,6 +31,7 @@
     border: 3px solid black;
     height: 200px;
     width: 200px;
+    margin-left: 124px
 }
 
 .card_h1 {
@@ -47,7 +48,7 @@
     align-items: center;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1440px) {
     .grid-container {
         grid-template-columns: repeat(3, 0.5fr);
         /* three columns with equal width */
@@ -69,30 +70,17 @@
         border: 3px solid black;
         height: 175px;
         width: 175px;
+        margin-left: 138px;
     }
 }
 
-@media screen and
-  (max-width: 1024px){
-    .grid-container {
-        grid-template-columns: repeat(3, 0.5fr); /* three columns with equal width */
-        gap: 1rem;
-        margin: 50px;
-        float:center;
-        height: auto;
-        display: inline;
-        justify-content: center;
-    }
-
-    .card_h1 {
-        font-family: PlusJakartaSans;
-    }
-
-    img {
+@media screen and (max-width: 600px) {
+    .profile-usr {
         object-fit: cover;
         border-radius: 50%;
         border: 3px solid black;
         height: 175px;
         width: 175px;
+        margin-left: 15%;
     }
-  }
+}    
