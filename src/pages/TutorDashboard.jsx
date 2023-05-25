@@ -26,7 +26,7 @@ function TutorDashboard() {
         }
         if (current_time < schedule_time) {
             addUpcoming(current => current.find(e => e.key === transformed_schedule.key) ? [...current] : [transformed_schedule, ...current])
-        } else if (schedule_time >= subSeconds(current_time, 1) && schedule_time <= addHours(current_time, 1)) {
+        } else if (current_time >= subSeconds(schedule_time,1) && current_time <= addHours(schedule_time, 1)) {
             addOngoing(current => current.find(e => e.key === transformed_schedule.key) ? [...current] : [transformed_schedule, ...current])
         } else {
             transformed_schedule.learner = schedule['learner_id'] ?? '-'
