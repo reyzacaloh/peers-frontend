@@ -66,7 +66,7 @@ const Input = () => {
     const fileRef = ref(storage, `files/${data.chatId}/${fileUpload.name}`);
     try {
       uploadBytes(fileRef, fileUpload).then(() => {
-        
+        console.log("File uploaded")
       });
       return `https://storage.googleapis.com/peers-staging-9d8ed.appspot.com/files/${data.chatId}/${fileUpload.name}`;
     } catch (e) {
