@@ -5,13 +5,14 @@ import AuthContextProvider from "../../../contexts/AuthContext";
 import { ChatContext } from "../../../contexts/ChatContext";
 import { ChatPartnerContext } from "../../../contexts/ChatPartnerContext";
 describe("Input component", () => {
-  const currentUser = { uid: "123" };
+  
+  const currentUser = { uid: "123", role : 2 };
   const data = { chatId: "abc", user: { uid: "456" } };
 
   it("should update the message state when user types in the input field", () => {
     render(
         <AuthContextProvider>
-          <ChatContext.Provider value={currentUser}>
+          <ChatContext.Provider value={{ currentUser }}>
             <ChatPartnerContext.Provider value={data}>
               <Input/>
             </ChatPartnerContext.Provider>
