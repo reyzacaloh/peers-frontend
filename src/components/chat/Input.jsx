@@ -74,7 +74,8 @@ const Input = () => {
     }
   };
   const handleSend = async () => {
-    let fileUrl = "";
+    if (!disable){
+      let fileUrl = "";
     if (fileUpload != null) {
       fileUrl = `${handleUpload()}|`;
     }
@@ -105,6 +106,7 @@ const Input = () => {
 
     setMessage("");
     setFileUpload(null);
+    }
   };
   const handleKeyDown = async (event) => {
     if (event.key === "Enter") {
@@ -122,6 +124,7 @@ const Input = () => {
       />
       <div className="input_btn">
         <input
+          disabled={disable}
           type="file"
           id="file"
           data-testid="input"
