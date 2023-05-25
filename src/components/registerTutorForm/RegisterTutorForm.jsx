@@ -154,7 +154,7 @@ const RegisterTutorForm = () => {
                 required
                 /><br></br>
                 {formik.touched.price_per_hour && (<Error className="error">{formik.errors.price_per_hour}</Error>)}
-                <Label htmlFor="ktp" required>Kartu Identitas/KTP :<br></br></Label>
+                <Label htmlFor="ktp" required>KTM :<br></br></Label>
                 <Input
                 id="ktp"
                 data-testid="ktp"
@@ -168,7 +168,7 @@ const RegisterTutorForm = () => {
                 size="large"
                 required
                 /><br></br>
-                <Label htmlFor="ktm_person" required>KTM dan Muka:<br></br></Label>
+                <Label htmlFor="ktm_person" required>Selfie dengan KTM :<br></br></Label>
                 <Input
                 id="ktm_person"
                 data-testid="ktm_person"
