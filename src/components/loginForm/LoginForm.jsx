@@ -49,8 +49,7 @@ const LoginForm = () => {
           type: "TUTOR",
         });
       }
-      
-      console.log(response.data)
+
       navigate("/");
     } catch (err) {
       console.log("Error: ", err);
