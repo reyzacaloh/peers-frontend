@@ -65,7 +65,7 @@ describe('RatingSchedule test', () => {
         axios.get = jest.fn()
         axios.get.mockResolvedValueOnce(mockResponse)
         setup()
-        expect(screen.getByText("History")).toBeInTheDocument();
+        expect(screen.getByText("Rate your previous Tutoring Sessions :")).toBeInTheDocument();
         expect(axios.get).toHaveBeenCalled()
     });
 
