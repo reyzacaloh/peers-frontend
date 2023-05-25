@@ -9,8 +9,11 @@ function Rating(props) {
   
   const navigate = useNavigate();
   const tutorId = Number(props.tutorId);
+  const scheduleId = Number(props.scheduleId);
+  const isRated = props.isRated;
 
   const initialValues = {
+    schedule_id: scheduleId,
     tutor_id: tutorId,
     rating: 0,
   };
@@ -18,7 +21,7 @@ function Rating(props) {
   const onSubmit = async (values, actions) => {
     
     try {
-        await axios.post(`${process.env.REACT_APP_API_URL}/api/tutor_form/rate/`, {rating:`${values.rating}`}, {
+        await axios.post(`${process.env.REACT_APP_API_URL}/api/tutor_form/rate/`, {rating:`${values.rating}`, tutor_id:`${values.tutor_id}`, schedule_id:`${values.schedule_id}`},{
             headers: {
                 "content-type": "application/x-www-form-urlencoded",
                 authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
@@ -27,8 +30,9 @@ function Rating(props) {
         actions.setSubmitting(false);
         console.log("Success");
         actions.setStatus("success");
+        console.log(isRated);
 
-        navigate("/tutor");
+        navigate("/rate");
 
     } catch (err) {
         console.log(values);
@@ -53,7 +57,7 @@ function MouseOut(event){
   return (
     <div style={styles.container}>
       <Popup trigger=
-                {<button style={styles.button}> Rate Tutor</button>}
+                {<button style={styles.button} disabled={isRated === "true" ? true:false}> Rate Tutor</button>}
                 modal nested>
       {close => (
       <><div style={styles.form}>
@@ -65,8 +69,8 @@ function MouseOut(event){
               <Rate style={styles.rate}
                 onChange={(value) => formik.setFieldValue("rating", value)} />
               <Button
-                type="submit"
-                disabled={formik.isSubmitting || formik.status === "success"}
+                type="submit" 
+                disabled={formik.isSubmitting || formik.status === "success" }
               >
                 {formik.isSubmitting ? "Processing..." : "Save"}
               </Button>

@@ -16,7 +16,7 @@ const RatingSchedule = () => {
       tutor : `${schedule['tutor_id']['uid']['first_name']} ${schedule['tutor_id']['uid']['last_name']}`,
       date : `${schedule_time.getFullYear()}-${schedule_time.getMonth()+1}-${schedule_time.getDate()}`,
       time : schedule_time.toLocaleTimeString(),
-      rating : <Rating tutorId={`${schedule['tutor_id']['id']}`}></Rating>
+      rating : <Rating isRated={`${schedule['is_finished']}`} tutorId={`${schedule['tutor_id']['id']}`} scheduleId={`${schedule['id']}`}></Rating>,
     }
     if (current_time>schedule_time) {
         addHistory(current => current.find(e => e.key === transformed_schedule.key)?[...current]:[transformed_schedule,...current])
@@ -49,7 +49,7 @@ const RatingSchedule = () => {
   ];
   const items = [{
       key: '1',
-      label: `History`,
+      label: `Rate your previous Tutoring Sessions :`,
       children: <Table columns={columns} dataSource={history} />,
     },
   ];
