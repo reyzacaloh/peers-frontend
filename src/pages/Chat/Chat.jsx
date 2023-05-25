@@ -125,7 +125,8 @@ const Chat = () => {
         if(!showErrorRef.current){
           showError()
           showErrorRef.current = true;
-          window.location.reload();
+          setTimeout(() => window.location.reload(), 3000);
+          
         }
       }
     };
