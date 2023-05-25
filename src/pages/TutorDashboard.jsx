@@ -115,14 +115,16 @@ function TutorDashboard() {
                         </div>
                     </div>
                 </NavLink>
-                <div className="card-tutor-dashboard">
-                    <div className="icon">
-                        <FaWallet className='ion-icon' />
+                <NavLink to={"/tutor/edit-price"}>
+                    <div className="card-tutor-dashboard">
+                        <div className="icon">
+                            <FaWallet className='ion-icon' />
+                        </div>
+                        <div className="content">
+                            <h4>{currencyFormat(tutorIncome['total_income'] || 0)}</h4>
+                        </div>
                     </div>
-                    <div className="content">
-                        <h4>{currencyFormat(tutorIncome['total_income'] || 0)}</h4>
-                    </div>
-                </div>
+                </NavLink>
             </div>
             <div className="table-tutor-detail">
                 <div>
@@ -134,6 +136,6 @@ function TutorDashboard() {
             </div>
         </div>
     );
-};
+}
 
 export default TutorDashboard;
