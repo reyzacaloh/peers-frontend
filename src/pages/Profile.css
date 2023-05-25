@@ -28,19 +28,19 @@
 .profile-usr {
     object-fit: cover;
     border-radius: 50%;
+    border: 3px solid black;
     height: 200px;
     width: 200px;
+    margin-left: 124px
 }
 
-.card .content {
-    position: absolute;
-    padding: 30px;
-    padding-top: 228px;
-    text-align: left;
+.card_h1 {
+    padding-top: 15px;
+    font-family: PlusJakartaSans, sans-serif;
 }
 
-.card .content h4 {
-    margin-top: 10px;
+.card_h4 {
+    margin-top: 3px;
     font-size: 1.5em;
     color: black;
     margin-bottom: 15px;
@@ -48,7 +48,7 @@
     align-items: center;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1440px) {
     .grid-container {
         grid-template-columns: repeat(3, 0.5fr);
         /* three columns with equal width */
@@ -60,17 +60,27 @@
         justify-content: center;
     }
 
-    .card .content {
-        position: absolute;
-        width: 50%;
-        padding-top: 228px;
-        text-align: left;
+    .card_h1 {
+        font-family: PlusJakartaSans, sans-serif;
     }
 
     .profile-usr {
         object-fit: cover;
         border-radius: 50%;
+        border: 3px solid black;
         height: 175px;
         width: 175px;
+        margin-left: 138px;
     }
 }
+
+@media screen and (max-width: 600px) {
+    .profile-usr {
+        object-fit: cover;
+        border-radius: 50%;
+        border: 3px solid black;
+        height: 175px;
+        width: 175px;
+        margin-left: 15%;
+    }
+}    
