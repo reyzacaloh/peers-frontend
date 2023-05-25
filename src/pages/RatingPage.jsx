@@ -1,5 +1,4 @@
 import RatingSchedule from '../components/RatingSchedule';
-import Rating from '../components/Rating';
 
 const RatingPage = () => {
   return (
