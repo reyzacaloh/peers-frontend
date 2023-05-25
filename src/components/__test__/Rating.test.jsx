@@ -6,6 +6,7 @@ import userEvent from '@testing-library/user-event'
 import Rating from '../Rating';
 import "@testing-library/jest-dom/extend-expect";
 import { BrowserRouter, useNavigate } from 'react-router-dom';
+import { Rate } from 'antd';
 import Popup from 'reactjs-popup';
 
 describe('Rating test', () => {
@@ -23,7 +24,7 @@ describe('Rating test', () => {
     const mockPost = jest.spyOn(axios, 'post');
     mockPost.mockResolvedValueOnce({});
     const { getByText } = render(<AuthContextProvider>
-      <Rating tutorId={1} />
+      <Rating tutorId={1} scheduleId={0} />
     </AuthContextProvider>
       , { wrapper: BrowserRouter });
     fireEvent.click(getByText('Rate Tutor'));
@@ -32,7 +33,9 @@ describe('Rating test', () => {
     
     await waitFor(() => expect(mockPost).toHaveBeenCalledWith(
       `${process.env.REACT_APP_API_URL}/api/tutor_form/rate/`,
-      { rating: '0' },
+      { rating: '0' , 
+      schedule_id: '0',
+      tutor_id: '1',},
       {
         headers: {
           'content-type': 'application/x-www-form-urlencoded',
@@ -49,7 +52,7 @@ describe('Rating test', () => {
     };
     mockPost.mockRejectedValueOnce(errorResponse);
     const { getByText } = render(<AuthContextProvider>
-      <Rating tutorId={1} />
+      <Rating tutorId={1} scheduleId={0} />
     </AuthContextProvider>
       , { wrapper: BrowserRouter });
     fireEvent.click(getByText('Rate Tutor'));
@@ -57,7 +60,9 @@ describe('Rating test', () => {
 
     await waitFor(() => expect(mockPost).toHaveBeenCalledWith(
       `${process.env.REACT_APP_API_URL}/api/tutor_form/rate/`,
-      { rating: '0' },
+      { rating: '0' , 
+      schedule_id: '0',
+      tutor_id: '1',},
       {
         headers: {
           'content-type': 'application/x-www-form-urlencoded',
