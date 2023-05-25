@@ -109,7 +109,7 @@ const RegisterTutorForm = () => {
                 required
                 /> <br></br>
                 {formik.touched.university && (<Error className="error">{formik.errors.university}</Error>)}
-                <Label htmlFor="pddikti" required>Alamat PDDIKTI :<br></br></Label>
+                <Label htmlFor="pddikti" required>Alamat PDDIKTI : <a target="_blank" rel="noopener noreferrer" href="https://pddikti.kemdikbud.go.id/data_mahasiswa/">(Cari di Sini)</a><br></br></Label>
                 <Input
                 id="pddikti"
                 data-testid="pddikti"
