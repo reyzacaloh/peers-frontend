@@ -36,7 +36,7 @@
 
 .card_h1 {
     padding-top: 15px;
-    font-family: Helvetica, PlusJakartaSans;
+    font-family: PlusJakartaSans, sans-serif;
 }
 
 .card_h4 {
@@ -61,7 +61,7 @@
     }
 
     .card_h1 {
-        font-family: Helvetica, PlusJakartaSans;
+        font-family: PlusJakartaSans, sans-serif;
     }
 
     .profile-usr {
