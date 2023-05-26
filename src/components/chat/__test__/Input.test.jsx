@@ -12,7 +12,7 @@ describe("Input component", () => {
   const renderInput = () => (
     render(
       <AuthContextProvider>
-        <ChatContext.Provider value={currentUser}>
+        <ChatContext.Provider value={{currentUser}}>
           <ChatPartnerContext.Provider value={data}>
             <Input/>
           </ChatPartnerContext.Provider>
