@@ -18,9 +18,10 @@ function TutorDashboard() {
     const processSchedule = (schedule) => {
         const current_time = new Date()
         const schedule_time = new Date(schedule.date_time)
+        
         const transformed_schedule = {
             key: schedule['id'],
-            learner: schedule['learner_id'] ?? 'Belum ada',
+            learner: `${schedule['learner_id'] == null ? '-' : schedule['learner_id']['first_name'] + ' ' + schedule['learner_id']['last_name']}`,
             date: `${schedule_time.getFullYear()}-${schedule_time.getMonth() + 1}-${schedule_time.getDate()}`,
             time: schedule_time.toLocaleTimeString()
         }
@@ -29,7 +30,7 @@ function TutorDashboard() {
         } else if (current_time >= subSeconds(schedule_time,1) && current_time <= addHours(schedule_time, 1)) {
             addOngoing(current => current.find(e => e.key === transformed_schedule.key) ? [...current] : [transformed_schedule, ...current])
         } else {
-            transformed_schedule.learner = schedule['learner_id'] ?? '-'
+            transformed_schedule.learner = `${schedule['learner_id'] == null ? '-' : schedule['learner_id']['first_name'] + ' ' + schedule['learner_id']['last_name']}`
             addHistory(current => current.find(e => e.key === transformed_schedule.key) ? [...current] : [transformed_schedule, ...current])
         }
 

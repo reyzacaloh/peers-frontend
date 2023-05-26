@@ -6,12 +6,13 @@ import { ChatContext } from "../../../contexts/ChatContext";
 import { ChatPartnerContext } from "../../../contexts/ChatPartnerContext";
 
 describe("Input component", () => {
-  const currentUser = { uid: "123" };
+  
+  const currentUser = { uid: "123", role : 2 };
   const data = { chatId: "abc", user: { uid: "456" } };
   const renderInput = () => (
     render(
       <AuthContextProvider>
-        <ChatContext.Provider value={currentUser}>
+        <ChatContext.Provider value={{currentUser}}>
           <ChatPartnerContext.Provider value={data}>
             <Input/>
           </ChatPartnerContext.Provider>
@@ -21,7 +22,15 @@ describe("Input component", () => {
   );
 
   it("should update the message state when user types in the input field", () => {
-    renderInput();
+    render(
+        <AuthContextProvider>
+          <ChatContext.Provider value={{ currentUser }}>
+            <ChatPartnerContext.Provider value={data}>
+              <Input/>
+            </ChatPartnerContext.Provider>
+          </ChatContext.Provider>
+          </AuthContextProvider>
+        );
     const input = screen.getByPlaceholderText("Type a message");
 
     fireEvent.change(input, { target: { value: "Hello, world!" } });
