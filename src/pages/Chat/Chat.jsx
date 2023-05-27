@@ -28,6 +28,18 @@ const Chat = () => {
   const showErrorRef = useRef(false);
   useEffect(() => {
     showErrorRef.current = false;
+    const handlePromiseRejection = (event) => {
+      console.log("Uncaught Promise Rejection:", event.reason);
+      if(!showErrorRef.current){
+        showError()
+        showErrorRef.current = true;
+        setTimeout(() => window.location.reload(), 2000);
+        
+      }
+    };
+
+    window.addEventListener("unhandledrejection", handlePromiseRejection);
+
     const showError = () => {
       api.error({
         message: 'Koneksi Gagal',
@@ -77,19 +89,22 @@ const Chat = () => {
         if (!learner_check.exists()) {
           await setDoc(doc(db, "userChats", currentUser.uid), {});
         }
+        
 
         const book_list = response.data.booking_list;
         book_list.forEach(async (item) => {
           const combinedId =
-            currentUser.uid > item.tutor_uid
-              ? currentUser.uid + item.tutor_uid
-              : item.tutor_uid + currentUser.uid;
+            currentUser.uid > item.uid
+              ? currentUser.uid + item.uid
+              : item.uid + currentUser.uid;
+          
+          
 
           const tutor_check = await getDoc(
-            doc(db, "userChats", item.tutor_uid)
+            doc(db, "userChats", item.uid)
           );
           if (!tutor_check.exists()) {
-            await setDoc(doc(db, "userChats", item.tutor_uid), {});
+            await setDoc(doc(db, "userChats", item.uid), {});
           }
 
           const res = await getDoc(doc(db, "chats", combinedId));
@@ -103,13 +118,13 @@ const Chat = () => {
               [combinedId + ".userInfo"]: {
                 latest_message: "",
                 profile_pic: item.profile_pic,
-                uid: item.tutor_uid,
+                uid: item.uid,
                 username: item.tutor_name,
               },
               [combinedId + ".date"]: serverTimestamp(),
             });
 
-            await updateDoc(doc(db, "userChats", item.tutor_uid), {
+            await updateDoc(doc(db, "userChats", item.uid), {
               [combinedId + ".userInfo"]: {
                 latest_message: "",
                 profile_pic: currentUser.profile_picture,
@@ -125,13 +140,16 @@ const Chat = () => {
         if(!showErrorRef.current){
           showError()
           showErrorRef.current = true;
-          setTimeout(() => window.location.reload(), 3000);
+          setTimeout(() => window.location.reload(), 2000);
           
         }
       }
     };
     getContacts();
     currentUser.uid && getChats();
+    return () => {
+      window.removeEventListener("unhandledrejection", handlePromiseRejection);
+    };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
