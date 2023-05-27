@@ -18,18 +18,19 @@ function TutorDashboard() {
     const processSchedule = (schedule) => {
         const current_time = new Date()
         const schedule_time = new Date(schedule.date_time)
+        
         const transformed_schedule = {
             key: schedule['id'],
-            learner: schedule['learner_id'] ?? 'Belum ada',
+            learner: `${schedule['learner_id'] == null ? '-' : schedule['learner_id']['first_name'] + ' ' + schedule['learner_id']['last_name']}`,
             date: `${schedule_time.getFullYear()}-${schedule_time.getMonth() + 1}-${schedule_time.getDate()}`,
             time: schedule_time.toLocaleTimeString()
         }
         if (current_time < schedule_time) {
             addUpcoming(current => current.find(e => e.key === transformed_schedule.key) ? [...current] : [transformed_schedule, ...current])
-        } else if (schedule_time >= subSeconds(current_time, 1) && schedule_time <= addHours(current_time, 1)) {
+        } else if (current_time >= subSeconds(schedule_time,1) && current_time <= addHours(schedule_time, 1)) {
             addOngoing(current => current.find(e => e.key === transformed_schedule.key) ? [...current] : [transformed_schedule, ...current])
         } else {
-            transformed_schedule.learner = schedule['learner_id'] ?? '-'
+            transformed_schedule.learner = `${schedule['learner_id'] == null ? '-' : schedule['learner_id']['first_name'] + ' ' + schedule['learner_id']['last_name']}`
             addHistory(current => current.find(e => e.key === transformed_schedule.key) ? [...current] : [transformed_schedule, ...current])
         }
 
@@ -115,14 +116,16 @@ function TutorDashboard() {
                         </div>
                     </div>
                 </NavLink>
-                <div className="card-tutor-dashboard">
-                    <div className="icon">
-                        <FaWallet className='ion-icon' />
+                <NavLink to={"/tutor/edit-price"}>
+                    <div className="card-tutor-dashboard">
+                        <div className="icon">
+                            <FaWallet className='ion-icon' />
+                        </div>
+                        <div className="content">
+                            <h4>{currencyFormat(tutorIncome['total_income'] || 0)}</h4>
+                        </div>
                     </div>
-                    <div className="content">
-                        <h4>{currencyFormat(tutorIncome['total_income'] || 0)}</h4>
-                    </div>
-                </div>
+                </NavLink>
             </div>
             <div className="table-tutor-detail">
                 <div>
@@ -134,6 +137,6 @@ function TutorDashboard() {
             </div>
         </div>
     );
-};
+}
 
 export default TutorDashboard;

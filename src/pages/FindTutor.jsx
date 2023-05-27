@@ -26,6 +26,7 @@ const FindTutor = () => {
           authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`,
         },
       });
+
       setTutor(response.data['tutors'])
     } catch (err) {
       console.log("Error: ", err.message);

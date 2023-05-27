@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import {Table, Tabs} from 'antd';
-import {addHours, subSeconds} from 'date-fns';
 import axios from 'axios';
+import Rating from './Rating';
 
-const LearnerSchedule = () => {
-  const [upcoming, addUpcoming] = useState([]);
-  const [ongoing, addOngoing] = useState([]);
+const RatingSchedule = () => {
+  
   const [history, addHistory] = useState([]);
  
   const processSchedule = (schedule) => {
@@ -16,13 +15,10 @@ const LearnerSchedule = () => {
       key : `${schedule['id']}`,
       tutor : `${schedule['tutor_id']['uid']['first_name']} ${schedule['tutor_id']['uid']['last_name']}`,
       date : `${schedule_time.getFullYear()}-${schedule_time.getMonth()+1}-${schedule_time.getDate()}`,
-      time : schedule_time.toLocaleTimeString()
+      time : schedule_time.toLocaleTimeString(),
+      rating : <Rating isRated={`${schedule['is_finished']}`} tutorId={`${schedule['tutor_id']['id']}`} scheduleId={`${schedule['id']}`}></Rating>,
     }
-    if (current_time<schedule_time) {
-        addUpcoming(current => current.find(e => e.key === transformed_schedule.key)?[...current]:[transformed_schedule,...current])
-    } else if (current_time >= subSeconds(schedule_time,1) && current_time <= addHours(schedule_time, 1)){
-        addOngoing(current => current.find(e => e.key === transformed_schedule.key)?[...current]:[transformed_schedule,...current])
-    } else {    
+    if (current_time>schedule_time) {
         addHistory(current => current.find(e => e.key === transformed_schedule.key)?[...current]:[transformed_schedule,...current])
     }
     
@@ -44,22 +40,16 @@ const LearnerSchedule = () => {
         title: 'Waktu',
         dataIndex: 'time',
         key: 'time',
+    },
+    {
+        title: 'Rate',
+        dataIndex: 'rating',
+        key: 'rating',
     }
   ];
-  const items = [
-    {
+  const items = [{
       key: '1',
-      label: `Upcoming`,
-      children: <Table columns={columns} dataSource={upcoming} />,
-    },
-    {
-      key: '2',
-      label: `Ongoing`,
-      children: <Table columns={columns} dataSource={ongoing} />,
-    },
-    {
-      key: '3',
-      label: `History`,
+      label: `Rate your previous Tutoring Sessions :`,
       children: <Table columns={columns} dataSource={history} />,
     },
   ];
@@ -71,6 +61,7 @@ const LearnerSchedule = () => {
         },
       });
       response.data['schedules'].map(processSchedule)
+      console.log(response);
     } catch (err) {
       console.log("Error: ", err.message);
     }
@@ -83,4 +74,4 @@ const LearnerSchedule = () => {
 
 }
 
-export default LearnerSchedule;
+export default RatingSchedule;
