@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import Message from "../Message";
+import SeparateMessage from "../SeparateMessage";
 
 describe("Message", () => {
   const data = {
@@ -80,4 +81,44 @@ describe("Message", () => {
     expect(screen.queryAllByAltText("msg_pic")).toHaveLength(0);
     expect(screen.queryAllByTestId("message_text")).toHaveLength(0);
   })
+
+  test('should separate message and link when both are present', () => {
+    const input = 'https://example.com/image.jpg|Hello, world!';
+    const expectedOutput = {
+      message: 'Hello, world!',
+      message_img: 'https://example.com/image.jpg'
+    };
+
+    expect(SeparateMessage(input)).toEqual(expectedOutput);
+  });
+
+  test('should set message as original input when link is missing', () => {
+    const input = 'Hello, world!';
+    const expectedOutput = {
+      message: 'Hello, world!',
+      message_img: ''
+    };
+
+    expect(SeparateMessage(input)).toEqual(expectedOutput);
+  });
+
+  test('should handle empty input', () => {
+    const input = '';
+    const expectedOutput = {
+      message: '',
+      message_img: ''
+    };
+
+    expect(SeparateMessage(input)).toEqual(expectedOutput);
+  });
+
+  test('should handle unexpected input', () => {
+    const input = 999;
+    const expectedOutput = {
+      message: 999,
+      message_img: ''
+    };
+
+    expect(SeparateMessage(input)).toEqual(expectedOutput);
+  });
 });

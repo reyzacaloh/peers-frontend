@@ -34,7 +34,7 @@ const TutorScheduleForm = () => {
             console.log("Success");
             actions.setStatus("success");
 
-            navigate("/tutor");
+            navigate("/tutor/dashboard");
 
         } catch (err) {
             console.log("Error: ", err);
