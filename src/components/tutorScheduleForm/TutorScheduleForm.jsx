@@ -16,14 +16,14 @@ const TutorScheduleForm = () => {
     };
 
     const initialValues = {
-        date: dayjs().add(1, 'day'),
+        date: dayjs(),
         time: dayjs(),
     };
 
     const onSubmit = async (values, actions) => {
         try {
             await axios.post(`${process.env.REACT_APP_API_URL}/api/schedule/`, {
-                date_time: `${values.date.format('YYYY-MM-DD')}T${values.time.format('HH:00:00.0Z')}`
+                date_time: `${values.date.format('YYYY-MM-DD')}T${values.time.format('HH:mm:00.0Z')}`
                 }, {
                 headers: {
                     "content-type": "application/x-www-form-urlencoded",

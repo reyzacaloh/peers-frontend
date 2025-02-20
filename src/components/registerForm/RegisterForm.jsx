@@ -80,6 +80,7 @@ const RegisterForm = () => {
               formData.append("last_name", values.last_name);
               formData.append("date_of_birth", values.date_of_birth);
               formData.append("profile_picture", selectedFile);
+       
               await axios.post(
                 `${process.env.REACT_APP_API_URL}/api/auth/register/`,
                 formData,
@@ -89,14 +90,17 @@ const RegisterForm = () => {
                   },
                 }
               );
+              console.log(formData);
               console.log("success");
               actions.setStatus("success");
               showSuccessToast();
               setTimeout(() => {
                 navigate("/login");
               }, "1500");
+
             } catch (err) {
-              console.log("Error: ", err.code);
+              
+              console.log("Error: ", err);
               actions.setStatus(err.code);
               errorHandler(err.code);
             }

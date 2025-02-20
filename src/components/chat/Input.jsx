@@ -15,6 +15,7 @@ import { storage, db } from "../../firebase";
 import { ref, uploadBytes } from "firebase/storage";
 import { v4 as uuid } from "uuid";
 import axios from "axios";
+import { getDownloadURL } from "firebase/storage";
 
 const Input = () => {
   const [message, setMessage] = useState("");
@@ -67,22 +68,26 @@ const Input = () => {
     }
   }, [currentUser.role, data]);
 
-  const handleUpload = () => {
+  const handleUpload = async  () => {
     const fileRef = ref(storage, `files/${data.chatId}/${fileUpload.name}`);
     try {
-      uploadBytes(fileRef, fileUpload).then(() => {
+       await uploadBytes(fileRef, fileUpload).then(() => {
         console.log("File uploaded")
       });
-      return `https://storage.googleapis.com/peers-staging-9d8ed.appspot.com/files/${data.chatId}/${fileUpload.name}`;
-    } catch (e) {
+      
+      const url = await getDownloadURL(fileRef);
+      console.log(url);
+      return url;
+  } catch (e) {
       console.log(e);
     }
   };
   const handleSend = async () => {
-    if (!disable){
-      let fileUrl = "";
+  if (!disable) {
+    let fileUrl = "";
+
     if (fileUpload != null) {
-      fileUrl = `${handleUpload()}|`;
+      fileUrl = await handleUpload() + "|"; // ✅ No need for template literals
     }
 
     await updateDoc(doc(db, "chats", data.chatId), {

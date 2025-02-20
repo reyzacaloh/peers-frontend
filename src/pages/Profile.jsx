@@ -26,7 +26,7 @@ const Profile = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
+  
   return (
     <div className='page_container'>
       <h1>Profile page</h1>

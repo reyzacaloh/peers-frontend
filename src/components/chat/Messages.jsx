@@ -22,6 +22,7 @@ const Messages = () => {
     },[data.chatId])
     
     const handleMessages= (allMessage,user, partner)=>{
+      console.log(partner)
       return allMessage.map(message => ({
         ...message,
         isOwner: message.senderId === user.uid,

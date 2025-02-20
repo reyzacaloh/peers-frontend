@@ -92,6 +92,7 @@ const Chat = () => {
         
 
         const book_list = response.data.booking_list;
+        console.log(book_list)
         book_list.forEach(async (item) => {
           const combinedId =
             currentUser.uid > item.uid
@@ -108,26 +109,31 @@ const Chat = () => {
           }
 
           const res = await getDoc(doc(db, "chats", combinedId));
-
+          
           if (!res.exists()) {
             //create a chat in chats collection
             await setDoc(doc(db, "chats", combinedId), { messages: [] });
 
+            const partner_pic = item.profile_pic.split("?")[0]
+            const user_pic = currentUser.profile_picture.split("?")[0]
+            console.log(partner_pic)
+            console.log(user_pic)
             //create user chats
             await updateDoc(doc(db, "userChats", currentUser.uid), {
               [combinedId + ".userInfo"]: {
                 latest_message: "",
-                profile_pic: item.profile_pic,
+                profile_pic: partner_pic,
                 uid: item.uid,
                 username: item.tutor_name,
               },
               [combinedId + ".date"]: serverTimestamp(),
             });
 
+
             await updateDoc(doc(db, "userChats", item.uid), {
               [combinedId + ".userInfo"]: {
                 latest_message: "",
-                profile_pic: currentUser.profile_picture,
+                profile_pic: user_pic,
                 uid: currentUser.uid,
                 username: currentUser.first_name + " " + currentUser.last_name,
               },
@@ -137,10 +143,10 @@ const Chat = () => {
         });
       } catch (err) {
         console.log(err)
-        if(!showErrorRef.current){
+        if(showErrorRef.current){
           showError()
           showErrorRef.current = true;
-          setTimeout(() => window.location.reload(), 2000);
+          setTimeout(() => window.location.reload(), 20000);
           
         }
       }
